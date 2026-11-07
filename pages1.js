@@ -23,7 +23,7 @@
   /* ---------- হোম ---------- */
   function portraitHero() {
     var f = [['drop', 'Hydrology', ''], ['layers', 'GIS & Remote Sensing', 'sky'], ['camera', 'Photography', 'gold'], ['drone', 'Drone survey', 'rose']];
-    return '<div class="pf rv in">' + cont('', 6) + '<span class="ring"></span><span class="ring r2"></span><div class="arch">' + pic(S.portrait, S.name, 'people') + '</div>' +
+    return '<div class="pf rv in">' + cont('', 6) + '<span class="lay l1"></span><span class="lay l2"></span><div class="arch">' + pic(S.portrait, S.name, 'people') + '</div>' +
       f.map(function (x, i) { return '<div class="float f' + (i + 1) + '">' + ib(x[0], x[2]) + x[1] + '</div>'; }).join('') + '</div>';
   }
   function home() {
@@ -41,12 +41,14 @@
       '<section class="foi"><div class="wrap">' + sh('Field of interest', 'Where my <em>curiosity</em> flows', 'Eight topics I keep coming back to. Open any card to read more.') + '<div class="cards c4 sm-2">' + S.interests.map(function (it) { return interestCard(it); }).join('') + '</div>' +
       '<p class="ctr" style="margin-top:36px"><a class="btn" href="research.html">' + ic('flask') + ' See my research ' + ic('arrow') + '</a></p></div></section>' +
       '<section class="tint"><div class="wrap">' + sh('Photography', 'Frames from the <em>field</em>', S.photography.intro) +
-      '<div class="mosaic">' + ph.map(function (p) { return '<a class="rv" href="photography.html">' + pic(p.file, p.title, 'camera') + '<span>' + ic('camera') + esc(p.title) + '</span></a>'; }).join('') + '</div>' +
+      '<div class="mosaic" id="mos">' + ph.map(function (p, i) { return '<button type="button" class="mi rv" data-i="' + i + '" aria-label="Open photo: ' + esc(p.title) + '">' + pic(p.file, p.title, 'camera') + '<span>' + ic('camera') + esc(p.title) + '</span></button>'; }).join('') + '</div>' +
       '<p class="ctr" style="margin-top:34px"><a class="btn pri" href="photography.html">' + ic('camera') + ' See the full gallery</a></p></div></section>' +
       '<section><div class="wrap">' + sh('Explore', 'Wander through the <em>portfolio</em>', '') + '<div class="tiles">' + tiles.map(function (t) {
         return '<a class="tile lift rv" href="' + t[0] + '">' + ib(t[2], t[3], 'lg') + '<span><b>' + esc(t[1]) + '</b><small>' + esc(t[4]) + '</small></span>' + ic('arrow') + '</a>';
       }).join('') + '</div></div></section>' +
       U.phdBand();
+    var LB = U.makeLightbox();
+    U.$$('#mos .mi').forEach(function (b) { b.addEventListener('click', function () { LB.open(S.photography.photos, +b.dataset.i); }); });
   }
 
   /* ---------- About ---------- */
@@ -64,17 +66,17 @@
   }
   function about() {
     var st = S.story, fic = { 'Based in': 'pin', 'Position': 'briefcase', 'Degree': 'grad', 'Looking for': 'target', 'Languages': 'globe' };
-    $('#app').innerHTML = phead('user', st.kicker, st.headline, '', '', '', ['camera', 'drop']) +
-      '<section><div class="wrap about"><div>' + frame() + '</div><div>' +
+    $('#app').innerHTML = phead('user', '', st.headline, '', '', '', ['camera', 'drop']) +
+      '<section><div class="wrap about"><div class="al">' + frame() + '</div><div class="af">' +
+      '<div class="facts rv">' + st.facts.map(function (f) { return '<div class="fact">' + ib(fic[f[0]] || 'star') + '<div><small>' + esc(f[0]) + '</small><span class="v">' + esc(f[1]) + '</span></div></div>'; }).join('') + '</div></div><div class="ar">' +
       '<div class="prose rv">' + st.paragraphs.map(function (p, i) { return '<p' + (i === 0 ? ' class="lede"' : '') + '>' + esc(p) + '</p>'; }).join('') + '</div>' +
       '<div class="lines rv">' + st.lines.map(function (l) { return '<div class="line">' + ib(l.icon, '', '') + '<span>' + esc(l.text) + '</span></div>'; }).join('') + '</div>' +
-      '<div class="facts rv">' + st.facts.map(function (f) { return '<div class="fact">' + ib(fic[f[0]] || 'star') + '<div><small>' + esc(f[0]) + '</small><span class="v">' + esc(f[1]) + '</span></div></div>'; }).join('') + '</div>' +
       '<div class="rv" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">' + U.cvBtn('pri') + '<a class="btn" href="contact.html">' + ic('mail') + ' Contact me</a></div></div></div></section>' +
       '<section class="tint"><div class="wrap">' + sh('Education', 'Where I <em>studied</em>', 'Open a card for the details.') + '<div class="cards c2">' + S.education.map(function (e, i) {
         var o = { art: e.art, tone: tone(i + 1), kicker: e.when, kickerIcon: 'cal', title: e.title, sub: e.org, text: e.text, blocks: [{ h: 'Highlights', list: e.points }] };
         return '<article class="card edu lift rv"' + btn(o) + '><div class="aw">' + artTile(e.art, tone(i + 1)) + '</div><div class="cb"><span class="when">' + esc(e.when) + '</span><h3>' + esc(e.title) + '</h3><div class="org">' + esc(e.org) + '</div><p>' + esc(e.note) + '</p>' + more() + '</div></article>';
       }).join('') + '</div></div></section>' +
-      '<section><div class="wrap">' + sh('More about me', 'Beyond the <em>lab</em>', 'The other half of the picture. Open a card to read more.') + '<div class="cards c3 c5">' + S.beyond.map(function (b, i) {
+      '<section><div class="wrap">' + sh('More about me', 'Beyond the <em>lab</em>', 'The other half of the picture. Open a card to read more.') + '<div class="cards c3' + (S.beyond.length % 3 === 2 ? ' c5' : '') + '">' + S.beyond.map(function (b, i) {
         var o = { art: b.art, tone: b.tone, kicker: 'Beyond the lab', kickerIcon: 'star', title: b.title, text: b.text, links: b.link ? [b.link] : [] };
         return '<article class="card ifc lift rv"' + btn(o) + '><div class="aw">' + artTile(b.art, b.tone) + '</div><div class="cb"><h3>' + esc(b.title) + '</h3><p>' + esc(b.short) + '</p>' + more('Read more') + '</div></article>';
       }).join('') + '</div></div></section>' +
@@ -108,8 +110,8 @@
 
   /* ---------- Skills ---------- */
   function skills() {
-    $('#app').innerHTML = phead('tools', 'Skills & Training', 'Tools, methods and the craft behind my work', 'From satellite data and hydrological models to a drone and a camera: the software, methods and training I rely on, and what I use each one for.', '', '', ['code', 'layers']) +
-      '<section><div class="wrap">' + sh('Toolbox', 'What I can <em>do</em>', 'Seven groups of tools and methods. Open a card to see each tool and how I use it.') + '<div class="cards c3">' +
+    $('#app').innerHTML = phead('tools', 'Skills & Training', 'Tools, methods and the craft behind my work', 'From satellite data and hydrological models to a drone, a camera and a code editor: the software, methods and training I rely on, and what I use each one for.', '', '', ['code', 'layers']) +
+      '<section><div class="wrap">' + sh('Toolbox', 'What I can <em>do</em>', S.skills.length + ' groups of tools and methods. Open a card to see each tool and how I use it.') + '<div class="cards c4">' +
       S.skills.map(function (k, i) {
         var o = { art: k.art, tone: k.tone, kicker: 'Skills', kickerIcon: 'tools', title: k.group, text: [k.used], blocks: [{ h: 'Tools', defs: k.tools }, { h: 'How I use it', list: k.uses }], pubs: k.pubs, links: k.link ? [k.link] : [] };
         return '<article class="card skill lift rv"' + btn(o) + '><div class="aw">' + artTile(k.art, k.tone) + '</div><div class="cb"><h3>' + esc(k.group) + '</h3><div class="it">' + k.items.map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div><p>' + esc(k.used) + '</p>' + more() + '</div></article>';

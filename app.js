@@ -71,7 +71,7 @@
       '<a href="photography.html"' + (cur === 'photography' ? ' class="on"' : '') + '>' + ib('camera', 'gold') + '<span><b>' + esc(L.photography) + '</b><small>Gallery and albums</small></span></a>' +
       '<a href="travel.html"' + (cur === 'travel' ? ' class="on"' : '') + '>' + ib('compass', 'sky') + '<span><b>' + esc(L.travel) + '</b><small>Stories and photographs</small></span></a></div></div>' +
       '<a href="contact.html"' + (cur === 'contact' ? ' class="on"' : '') + '>' + ic('mail') + 'Contact</a>' +
-      (S.cv ? '<a class="cv" href="' + esc(S.cv) + '" download>' + ic('dl') + ' CV</a>' : '') + '</nav>' +
+      '</nav>' +
       '<button class="burger" id="bg" aria-label="Menu" aria-expanded="false">' + ic('menu') + '</button></div></header>';
     $('#bg').addEventListener('click', function () { var o = $('#nl').classList.toggle('open'); this.setAttribute('aria-expanded', o); document.body.style.overflow = o ? 'hidden' : ''; });
     var dd = $('.dd'), btn = $('.ddb');
@@ -81,10 +81,10 @@
   function footer() {
     var L = S.lens;
     $('#foot').innerHTML = '<footer class="foot">' + wave() + cont('gold', 7) + '<div class="wrap"><div class="g"><div class="brand"><div class="who"><span class="av"><img src="photos/avatar.jpg" alt=""></span><div><b>' + esc(S.name) + '</b><small>' + esc(S.role) + '</small></div></div>' +
-      '<p>Water and environmental researcher and photographer from Bangladesh, working with GIS, remote sensing and hydrological modelling.</p><div class="soc">' + socials() + '</div></div>' +
+      '<p>Water and environmental researcher and photographer from Bangladesh, working with GIS, remote sensing and hydrological modelling.</p><blockquote class="fq">' + ic('quote') + '<span>' + esc(S.story.headline) + '</span></blockquote><div class="soc">' + socials() + '</div></div>' +
       '<div><h5>Explore</h5><ul>' + NAV.slice(0, 4).map(function (n) { return '<li><a href="' + n[0] + '">' + ic(n[2]) + n[1] + '</a></li>'; }).join('') + '</ul></div>' +
       '<div><h5>More</h5><ul><li><a href="research.html">' + ic('flask') + 'Research</a></li><li><a href="projects.html">' + ic('folder') + 'Projects</a></li><li><a href="photography.html">' + ic('camera') + esc(L.photography) + '</a></li><li><a href="travel.html">' + ic('compass') + esc(L.travel) + '</a></li></ul></div>' +
-      '<div><h5>Get in touch</h5><ul><li><a href="mailto:' + esc(S.email) + '">' + ic('mail') + esc(S.email) + '</a></li><li><a href="contact.html">' + ic('send') + 'Send a message</a></li><li><span class="plain">' + ic('pin') + esc(S.location) + '</span></li>' + (S.cv ? '<li><a href="' + esc(S.cv) + '" download>' + ic('dl') + 'Download CV</a></li>' : '') + '</ul></div></div>' +
+      '<div><h5>Get in touch</h5><ul><li><a href="mailto:' + esc(S.email) + '">' + ic('mail') + esc(S.email) + '</a></li><li><a href="contact.html">' + ic('send') + 'Send a message</a></li><li><span class="plain">' + ic('pin') + esc(S.location) + '</span></li>' + '</ul></div></div>' +
       '<div class="bar"><span class="cr">Developed and Powered by <b>thySelf</b></span><a class="top" href="#top" id="totop" aria-label="Back to top">' + ic('up') + '<span>Back to top</span></a></div></div></footer>';
     $('#totop').addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
   }
@@ -93,20 +93,20 @@
   function sh(eyebrow, title, lead) {
     return '<header class="sh rv">' + (eyebrow ? '<div class="eb"><i></i><span>' + esc(eyebrow) + '</span><i></i></div>' : '') + '<h2>' + title + '</h2><div class="ul">' + UL + '</div>' + (lead ? '<p class="lead">' + esc(lead) + '</p>' : '') + '</header>';
   }
-  function phead(icon, kicker, headline, sub, extra, crumb, orbs) {
+  function phead(icon, kicker, headline, sub, extra, crumb, orbs, badge) {
     var w = String(headline).split(' '), last = w.pop(); orbs = orbs || [];
-    return '<section class="ph">' + cont('', 2) + '<div class="dots" style="right:6%;bottom:12%;width:170px;height:130px"></div>' + wave() + '<div class="wrap"><div class="pt">' + (crumb || '') + '<span class="eb2"><i></i>' + esc(kicker) + '</span><h1>' + esc(w.join(' ')) + ' <em>' + esc(last) + '</em></h1>' + (sub ? '<p class="s">' + esc(sub) + '</p>' : '') + (extra || '') + '</div>' +
+    return '<section class="ph">' + cont('', 2) + '<div class="dots" style="right:6%;bottom:12%;width:170px;height:130px"></div>' + wave() + '<div class="wrap"><div class="pt">' + (crumb || '') + (kicker ? '<span class="eb2"><i></i>' + esc(kicker) + '</span>' : '') + (badge ? '<div class="hbadge" aria-hidden="true">' + artTile(badge[0], badge[1]) + '</div>' : '') + '<h1>' + esc(w.join(' ')) + ' <em>' + esc(last) + '</em></h1>' + (sub ? '<p class="s">' + esc(sub) + '</p>' : '') + (extra || '') + '</div>' +
       '<div class="pg" aria-hidden="true"><span class="ring"></span><span class="ring r2"></span><span class="core">' + ic(icon) + '</span>' + orbs.map(function (o, i) { return '<span class="orb o' + (i + 1) + '">' + ic(o) + '</span>'; }).join('') + '</div></div></section>';
   }
   function band(title, text, buttons) {
     return '<section><div class="wrap"><div class="band rv">' + cont('', 5) + '<div><h2>' + esc(title) + '</h2><p>' + esc(text) + '</p></div><div style="display:flex;gap:12px;flex-wrap:wrap">' + buttons + '</div></div></div></section>';
   }
   function ctaBand() {
-    return band('Let\'s work on something together.', 'Open to research collaboration, consulting and new ideas.', '<a class="btn pri" href="contact.html">' + ic('mail') + ' Get in touch</a>' + cvBtn());
+    return band('Let\'s work on something together.', 'Open to research collaboration, consulting and new ideas.', '<a class="btn pri" href="contact.html">' + ic('mail') + ' Get in touch</a>');
   }
   function lensSwitch(cur) {
     var L = S.lens;
-    return '<div class="lensnav"><span>' + esc(L.name) + '</span><a href="photography.html"' + (cur === 'photography' ? ' class="on"' : '') + '>' + ic('camera') + esc(L.photography) + '</a><a href="travel.html"' + (cur === 'travel' ? ' class="on"' : '') + '>' + ic('compass') + esc(L.travel) + '</a></div>';
+    return '<div class="lensnav"><a href="photography.html"' + (cur === 'photography' ? ' class="on"' : '') + '>' + ic('camera') + esc(L.photography) + '</a><a href="travel.html"' + (cur === 'travel' ? ' class="on"' : '') + '>' + ic('compass') + esc(L.travel) + '</a></div>';
   }
 
   /* ---------- মোডাল (পপআপ) ---------- */
@@ -219,7 +219,7 @@
   /* কার্ডের ওপরের ছবি-আঁকা অংশ + popup বাঁধার attribute */
   function btn(o) { return ' tabindex="0" role="button" data-info="' + reg(o) + '"'; }
 
-  var KT = { research: '', consulting: 'gold', tool: 'sky', media: 'rose' };
+  var KT = { research: '', consulting: 'gold', tool: 'sky', media: 'rose', web: 'sand' };
   function projectCard(p) {
     return '<a class="card pcard lift rv" href="project.html?p=' + esc(p.id) + '"><div class="tw"><div class="thumb">' + pic(p.photo || p.map, p.title, p.art || 'folder', '', KT[p.kind] || '') + '</div><span class="chip st">' + esc(p.statusLabel) + '</span></div>' +
       '<div class="cb"><h3>' + esc(p.title) + '</h3><p class="clamp">' + esc(p.summary) + '</p><div class="tags">' + p.tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div><span class="more">' + (p.period ? esc(p.period) + ' · ' : '') + 'View project ' + ic('arrow') + '</span></div></a>';
@@ -231,7 +231,7 @@
   }
   function phdBand() {
     var P = S.phd;
-    return '<section><div class="wrap"><div class="phd rv">' + cont('', 4) + '<div class="in"><div class="phdart">' + U.art('cert') + '</div><div><h3>' + esc(P.title) + '</h3><p>' + esc(P.text) + '</p><div class="tags">' + P.interests.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div><a class="btn pri" href="contact.html">' + ic('mail') + ' Get in touch</a> ' + cvBtn() + '</div></div></div></div></section>';
+    return '<section><div class="wrap"><div class="phd rv">' + cont('', 4) + '<div class="in"><div class="phdart">' + U.art('cert') + '</div><div><h3>' + esc(P.title) + '</h3><p>' + esc(P.text) + '</p><div class="tags">' + P.interests.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div><a class="btn pri" href="contact.html">' + ic('mail') + ' Get in touch</a></div></div></div></div></section>';
   }
 
   /* ---------- অ্যানিমেশন ---------- */
@@ -255,6 +255,23 @@
     $$('[data-n]').forEach(function (e) { io.observe(e); });
   }
 
+  /* ---------- পেজ বদলের নরম ট্রানজিশন ---------- */
+  function pageFx() {
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if ((a.target && a.target !== '_self') || a.hasAttribute('download')) return;
+      var h = a.getAttribute('href');
+      if (!h || h.charAt(0) === '#' || /^(mailto:|tel:|javascript:)/i.test(h)) return;
+      if (a.origin !== location.origin) return;
+      if (a.pathname === location.pathname && a.search === location.search) return;
+      e.preventDefault(); document.body.classList.add('pg-out');
+      setTimeout(function () { location.href = a.href; }, 220);
+    });
+    window.addEventListener('pageshow', function (e) { if (e.persisted) document.body.classList.remove('pg-out'); });
+  }
+
   /* বাইরে থেকে পেজ-ফাইলগুলো যা ব্যবহার করবে */
   U.S = S; U.$ = $; U.$$ = $$; U.esc = esc; U.param = param; U.ic = ic; U.ib = ib; U.cont = cont; U.UL = UL; U.wave = wave; U.pic = pic; U.artTile = artTile;
   U.SOC = SOC; U.socials = socials; U.bold = bold; U.cvBtn = cvBtn; U.sh = sh; U.phead = phead; U.band = band; U.ctaBand = ctaBand; U.lensSwitch = lensSwitch;
@@ -268,6 +285,6 @@
     setBg(); nav(); initModal();
     var pg = document.body.dataset.page;
     try { (U.pages[pg] || U.pages.home)(); } catch (err) { $('#app').innerHTML = '<section><div class="wrap"><p>Something went wrong while loading this page.</p></div></section>'; if (window.console) console.error(err); }
-    footer(); bindCards(document); reveal(); count();
+    footer(); bindCards(document); reveal(); count(); pageFx();
   });
 })();

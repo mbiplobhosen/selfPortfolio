@@ -39,7 +39,7 @@
 
   /* ---------- Projects ---------- */
   function projects() {
-    var P = S.projects, kinds = [['all', 'All', 'folder'], ['research', 'Research', 'flask'], ['consulting', 'Consulting', 'briefcase'], ['tool', 'Tools', 'code'], ['media', 'Media', 'video']];
+    var P = S.projects, kinds = [['all', 'All', 'folder'], ['research', 'Research', 'flask'], ['consulting', 'Consulting', 'briefcase'], ['tool', 'Tools', 'code'], ['web', 'Web', 'globe'], ['media', 'Media', 'video']];
     var count = function (k) { return k === 'all' ? P.length : P.filter(function (p) { return p.kind === k; }).length; };
     var feat = P.filter(function (p) { return p.featured; })[0];
     $('#app').innerHTML = phead('folder', 'Projects', 'Projects, studies and tools in the making', 'Funded research, consulting studies, a documentary and tools I am building. Each card opens the full story, and photos and results are added as every project matures. Journal articles live on the Research page.', '', '', ['bolt', 'leaf']) +
@@ -60,7 +60,7 @@
     var rows = [['Status', p.statusLabel, 'check'], ['Period', p.period, 'cal'], ['My role', p.role, 'user'], ['Lead', p.lead, 'users'], ['Institution', p.org, 'pin']].filter(function (r) { return r[1]; });
     var others = S.projects.filter(function (x) { return x.id !== p.id; }).slice(0, 3);
     $('#app').innerHTML = phead('folder', 'Project', p.title, p.summary, '<div class="tags" style="margin-top:20px">' + tags(p.tags) + '</div>', '<a class="crumb" href="projects.html">' + ic('back') + ' All projects</a><br>', ['bolt', 'leaf']) +
-      '<section><div class="wrap pd"><div><div class="figure">' + pic(p.photo || p.map, p.title, p.art || 'folder', '', U.KT[p.kind] || '') + '</div>' +
+      '<section><div class="wrap pd"><div><div class="figure">' + pic(p.photo || p.map, p.title, p.art || 'folder', '', U.KT[p.kind] || '') + '</div>' + (p.gallery && p.gallery.length ? '<div class="imgs shots">' + p.gallery.map(function (f) { return '<div>' + pic(f, p.title, 'camera') + '</div>'; }).join('') + '</div>' : '') +
       sec('The problem', p.problem, 'target') + sec('Approach', p.method, 'layers') + sec('Results', p.results, 'chart') + vid +
       (p.results || p.video ? '' : '<div class="soon" style="margin-top:24px">' + ic('clock') + ' More details, photos and results will be added soon.</div>') + mats + '</div>' +
       '<aside class="side">' + rows.map(function (r) { return '<div>' + ib(r[2]) + '<span><small>' + r[0] + '</small>' + esc(r[1]) + '</span></div>'; }).join('') + '</aside></div></section>' +

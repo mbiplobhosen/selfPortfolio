@@ -15,14 +15,13 @@ window.SITE = {
   role: "Research Assistant",
   email: "mdbiplob9123@gmail.com",
   location: "Gazipur, Bangladesh",
-  siteUrl: "https://biplob9123.github.io/self-portfolio/",
+  siteUrl: "https://mbiplobhosen.github.io/selfPortfolio/",
 
   /* মেনুর "Photography + Travel" গ্রুপের নাম — এখানে বদলালেই হবে */
   lens: { name: "Lens & Journeys", photography: "Photography", travel: "Travel blog" },
 
-  /* যোগাযোগ ফর্ম: formspree.io বা web3forms.com থেকে পাওয়া লিংক এখানে বসান।
-     খালি থাকলে ফর্ম "পাঠান" চাপলে ইমেইল অ্যাপ খুলবে (তাও কাজ করে)। */
-  formEndpoint: "",
+  /* Web3Forms Access Key — মেসেজ সরাসরি আপনার ইনবক্সে আসে। ফাঁকা ("") রাখলে আগের মতো ইমেইল অ্যাপ খুলবে */
+  formKey: "2c2fdbc5-40c5-4505-b19f-362ce2f5140e",
 
   /* লিংক: যেটা নেই সেটা "" রাখুন */
   links: {
@@ -42,10 +41,10 @@ window.SITE = {
   /* ---------- ২. হোম পেজ ---------- */
   hero: {
     hello: "Welcome, I'm",
-    kicker: "Water & environmental researcher  ·  Photographer",
+    kicker: "Water & environmental researcher  ·  Photographer  ·  Web developer",
     headline: "I read rivers — in data and in light.",
     sub: "I map floods, groundwater and heat with GIS, remote sensing and machine learning, and I photograph the landscapes and people of Bangladesh.",
-    chips: ["GIS & Remote Sensing", "Hydrological Modelling", "AHP · Fuzzy AHP · ANN", "Photography"]
+    chips: ["GIS & Remote Sensing", "Hydrological Modelling", "AHP · Fuzzy AHP · ANN", "Photography", "Web Development"]
   },
 
   /* আপনার ছবি: হোমের জন্য photos/portrait.jpg, About-এর জন্য photos/about.jpg */
@@ -57,7 +56,7 @@ window.SITE = {
     { n: 9,  label: "Journal articles",         icon: "book" },
     { n: 17, label: "Conference papers",        icon: "mic" },
     { n: 2,  label: "Presenting-paper awards",  icon: "award" },
-    { n: 9,  label: "Projects & tools",         icon: "folder" }
+    { n: 13, label: "Projects & tools",         icon: "folder" }
   ],
 
   /* ---------- ৩. আগ্রহের ক্ষেত্র (Home ও Research — প্রতিটায় ক্লিকে popup) ----------
@@ -161,12 +160,14 @@ window.SITE = {
       "Bangladesh is a delta, so water is never far from the story: floods in Sylhet and Tangail, groundwater beneath Gazipur and Narshingdi, landslides in the Hill Tracts, erosion along the Kuakata coast. I work with satellite images, GIS, field surveys and models to turn those stories into maps that people can actually use.",
       "I'm as happy in the field as at a screen. My undergraduate thesis took me to Gobra Union in Gopalganj to look at saline-water intrusion and farming, I worked through the Kuakata erosion project, and I fly a DJI Air 2S for aerial photography and surveys.",
       "The camera is the other half of me. I started the DUET Photographic Society, led its workshops as Chief Instructor and now advise it. I also made a video documentary for a GCA-funded coastal erosion project.",
+      "I also build websites. I designed, coded and host the website of BlueGreen Research and Consultancy (BGRC) myself, in plain HTML, CSS and JavaScript.",
       "What's next? A PhD, where I can keep working on climate-resilient water planning and flood-risk reduction with people who care about the same places."
     ],
     lines: [
       { icon: "layers", text: "I turn satellite data, field surveys and models into maps that planners can use." },
       { icon: "camera", text: "Behind the research is a camera: landscapes, wildlife and people of Bangladesh." },
-      { icon: "users",  text: "I like building communities, from a photographic society to student organisations." }
+      { icon: "users",  text: "I like building communities, from a photographic society to student organisations." },
+      { icon: "code",   text: "I design, code and host websites too, from the first sketch to the live site." }
     ],
     facts: [
       ["Based in",   "Gazipur, Bangladesh"],
@@ -195,6 +196,9 @@ window.SITE = {
     { art: "drone",   tone: "rose", title: "Drone & aerial", short: "Aerial photography and drone surveys.",
       text: ["A DJI Air 2S lets me see rivers, roads, campuses and farmland from above, both for photography and for survey work.", "Seeing a landscape from the air often explains what a map only hints at."],
       link: { label: "See aerial photos", href: "photography.html" } },
+    { art: "code",    tone: "sky",  title: "Web development", short: "Websites designed, coded and hosted by hand.",
+      text: ["I build websites in plain HTML, CSS and JavaScript, doing the design, the code and the hosting myself.", "The BlueGreen Research and Consultancy (BGRC) website is one I made from start to finish, in English and Bangla."],
+      link: { label: "See the BGRC website", href: "project.html?p=bgrc-website" } },
     { art: "film",    tone: "sky",  title: "Video & documentary", short: "A documentary for a GCA-funded erosion project.",
       text: ["After the GCA-funded Kuakata Sea Beach erosion project I made a video documentary for GCA.", "More about the documentary will be added here."],
       link: { label: "See the project", href: "project.html?p=kuakata-documentary-gca" } },
@@ -315,6 +319,9 @@ window.SITE = {
     { icon: "code", art: "code", tone: "sky", group: "Programming & data", items: ["Python (intermediate)", "Google Earth Engine"], used: "Data analysis and building small tools.",
       tools: [["Python (intermediate)", "Data analysis and small tools; completed a 60-hour course at IICT, DUET in June 2026."], ["Google Earth Engine", "Cloud platform for analysing satellite data at scale."]],
       uses: ["Satellite-based air quality and temperature analysis", "Building the Raster Downscaling Tool"], pubs: [], link: { label: "See the Raster Downscaling Tool", href: "project.html?p=raster-downscaling-tool" } },
+    { icon: "globe", art: "code", tone: "rose", group: "Web development", items: ["HTML", "CSS", "JavaScript", "Web design", "Hosting"], used: "Designing, coding and hosting websites by hand, from the first sketch to the live site.",
+      tools: [["HTML", "The structure and content of a web page."], ["CSS", "Layout, colour, typography and responsive design."], ["JavaScript", "Interactivity such as menus, forms, filters and language switches."], ["Web design", "Planning the layout, look and flow of a site before coding it."], ["Hosting", "Publishing a finished website online and keeping it running."]],
+      uses: ["Designed, coded and hosted the BlueGreen Research and Consultancy (BGRC) website, in English and Bangla"], pubs: [], link: { label: "See the BGRC website project", href: "project.html?p=bgrc-website" } },
     { icon: "video", art: "camera", tone: "gold", group: "Photography & video", items: ["Photography", "Aerial photography", "Video documentary", "Teaching workshops"], used: "Shooting, editing and teaching; documentary for a GCA-funded project.",
       tools: [["Photography", "Landscapes, wildlife and people, shot on a Canon EOS 77D."], ["Aerial photography", "Photographs from a DJI Air 2S."], ["Video documentary", "A documentary for a GCA-funded erosion project."], ["Teaching workshops", "Chief Instructor of the DUET Photographic Society."]],
       uses: ["Photography workshops at DUET", "Documentary storytelling"], pubs: [], link: { label: "Open the gallery", href: "photography.html" } }
@@ -480,12 +487,12 @@ window.SITE = {
      problem / method / results / materials — যেটা খালি সেটা পেজে দেখাবে না।                      */
   projects: [
     { id: "iee-etp-sirajganj", kind: "consulting", art: "factory", featured: true, status: "ongoing", statusLabel: "Ongoing project",
-      title: "IEE and ETP design for a paper factory, Sirajganj", period: "Ongoing",
+      title: "IEE report for a paper factory, Sirajganj", period: "Ongoing",
       role: "", lead: "", org: "",
-      summary: "An Initial Environmental Examination (IEE) and the design of an Effluent Treatment Plant (ETP) for a paper factory in Sirajganj, Bangladesh.",
-      tags: ["IEE", "ETP design", "Sirajganj", "Industrial wastewater"],
-      problem: "Paper manufacturing uses large volumes of water and releases wastewater that must be treated before it reaches rivers. This project covers the environmental assessment and the treatment plant design for the factory.",
-      method: "An IEE describes the factory's environmental setting, the likely impacts and the measures to reduce them. The ETP design sizes the treatment units for the factory's wastewater.",
+      summary: "An Initial Environmental Examination (IEE) report for a paper factory in Sirajganj, Bangladesh.",
+      tags: ["IEE", "Sirajganj", "Industrial wastewater"],
+      problem: "Paper manufacturing uses large volumes of water and releases wastewater that must be treated before it reaches rivers. This project covers the environmental assessment (IEE report) for the factory.",
+      method: "An IEE describes the factory's environmental setting, the likely impacts and the measures to reduce them.",
       results: "", materials: [], photo: "photos/projects/sirajganj-etp.jpg", map: "" },
 
     { id: "ev-charging-dhaka", kind: "research", art: "ev", featured: true, status: "ongoing", statusLabel: "Research project",
@@ -541,6 +548,37 @@ window.SITE = {
       summary: "Spatiotemporal drought assessment with SPEI-12, comparing two coastal divisions of Bangladesh.",
       tags: ["SPEI-12", "Drought", "Coastal"],
       problem: "", method: "Standardised Precipitation Evapotranspiration Index (SPEI-12) computed across both divisions over time.", results: "", materials: [], photo: "", map: "maps/drought.jpg" },
+
+    { id: "bgrc-website", kind: "web", art: "code", featured: false, status: "completed", statusLabel: "Live website",
+      title: "BGRC website: design, development and hosting", period: "August 2026 – present",
+      role: "Designer, developer and host (built it all myself)", lead: "", org: "BlueGreen Research and Consultancy (BGRC)",
+      summary: "The website of BlueGreen Research and Consultancy, designed, coded and hosted by me in HTML, CSS and JavaScript, in English and Bangla.",
+      tags: ["HTML", "CSS", "JavaScript", "Web design", "English + Bangla"],
+      problem: "A consultancy needs a clear, trustworthy website where industries, NGOs, developers and students can see what it does and get in touch.",
+      method: "I did all the work myself: the design from scratch, the HTML, CSS and JavaScript code, the English and Bangla versions, and the hosting.",
+      results: "A live website with Home, About, Services, Training, Projects, Team, Insights and Contact pages, a quote-request form, WhatsApp and email contact, a project-process section and a switch between English and Bangla.",
+      materials: [{ label: "Visit www.bgrcbd.com", url: "https://www.bgrcbd.com" }], photo: "photos/projects/bgrc-home.jpg", gallery: ["photos/projects/bgrc-projects.jpg"], map: "" },
+
+    { id: "bgrc-gis-training", kind: "consulting", art: "satellite", featured: false, status: "done", statusLabel: "Training programme",
+      title: "GIS and RS training programme, six batches", period: "",
+      role: "", lead: "", org: "BlueGreen Research and Consultancy (BGRC)",
+      summary: "A training programme in GIS and remote sensing, run through BlueGreen Research and Consultancy in six batches.",
+      tags: ["GIS", "Remote sensing", "Training", "Six batches"],
+      problem: "", method: "", results: "", materials: [], photo: "photos/projects/bgrc-training.jpg", map: "" },
+
+    { id: "bgrc-duet-thesis", kind: "consulting", art: "river", featured: false, status: "done", statusLabel: "Completed project",
+      title: "Thesis project, Institute of Water and Environment, DUET", period: "",
+      role: "", lead: "", org: "BlueGreen Research and Consultancy (BGRC)",
+      summary: "A completed thesis project linked to the Institute of Water and Environment at DUET, listed among the BGRC projects.",
+      tags: ["Thesis", "DUET", "Water and environment"],
+      problem: "", method: "", results: "", materials: [], photo: "", map: "" },
+
+    { id: "bgrc-iubat-thesis", kind: "consulting", art: "cert", featured: false, status: "done", statusLabel: "Completed project",
+      title: "MSc thesis project, IUBAT", period: "",
+      role: "", lead: "", org: "BlueGreen Research and Consultancy (BGRC)",
+      summary: "Research and analysis support for an MSc thesis at IUBAT, listed among the completed BGRC projects.",
+      tags: ["MSc thesis", "IUBAT", "Research support"],
+      problem: "", method: "", results: "", materials: [], photo: "", map: "" },
 
     { id: "air-quality-gazipur", kind: "research", art: "air", featured: false, status: "ongoing", statusLabel: "Presented · ICSWER 2026",
       title: "Air quality in industrial Gazipur", period: "2025 – 2026",
