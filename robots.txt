@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://biplob9123.github.io/self-portfolio/sitemap.xml
