@@ -55,14 +55,20 @@
     if (!p) { $('#app').innerHTML = phead('folder', 'Projects', 'Project not found', 'Please go back to the project list.', '<p style="margin-top:20px"><a class="btn pri" href="projects.html">All projects</a></p>'); return; }
     document.title = p.title + ' — ' + S.name;
     var sec = function (h, t, i) { return t ? '<div class="ps rv">' + ib(i, '', '') + '<div><h3>' + h + '</h3><p>' + esc(t) + '</p></div></div>' : ''; };
+    var fullT = p.fullTitle ? '<div class="ps rv">' + ib('file', 'gold', '') + '<div><h3>Project title</h3><p>' + esc(p.fullTitle) + '</p></div></div>' : '';
+    var finds = (p.findings && p.findings.length) ? '<div class="ps rv">' + ib('star', 'gold', '') + '<div><h3>Key findings</h3>' + U.listHTML(p.findings) + '</div></div>' : '';
+    var toolz = (p.tools && p.tools.length) ? '<div class="ps rv">' + ib('tools', 'sky', '') + '<div><h3>Tools and methods</h3><div class="tags">' + tags(p.tools) + '</div></div></div>' : '';
+    var ack = p.ack ? '<div class="note rv" style="margin-top:22px">' + ic('award') + ' ' + esc(p.ack) + '</div>' : '';
+    var rel = (p.related || []).map(function (id) { return S.projects.filter(function (x) { return x.id === id; })[0]; }).filter(Boolean);
+    var relH = rel.length ? '<div class="ps rv">' + ib('folder', '', '') + '<div><h3>Related projects</h3><div class="mats">' + rel.map(function (r) { return '<a href="project.html?p=' + esc(r.id) + '">' + ic('arrow') + esc(r.title) + '</a>'; }).join('') + '</div></div></div>' : '';
     var mats = (p.materials && p.materials.length) ? '<div class="ps rv">' + ib('ext', 'sky', '') + '<div><h3>Materials</h3><div class="mats">' + p.materials.map(function (m) { return '<a href="' + esc(m.url) + '" target="_blank" rel="noopener">' + ic('ext') + esc(m.label) + '</a>'; }).join('') + '</div></div></div>' : '';
     var vid = p.video ? '<div class="ps rv">' + ib('video', 'rose', '') + '<div><h3>Watch</h3><div class="mats"><a href="' + esc(p.video) + '" target="_blank" rel="noopener">' + ic('video') + ' Watch the video</a></div></div></div>' : '';
     var rows = [['Status', p.statusLabel, 'check'], ['Period', p.period, 'cal'], ['My role', p.role, 'user'], ['Lead', p.lead, 'users'], ['Institution', p.org, 'pin']].filter(function (r) { return r[1]; });
     var others = S.projects.filter(function (x) { return x.id !== p.id; }).slice(0, 3);
     $('#app').innerHTML = phead('folder', 'Project', p.title, p.summary, '<div class="tags" style="margin-top:20px">' + tags(p.tags) + '</div>', '<a class="crumb" href="projects.html">' + ic('back') + ' All projects</a><br>', ['bolt', 'leaf']) +
       '<section><div class="wrap pd"><div><div class="figure">' + pic(p.photo || p.map, p.title, p.art || 'folder', '', U.KT[p.kind] || '') + '</div>' + (p.gallery && p.gallery.length ? '<div class="imgs shots">' + p.gallery.map(function (f) { return '<div>' + pic(f, p.title, 'camera') + '</div>'; }).join('') + '</div>' : '') +
-      sec('The problem', p.problem, 'target') + sec('Approach', p.method, 'layers') + sec('Results', p.results, 'chart') + vid +
-      (p.results || p.video ? '' : '<div class="soon" style="margin-top:24px">' + ic('clock') + ' More details, photos and results will be added soon.</div>') + mats + '</div>' +
+      fullT + sec('The problem', p.problem, 'target') + sec('Approach', p.method, 'layers') + toolz + sec('Results', p.results, 'chart') + finds + vid +
+      (p.results || p.video || p.findings ? '' : '<div class="soon" style="margin-top:24px">' + ic('clock') + ' More details, photos and results will be added soon.</div>') + mats + relH + ack + '</div>' +
       '<aside class="side">' + rows.map(function (r) { return '<div>' + ib(r[2]) + '<span><small>' + r[0] + '</small>' + esc(r[1]) + '</span></div>'; }).join('') + '</aside></div></section>' +
       '<section class="tint"><div class="wrap">' + sh('More', 'Other <em>projects</em>', '') + '<div class="cards c3">' + others.map(U.projectCard).join('') + '</div></div></section>' + U.ctaBand();
   }

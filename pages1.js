@@ -58,7 +58,7 @@
   function zigzag() {
     var L = [], R = [];
     S.journey.forEach(function (j, i) {
-      var o = { art: j.art, tone: tone(i), kicker: j.year, kickerIcon: 'cal', title: j.title, text: [j.text] };
+      var o = { art: j.art, tone: tone(i), kicker: j.year, kickerIcon: 'cal', title: j.title, text: [].concat(j.text), blocks: [j.points ? { h: 'Highlights', list: j.points } : null], gallery: j.gallery, galleryH: j.galleryH, galleryAlbum: j.galleryAlbum };
       var c = '<article class="card zc ' + (i % 2 ? 'r' : 'l') + (j.now ? ' now' : '') + ' rv" style="--o:' + i + '"' + btn(o) + '><span class="yr">' + esc(j.year) + '</span><div class="zb"><span class="zart ' + tone(i) + '">' + U.art(j.art) + '</span><div><h4>' + esc(j.title) + '</h4><p>' + esc(j.short) + '</p>' + more() + '</div></div></article>';
       (i % 2 ? R : L).push(c);
     });
@@ -73,35 +73,45 @@
       '<div class="lines rv">' + st.lines.map(function (l) { return '<div class="line">' + ib(l.icon, '', '') + '<span>' + esc(l.text) + '</span></div>'; }).join('') + '</div>' +
       '<div class="rv" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">' + U.cvBtn('pri') + '<a class="btn" href="contact.html">' + ic('mail') + ' Contact me</a></div></div></div></section>' +
       '<section class="tint"><div class="wrap">' + sh('Education', 'Where I <em>studied</em>', 'Open a card for the details.') + '<div class="cards c2">' + S.education.map(function (e, i) {
-        var o = { art: e.art, tone: tone(i + 1), kicker: e.when, kickerIcon: 'cal', title: e.title, sub: e.org, text: e.text, blocks: [{ h: 'Highlights', list: e.points }] };
+        var o = { art: e.art, tone: tone(i + 1), kicker: e.when, kickerIcon: 'cal', title: e.title, sub: e.org, text: e.text, blocks: [{ h: 'Highlights', list: e.points }], badges: e.badges, badgesH: e.badgesH, gallery: e.gallery, galleryH: e.galleryH, galleryAlbum: e.galleryAlbum };
         return '<article class="card edu lift rv"' + btn(o) + '><div class="aw">' + artTile(e.art, tone(i + 1)) + '</div><div class="cb"><span class="when">' + esc(e.when) + '</span><h3>' + esc(e.title) + '</h3><div class="org">' + esc(e.org) + '</div><p>' + esc(e.note) + '</p>' + more() + '</div></article>';
       }).join('') + '</div></div></section>' +
       '<section><div class="wrap">' + sh('More about me', 'Beyond the <em>lab</em>', 'The other half of the picture. Open a card to read more.') + '<div class="cards c3' + (S.beyond.length % 3 === 2 ? ' c5' : '') + '">' + S.beyond.map(function (b, i) {
-        var o = { art: b.art, tone: b.tone, kicker: 'Beyond the lab', kickerIcon: 'star', title: b.title, text: b.text, links: b.link ? [b.link] : [] };
+        var o = { art: b.art, tone: b.tone, kicker: 'Beyond the lab', kickerIcon: 'star', title: b.title, text: b.text, blocks: [b.points ? { h: 'Highlights', list: b.points } : null, b.chips ? { h: 'Focus', chips: b.chips } : null], links: b.link ? [b.link] : [] };
         return '<article class="card ifc lift rv"' + btn(o) + '><div class="aw">' + artTile(b.art, b.tone) + '</div><div class="cb"><h3>' + esc(b.title) + '</h3><p>' + esc(b.short) + '</p>' + more('Read more') + '</div></article>';
       }).join('') + '</div></div></section>' +
       '<section class="tint jr-sec"><div class="wrap">' + sh('Journey', 'How I <em>got here</em>', 'The milestones so far. Open any block for the details.') + zigzag() + '</div></section>';
   }
 
   /* ---------- Experience ---------- */
+  function trainingSection() {
+    var T = S.trainings || [];
+    if (!T.length) return '';
+    return '<section class="tint" id="training"><div class="wrap">' + sh('Training & workshops', 'Training I have <em>delivered</em>', S.trainingIntro) +
+      '<div class="tags tp rv">' + (S.trainTopics || []).map(function (t) { return '<span class="chip">' + ic('check') + esc(t) + '</span>'; }).join('') + '</div>' +
+      '<div class="cards c3">' + T.map(function (t, i) {
+        var o = { art: t.art, tone: t.tone, kicker: t.when, kickerIcon: 'cal', title: t.title, sub: t.org, text: t.text, chips: [t.role, t.mode].filter(Boolean), blocks: [t.points ? { h: 'Highlights', list: t.points } : null], links: t.link ? [t.link] : [] };
+        return '<article class="card ifc lift rv"' + btn(o) + '><div class="aw">' + artTile(t.art, t.tone) + '<span class="ribbon cur">' + ic('cal') + esc(t.when) + '</span></div><div class="cb"><span class="when">' + esc(t.role) + '</span><h3>' + esc(t.title) + '</h3><p>' + esc(t.org) + (t.mode ? ' · ' + esc(t.mode) : '') + '</p>' + more() + '</div></article>';
+      }).join('') + '</div></div></section>';
+  }
   function experience() {
     var X = S.expIntro, A = S.awards;
-    var jump = '<div class="jump">' + [['#work', 'Work', 'briefcase'], ['#orgs', 'Organisations', 'users'], ['#field', 'Field experience', 'leaf'], ['#recognition', 'Recognition', 'award']].map(function (j) { return '<a href="' + j[0] + '">' + ic(j[2]) + j[1] + '</a>'; }).join('') + '</div>';
+    var jump = '<div class="jump">' + [['#work', 'Work', 'briefcase'], ['#training', 'Training', 'mic'], ['#orgs', 'Organisations', 'users'], ['#field', 'Field experience', 'leaf'], ['#recognition', 'Recognition', 'award']].map(function (j) { return '<a href="' + j[0] + '">' + ic(j[2]) + j[1] + '</a>'; }).join('') + '</div>';
     $('#app').innerHTML = phead('briefcase', X.kicker, X.headline, X.sub, jump, '', ['flask', 'award']) +
-      '<section id="work"><div class="wrap">' + sh('Work experience', 'Where I <em>work</em>', 'Research and consulting roles. Open a card for the details.') + '<div class="cards c3">' + S.experience.map(function (e, i) {
-        var o = { art: e.art, tone: tone(i), kicker: e.when, kickerIcon: 'cal', title: e.title, sub: e.org, text: e.text, blocks: [e.list ? { h: 'Projects I worked on', list: e.list } : null, e.points && !e.list ? { h: 'Highlights', list: e.points } : null, e.tags ? { h: 'Focus', chips: e.tags } : null], links: e.link ? [e.link] : [] };
-        return '<article class="card wk lift rv"' + btn(o) + '><div class="aw">' + artTile(e.art, tone(i)) + (e.now ? '<span class="ribbon cur">' + ic('check') + 'Current</span>' : '') + '</div><div class="cb"><span class="when">' + esc(e.when) + '</span><h3>' + esc(e.title) + '</h3><div class="org">' + esc(e.org) + '</div><div class="tags">' + tags(e.tags) + '</div>' + more() + '</div></article>';
-      }).join('') + '</div></div></section>' +
-      '<section class="tint" id="orgs"><div class="wrap">' + sh('Leadership & volunteering', 'Organisations I have been <em>part of</em>', 'Photography societies, student and environmental organisations.') + '<div class="cards c2">' + S.leadership.map(function (l, i) {
+      '<section id="work"><div class="wrap">' + sh('Work experience', 'Where I <em>work</em>', 'Research and consulting roles. Open a card for the details and related projects.') + '<div class="cards ' + (S.experience.length % 3 === 1 ? 'c2' : 'c3') + '">' + S.experience.map(function (e, i) {
+        var o = { art: e.art, tone: tone(i), kicker: e.when, kickerIcon: 'cal', title: e.title, sub: e.org, text: e.text, blocks: [e.list ? { h: 'Projects I worked on', list: e.list } : null, e.points && !e.list ? { h: 'Highlights', list: e.points } : null, e.tags ? { h: 'Focus', chips: e.tags } : null], links: e.links ? e.links.map(function (l, k) { return { label: (k === 0 ? 'Related project: ' : '') + l.label, href: l.href, icon: l.icon }; }) : (e.link ? [e.link] : []) };
+        return '<article class="card wk lift rv"' + btn(o) + '><div class="aw">' + artTile(e.art, tone(i)) + (e.now ? '<span class="ribbon cur">' + ic('check') + 'Current</span>' : '') + '</div><div class="cb"><span class="when">' + esc(e.when) + '</span><h3>' + esc(e.title) + '</h3><div class="org">' + esc(e.org) + '</div><div class="tags">' + tags(e.tags) + '</div>' + more(e.links ? 'Details and related projects' : 'Details') + '</div></article>';
+      }).join('') + '</div></div></section>' + trainingSection() +
+      '<section id="orgs"><div class="wrap">' + sh('Leadership & volunteering', 'Organisations I have been <em>part of</em>', 'Photography societies, student and environmental organisations.') + '<div class="cards c2">' + S.leadership.map(function (l, i) {
         var o = { art: l.art, tone: l.tone, kicker: l.when || 'Organisation', kickerIcon: 'users', title: l.org, text: l.more, blocks: [l.roles && l.roles.length ? { h: 'My roles', roles: l.roles } : null], images: l.images, soon: !(l.images && l.images.length), links: l.link ? [l.link] : [] };
         return '<article class="card org lift rv"' + btn(o) + '><div class="aw">' + artTile(l.art, l.tone) + '</div><div class="cb"><h3>' + esc(l.org) + '</h3>' + (l.when ? '<span class="meta">' + esc(l.when) + '</span>' : '') + '<p>' + esc(l.text) + '</p><div class="tags">' + (l.roles || []).map(function (r) { return '<span class="tag">' + esc(r.role) + (r.when ? ' · ' + esc(r.when) : '') + '</span>'; }).join('') + '</div>' + more() + '</div></article>';
       }).join('') + '</div></div></section>' +
-      '<section id="field"><div class="wrap">' + sh('Field experience', 'Learning on the <em>ground</em>', 'The surveys and field work behind the data. Open a card to see what each one involves.') + '<div class="cards c4">' + S.fieldwork.map(function (f, i) {
+      '<section class="tint" id="field"><div class="wrap">' + sh('Field experience', 'Learning on the <em>ground</em>', 'The surveys and field work behind the data. Open a card to see what each one involves.') + '<div class="cards c4">' + S.fieldwork.map(function (f, i) {
         var o = { art: f.art, tone: f.tone, kicker: 'Field experience', kickerIcon: 'leaf', title: f.title, text: [f.text], blocks: [{ h: 'What it involves', list: f.involves }, { h: 'What it builds', list: f.builds }] };
         return '<article class="card ifc lift rv"' + btn(o) + '><div class="aw">' + artTile(f.art, f.tone) + '</div><div class="cb"><h3>' + esc(f.title) + '</h3><p>' + esc(f.text) + '</p>' + more('What I learned') + '</div></article>';
       }).join('') + '</div></div></section>' +
-      '<section class="tint" id="recognition"><div class="wrap">' + sh('Recognition', 'Awards & <em>memberships</em>', '') + '<div class="cards c2">' + A.map(function (a, i) {
-        var o = { art: 'medal', tone: 'gold', kicker: a.when, kickerIcon: 'cal', title: a.title, sub: a.where, text: a.paper ? ['Awarded for the conference paper:'] : [], blocks: [a.paper ? { h: 'Paper', list: [a.paper] } : null] };
+      '<section id="recognition"><div class="wrap">' + sh('Recognition', 'Awards & <em>memberships</em>', '') + '<div class="cards c2">' + A.map(function (a, i) {
+        var o = { art: 'medal', tone: 'gold', kicker: a.when, kickerIcon: 'cal', title: a.title, sub: a.where, text: a.paper ? ['Awarded for the conference paper:'] : [], blocks: [a.paper ? { h: 'Paper', list: [a.paper] } : null], gallery: a.gallery, galleryH: a.galleryH, galleryAlbum: a.galleryAlbum };
         return '<article class="card aw2 lift rv"' + btn(o) + '><span class="medal">' + U.art('medal') + '</span><div><span class="when">' + esc(a.when) + '</span><h3>' + esc(a.title) + '</h3><p>' + esc(a.where) + '</p>' + more() + '</div></article>';
       }).join('') + '</div>' +
       '<div class="tags mem rv">' + S.memberships.map(function (m) { return '<span class="chip">' + ic('users') + esc(m) + '</span>'; }).join('') + '</div>' +

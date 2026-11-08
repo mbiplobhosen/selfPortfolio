@@ -68,8 +68,30 @@
     function mins(t) { var w = LA(t.body).join(' ').split(/\s+/).length; return Math.max(1, Math.round(w / 200)); }
     function readTxt(t) { return t.soon ? '' : (lang === 'bn' ? mins(t) + ' মিনিটের পাঠ' : mins(t) + ' min read'); }
     function card(t) {
-      return '<a class="card tcard lift rv' + (t.soon ? ' soon' : '') + '" href="travel.html?p=' + esc(t.id) + '&lang=' + lang + '"><div class="tw"><div class="thumb">' + pic(t.cover, L(t.title), 'compass', '', 'sky') + '</div><span class="chip">' + ic('pin') + esc(t.place || L(t.region)) + '</span>' + (t.soon ? '<span class="ribbon cur">' + ic('clock') + (lang === 'bn' ? 'শিগগিরই আসছে' : 'Story coming soon') + '</span>' : '') + '</div>' +
+      return '<a class="card tcard lift rv' + (t.soon ? ' soon' : '') + '" href="travel.html?p=' + esc(t.id) + '&lang=' + lang + '"><div class="tw"><div class="thumb">' + pic(t.cover, L(t.title), t.art || 'compass', '', t.tone === undefined ? 'sky' : t.tone) + '</div><span class="chip">' + ic('pin') + esc(t.place || L(t.region)) + '</span>' + (t.soon ? '<span class="ribbon cur">' + ic('clock') + (lang === 'bn' ? 'শিগগিরই আসছে' : 'Story coming soon') + '</span>' : '') + '</div>' +
         '<div class="cb' + cls + '"><span class="meta">' + [fdate(t.date) || t.when, L(t.region), readTxt(t)].filter(Boolean).map(esc).join(' · ') + '</span><h3>' + esc(L(t.title)) + '</h3><p class="clamp">' + esc(L(t.summary)) + '</p><div class="tags">' + tags(t.tags) + '</div><span class="more">' + (lang === 'bn' ? 'গল্পটি পড়ুন' : 'Read story') + ' ' + ic('arrow') + '</span></div></a>';
+    }
+    function travelMap() {
+      var M = T.map, G = window.BDMAP;
+      if (!M || !G) return '<div class="tags places rv">' + T.posts.map(function (p) { return '<span class="chip">' + ic('pin') + esc(p.place) + '</span>'; }).join('') + '</div>';
+      var byName = {}; G.d.forEach(function (d) { byName[d.n] = d; });
+      var hit = {}; M.groups.forEach(function (g, gi) { g.districts.forEach(function (n) { hit[n] = gi; }); });
+      var base = G.d.filter(function (d) { return hit[d.n] === undefined; }).map(function (d) { return '<path class="bd" d="' + d.p + '"><title>' + esc(d.n) + '</title></path>'; }).join('');
+      var shapes = M.groups.map(function (g) {
+        var inner = g.districts.map(function (n) { return byName[n] ? '<path class="bd on ' + g.tone + '" d="' + byName[n].p + '"/>' : ''; }).join('');
+        var ds = g.districts.map(function (n) { return byName[n]; }).filter(Boolean), cx = 0, cy = 0;
+        ds.forEach(function (d) { cx += d.c[0]; cy += d.c[1]; }); cx = cx / ds.length; cy = cy / ds.length;
+        if (g.districts.length > 2) cy += 62;
+        cx = Math.max(110, Math.min(G.w - 110, cx));
+        var lbl = '<text class="bl" x="' + cx.toFixed(0) + '" y="' + cy.toFixed(0) + '" text-anchor="middle">' + esc(L(g.label)) + '</text>';
+        var open = g.soon ? '<g class="bg ' + g.tone + '" aria-label="' + esc(L(g.label)) + ' (' + esc(L(M.soonText)) + ')">' : '<a class="bg ' + g.tone + '" href="travel.html?p=' + esc(g.post) + '&lang=' + lang + '" aria-label="' + esc(L(g.label)) + '">';
+        return open + '<title>' + esc(L(g.label)) + (g.soon ? ' · ' + esc(L(M.soonText)) : '') + '</title>' + inner + lbl + (g.soon ? '</g>' : '</a>');
+      }).join('');
+      var list = M.groups.map(function (g) {
+        var inner = '<span class="sw ' + g.tone + '"></span><span><b>' + esc(L(g.label)) + '</b><small>' + esc(L(g.sub)) + '</small></span>' + (g.soon ? '<em>' + esc(L(M.soonText)) + '</em>' : ic('arrow'));
+        return g.soon ? '<div class="bi soon">' + inner + '</div>' : '<a class="bi lift" href="travel.html?p=' + esc(g.post) + '&lang=' + lang + '">' + inner + '</a>';
+      }).join('');
+      return '<div class="bdm rv" id="map"><div class="bdmap"><svg viewBox="0 0 ' + G.w + ' ' + G.h + '" role="img" aria-label="' + esc(L(M.title)) + '"><g class="base">' + base + '</g>' + shapes + '</svg></div><div class="bdl"><p>' + esc(L(M.note)) + '</p>' + list + '<small class="src">' + (lang === 'bn' ? 'জেলার সীমানা: বিবিএস (২০২০)' : 'District boundaries: BBS, 2020') + '</small></div></div>';
     }
     var tr = T.posts.filter(function (x) { return x.id === id; })[0];
     if (tr) {
@@ -85,19 +107,21 @@
       var idx = T.posts.indexOf(tr), prev = T.posts[idx - 1], next = T.posts[idx + 1];
       var pn = function (t, dir) { return t ? '<a class="pn ' + dir + '" href="travel.html?p=' + esc(t.id) + '&lang=' + lang + '">' + (dir === 'p' ? ic('back') : '') + '<span><small>' + (dir === 'p' ? (lang === 'bn' ? 'আগের গল্প' : 'Previous story') : (lang === 'bn' ? 'পরের গল্প' : 'Next story')) + '</small>' + esc(L(t.title)) + '</span>' + (dir === 'n' ? ic('arrow') : '') + '</a>' : '<span></span>'; };
       $('#app').innerHTML = phead('compass', (lang === 'bn' ? 'ভ্রমণ · ' : 'Travel · ') + L(tr.region), L(tr.title), L(tr.summary), meta + '<div style="margin-top:18px">' + langSw + '</div>', '<a class="crumb" href="travel.html?lang=' + lang + '">' + ic('back') + ' ' + (lang === 'bn' ? 'সব গল্প' : 'All stories') + '</a>' + U.lensSwitch('travel'), ['pin', 'mountain']) +
-        '<section><div class="wrap"><article class="post' + cls + '"><div class="figure">' + pic(tr.cover, L(tr.title), 'compass', '', 'sky') + '</div>' + body +
+        '<section><div class="wrap"><article class="post' + cls + '"><div class="figure">' + pic(tr.cover, L(tr.title), tr.art || 'compass', '', tr.tone === undefined ? 'sky' : tr.tone) + '</div>' + body +
         (tr.photos && tr.photos.length ? '<div class="masonry pgal">' + tr.photos.map(function (f) { return '<div class="gi">' + pic(f, L(tr.title), 'camera') + '</div>'; }).join('') + '</div>' : '') +
         (tr.tags && tr.tags.length ? '<div class="tags" style="margin-top:30px">' + tags(tr.tags) + '</div>' : '') +
+        ((tr.related && tr.related.length) ? '<div class="row" style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap">' + tr.related.map(function (r) { return '<a class="btn pri sm" href="' + esc(r.href) + '">' + ic('flask') + ' ' + esc(L(r.label)) + '</a>'; }).join('') + '</div>' : '') +
+        '<div class="bdnote">' + (lang === 'bn' ? 'ভ্রমণের মানচিত্র দেখুন' : 'See the travel map') + ': <a href="travel.html?lang=' + lang + '#map">' + (lang === 'bn' ? 'যেসব জায়গায় গিয়েছি' : 'Places I have been') + '</a></div>' +
         '<div class="pns">' + pn(prev, 'p') + pn(next, 'n') + '</div></article></div></section>';
     } else {
       var posts = T.posts, real = posts.filter(function (p) { return !p.soon; }), feat = real[0] || posts[0], rest = posts.filter(function (p) { return p !== feat; });
       var places = []; posts.forEach(function (p) { if (p.place && places.indexOf(p.place) < 0) places.push(p.place); });
       $('#app').innerHTML = phead('compass', '', T.headline, L(T.intro), '<div style="margin-top:20px">' + langSw + '</div>', U.lensSwitch('travel'), ['pin', 'mountain'], ['compass', 'sky']) +
         '<section><div class="wrap">' + sh(lang === 'bn' ? 'সাম্প্রতিক' : 'Latest', lang === 'bn' ? 'সবচেয়ে নতুন <em>গল্প</em>' : 'The newest <em>story</em>', '') +
-        '<a class="feat card lift rv" href="travel.html?p=' + esc(feat.id) + '&lang=' + lang + '"><div class="tw"><div class="thumb">' + pic(feat.cover, L(feat.title), 'compass', '', 'sky') + '</div>' + (feat.soon ? '<span class="ribbon cur">' + ic('clock') + (lang === 'bn' ? 'শিগগিরই আসছে' : 'Story coming soon') + '</span>' : '') + '</div><div class="cb' + cls + '"><span class="chip">' + ic('pin') + esc(feat.place || L(feat.region)) + '</span><span class="meta">' + [fdate(feat.date) || feat.when, L(feat.region), readTxt(feat)].filter(Boolean).map(esc).join(' · ') + '</span><h3>' + esc(L(feat.title)) + '</h3><p>' + esc(L(feat.summary)) + '</p><div class="tags">' + tags(feat.tags) + '</div><span class="btn pri sm">' + (lang === 'bn' ? 'গল্পটি পড়ুন' : 'Read the story') + ' ' + ic('arrow') + '</span></div></a>' +
+        '<a class="feat card lift rv" href="travel.html?p=' + esc(feat.id) + '&lang=' + lang + '"><div class="tw"><div class="thumb">' + pic(feat.cover, L(feat.title), feat.art || 'compass', '', feat.tone === undefined ? 'sky' : feat.tone) + '</div>' + (feat.soon ? '<span class="ribbon cur">' + ic('clock') + (lang === 'bn' ? 'শিগগিরই আসছে' : 'Story coming soon') + '</span>' : '') + '</div><div class="cb' + cls + '"><span class="chip">' + ic('pin') + esc(feat.place || L(feat.region)) + '</span><span class="meta">' + [fdate(feat.date) || feat.when, L(feat.region), readTxt(feat)].filter(Boolean).map(esc).join(' · ') + '</span><h3>' + esc(L(feat.title)) + '</h3><p>' + esc(L(feat.summary)) + '</p><div class="tags">' + tags(feat.tags) + '</div><span class="btn pri sm">' + (lang === 'bn' ? 'গল্পটি পড়ুন' : 'Read the story') + ' ' + ic('arrow') + '</span></div></a>' +
         (rest.length ? '<div class="cards c3" style="margin-top:34px">' + rest.map(card).join('') + '</div>' : '') + '</div></section>' +
         '<section class="tint"><div class="wrap">' + sh(lang === 'bn' ? 'পথচলা' : 'Journeys', lang === 'bn' ? 'যেসব জায়গায় <em>গিয়েছি</em>' : 'Places I have <em>been</em>', '') +
-        '<div class="tags places rv">' + places.map(function (p) { return '<span class="chip">' + ic('pin') + esc(p) + '</span>'; }).join('') + '</div></div></section>' +
+        travelMap() + '</div></section>' +
         U.band('New stories are on the way', 'I add a post after every trip, in English and in Bangla. In the meantime, the photography gallery has frames from many of these places.', '<a class="btn pri" href="photography.html">' + ic('camera') + ' Open the gallery</a>' + (S.links.instagram ? '<a class="btn" target="_blank" rel="noopener" href="' + esc(S.links.instagram) + '">' + ic('insta') + ' Instagram</a>' : ''));
     }
     $$('#lang button').forEach(function (b) { b.addEventListener('click', function () { var u = new URL(location.href); u.searchParams.set('lang', b.dataset.l); location.href = u.toString(); }); });

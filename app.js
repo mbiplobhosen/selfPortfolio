@@ -40,7 +40,8 @@
   }
 
   /* ---------- ছবি ও ছবি-আঁকা (illustration tile) ---------- */
-  function artTile(name, tone, cls) { return '<div class="arttile ' + (tone || '') + ' ' + (cls || '') + '">' + cont('', 3 + (name ? name.length : 0)) + U.art(name) + '</div>'; }
+  var SPARSE = ' camera cert work compass medal plane leaf air raster lab ev film code people ';
+  function artTile(name, tone, cls) { return '<div class="arttile ' + (tone || '') + ' ' + (cls || '') + (SPARSE.indexOf(' ' + name + ' ') > -1 ? ' sp' : '') + '">' + cont('', 3 + (name ? name.length : 0)) + U.art(name) + '</div>'; }
   function pic(src, alt, art, cls, tone) {
     if (!src) return artTile(art, tone);
     return '<img src="' + esc(src) + '" alt="' + esc(alt || '') + '" loading="lazy" data-art="' + esc(art || 'camera') + '" data-tone="' + esc(tone || '') + '"' + (cls ? ' class="' + cls + '"' : '') + '>';
@@ -121,6 +122,24 @@
   function openModal(html) { $('#mc').innerHTML = html; mo.classList.add('on'); mo.scrollTop = 0; document.body.style.overflow = 'hidden'; $('.x', mo).focus(); }
   function closeModal() { mo.classList.remove('on'); document.body.style.overflow = ''; }
 
+  /* popup photo gallery (opens the shared lightbox) */
+  function galHTML(g, h) {
+    if (!g || !g.length) return '';
+    return (h ? '<h4 class="bh">' + esc(h) + '</h4>' : '') + '<div class="mgal">' + g.map(function (x, i) { return '<button type="button" class="mg" data-g="' + i + '" aria-label="Open photo: ' + esc(x.title || 'photo') + '">' + pic(x.file, x.title || '', 'camera') + '</button>'; }).join('') + '</div>';
+  }
+  function galBind(g, album) {
+    $$('.mg', mo).forEach(function (b) {
+      b.addEventListener('click', function () {
+        U._lb = U._lb || U.makeLightbox();
+        U._lb.open(g.map(function (x) { return { file: x.file, title: x.title || '', album: album || '' }; }), +b.dataset.g);
+      });
+    });
+  }
+  function badgesHTML(b, h) {
+    if (!b || !b.length) return '';
+    return (h ? '<h4 class="bh">' + esc(h) + '</h4>' : '') + '<div class="bdgs">' + b.map(function (x) { return '<span class="bdg ' + (x.tone || '') + '">' + ic(x.icon || 'users') + esc(x.t) + '</span>'; }).join('') + '</div>';
+  }
+
   /* generic info popup */
   var REG = [];
   function reg(o) { REG.push(o); return REG.length - 1; }
@@ -141,6 +160,8 @@
       if (b.roles && b.roles.length) h += '<div class="roles">' + b.roles.map(function (r) { return '<div class="role"><span>' + esc(r.role) + '</span>' + (r.when ? '<small>' + esc(r.when) + '</small>' : '') + '</div>'; }).join('') + '</div>';
       if (b.defs && b.defs.length) h += '<dl class="defs">' + b.defs.map(function (d) { return '<div><dt>' + esc(d[0]) + '</dt><dd>' + esc(d[1]) + '</dd></div>'; }).join('') + '</dl>';
     });
+    h += badgesHTML(o.badges, o.badgesH);
+    h += galHTML(o.gallery, o.galleryH);
     if (o.pubs && o.pubs.length) {
       h += '<h4 class="bh">Related papers</h4><div class="rels">' + o.pubs.map(function (id) {
         var i = pubIndex(id); if (i < 0) return ''; var p = S.publications[i];
@@ -152,6 +173,7 @@
     if (o.links && o.links.length) h += '<div class="row">' + o.links.map(function (l, i) { return '<a class="btn ' + (i ? '' : 'pri') + ' sm"' + (/^https?:/.test(l.href) ? ' target="_blank" rel="noopener"' : '') + ' href="' + esc(l.href) + '">' + ic(l.icon || 'arrow') + ' ' + esc(l.label) + '</a>'; }).join('') + '</div>';
     openModal(h + '</div>');
     $$('.rel', mo).forEach(function (b) { b.addEventListener('click', function () { pubModal(pubIndex(b.dataset.pubid)); }); });
+    galBind(o.gallery, o.galleryAlbum);
   }
 
   /* ---------- প্রকাশনা ও কনফারেন্স কার্ড ---------- */
@@ -205,8 +227,10 @@
       '<div class="info"><div>' + ic('pin') + '<span>' + esc(v.venue) + '</span></div><div>' + ic('cal') + '<span>' + esc(v.date || c.year) + '</span></div></div>' +
       (c.desc ? '<p>' + esc(c.desc) + '</p>' : '') +
       (imgs.length > 1 ? '<div class="imgs">' + imgs.slice(1).map(function (f) { return '<div>' + pic(f, c.title, 'camera') + '</div>'; }).join('') + '</div>' : '') +
-      (imgs.length ? '' : '<div class="note">' + ic('clock') + ' Photos and more details from this conference will be added here.</div>') + '</div>';
+      galHTML(c.gallery, c.galleryH || 'Photos') +
+      ((imgs.length || (c.gallery && c.gallery.length)) ? '' : '<div class="note">' + ic('clock') + ' Photos and more details from this conference will be added here.</div>') + '</div>';
     openModal(h);
+    galBind(c.gallery, c.galleryAlbum || v.venue);
   }
   function bindCards(root) {
     function bind(sel, attr, fn) {
@@ -226,12 +250,18 @@
   }
   function statsHTML() {
     return '<section class="stats"><div class="wrap"><div class="grid">' + S.stats.map(function (s, i) {
-      return '<div class="stat rv d' + i + '">' + ib(s.icon, ['', 'sky', 'gold', 'rose'][i % 4], 'lg') + '<div><b data-n="' + s.n + '">' + s.n + '</b><span class="l">' + esc(s.label) + '</span></div></div>';
+      return '<div class="stat rv d' + i + '">' + ib(s.icon, ['', 'sky', 'gold', 'rose'][i % 4], 'lg') + '<div><b data-n="' + (s.auto === 'projects' ? S.projects.length : s.n) + '">' + (s.auto === 'projects' ? S.projects.length : s.n) + '</b><span class="l">' + esc(s.label) + '</span></div></div>';
     }).join('') + '</div></div></section>';
   }
   function phdBand() {
-    var P = S.phd;
-    return '<section><div class="wrap"><div class="phd rv">' + cont('', 4) + '<div class="in"><div class="phdart">' + U.art('cert') + '</div><div><h3>' + esc(P.title) + '</h3><p>' + esc(P.text) + '</p><div class="tags">' + P.interests.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div><a class="btn pri" href="contact.html">' + ic('mail') + ' Get in touch</a></div></div></div></div></section>';
+    var P = S.phd, st = S.stats || [];
+    var nums = st.slice(0, 3).map(function (x) { return '<div class="p2s"><b>' + esc(x.n) + '</b><span>' + esc(x.label) + '</span></div>'; }).join('');
+    return '<section><div class="wrap"><div class="phd2 rv">' + cont('', 4) +
+      '<div class="p2t"><div class="p2pic">' + pic(P.photo, S.name, 'cert') + '</div><div class="p2h"><span class="eb2"><i></i>' + esc(P.kicker || 'Next step') + '</span><h3>' + esc(P.title) + '</h3><p>' + esc(P.text) + '</p>' +
+      '<div class="p2b"><a class="btn pri" href="contact.html">' + ic('mail') + ' Get in touch</a>' + cvBtn() + '<a class="btn" href="research.html">' + ic('flask') + ' My research</a></div></div></div>' +
+      '<div class="p2a">' + (P.areas || []).map(function (a, i) { return '<div class="p2c"><span class="ib ' + ['', 'sky', 'gold', 'rose', 'sand'][i % 5] + '">' + ic(a.icon) + '</span><div><b>' + esc(a.title) + '</b><p>' + esc(a.text) + '</p></div></div>'; }).join('') + '</div>' +
+      '<div class="p2f"><div class="p2n">' + nums + '</div><div class="p2k"><small>' + esc(P.toolsH || 'Tools') + '</small><div class="tags">' + (P.tools || []).map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div></div></div>' +
+      '</div></div></section>';
   }
 
   /* ---------- অ্যানিমেশন ---------- */
@@ -276,7 +306,7 @@
   U.S = S; U.$ = $; U.$$ = $$; U.esc = esc; U.param = param; U.ic = ic; U.ib = ib; U.cont = cont; U.UL = UL; U.wave = wave; U.pic = pic; U.artTile = artTile;
   U.SOC = SOC; U.socials = socials; U.bold = bold; U.cvBtn = cvBtn; U.sh = sh; U.phead = phead; U.band = band; U.ctaBand = ctaBand; U.lensSwitch = lensSwitch;
   U.openModal = openModal; U.closeModal = closeModal; U.info = info; U.reg = reg; U.btn = btn; U.bindCards = bindCards; U.listHTML = listHTML;
-  U.pubCard = pubCard; U.pubModal = pubModal; U.pubIndex = pubIndex; U.pubThumb = pubThumb; U.tagsOf = tagsOf; U.artOf = artOf; U.jshort = jshort;
+  U.galHTML = galHTML; U.galBind = galBind; U.pubCard = pubCard; U.pubModal = pubModal; U.pubIndex = pubIndex; U.pubThumb = pubThumb; U.tagsOf = tagsOf; U.artOf = artOf; U.jshort = jshort;
   U.KT = KT; U.confCard = confCard; U.projectCard = projectCard; U.statsHTML = statsHTML; U.phdBand = phdBand; U.NAV = NAV;
   U.pages = {};
 
