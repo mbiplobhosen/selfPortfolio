@@ -162,6 +162,12 @@
     });
     h += badgesHTML(o.badges, o.badgesH);
     h += galHTML(o.gallery, o.galleryH);
+    if (o.confs && o.confs.length) {
+      h += '<h4 class="bh">' + esc(o.confsH || 'Papers presented') + '</h4><div class="rels">' + o.confs.map(function (i) {
+        var c = S.conferences[i];
+        return '<button class="rel" type="button" data-confi="' + i + '">' + ic('mic') + '<span>' + esc(c.title) + '<small>' + esc(c.authors || '') + '</small></span>' + ic('arrow') + '</button>';
+      }).join('') + '</div>';
+    }
     if (o.pubs && o.pubs.length) {
       h += '<h4 class="bh">Related papers</h4><div class="rels">' + o.pubs.map(function (id) {
         var i = pubIndex(id); if (i < 0) return ''; var p = S.publications[i];
@@ -169,10 +175,9 @@
       }).join('') + '</div>';
     }
     if (imgs.length > 1) h += '<div class="imgs">' + imgs.slice(1).map(function (f) { return '<div>' + pic(f, o.title, 'camera') + '</div>'; }).join('') + '</div>';
-    if (o.soon) h += '<div class="note">' + ic('clock') + ' ' + esc(o.soonText || 'Photos and more details will be added here soon.') + '</div>';
     if (o.links && o.links.length) h += '<div class="row">' + o.links.map(function (l, i) { return '<a class="btn ' + (i ? '' : 'pri') + ' sm"' + (/^https?:/.test(l.href) ? ' target="_blank" rel="noopener"' : '') + ' href="' + esc(l.href) + '">' + ic(l.icon || 'arrow') + ' ' + esc(l.label) + '</a>'; }).join('') + '</div>';
     openModal(h + '</div>');
-    $$('.rel', mo).forEach(function (b) { b.addEventListener('click', function () { pubModal(pubIndex(b.dataset.pubid)); }); });
+    $$('.rel', mo).forEach(function (b) { b.addEventListener('click', function () { if (b.dataset.confi) confModal(+b.dataset.confi); else pubModal(pubIndex(b.dataset.pubid)); }); });
     galBind(o.gallery, o.galleryAlbum);
   }
 
@@ -181,7 +186,7 @@
   var TAGART = { 'Flood': 'flood', 'Groundwater': 'ground', 'Landslide': 'mountain', 'Heat': 'climate', 'Drought': 'climate', 'Energy': 'ev', 'Suitability': 'leaf', 'Water quality': 'river', 'Erosion': 'ground', 'Multi-hazard': 'flood', 'Air quality': 'air' };
   function tagsOf(title) { var o = []; TAGMAP.forEach(function (m) { if (m[0].test(title) && o.indexOf(m[1]) < 0) o.push(m[1]); }); return o.slice(0, 3); }
   function artOf(title) { var t = tagsOf(title); for (var i = 0; i < t.length; i++) if (TAGART[t[i]]) return TAGART[t[i]]; return 'chart'; }
-  function stLabel(p) { return p.status === 'published' ? 'Published ' + p.year : p.status === 'review' ? 'Under review' : 'In preparation'; }
+  function stLabel(p) { return p.status === 'published' ? 'Published ' + p.year : p.status === 'review' ? 'Under review' : 'In progress'; }
   function stIcon(p) { return p.status === 'published' ? 'check' : p.status === 'review' ? 'clock' : 'file'; }
   function jshort(j) { return j ? String(j).replace(/,.*$/, '') : ''; }
   function pubThumb(p, big) {
@@ -206,7 +211,7 @@
     var h = '<div class="mh fitmh"' + (p.image ? ' style="--bgi:url(\'' + esc(p.image) + '\')"' : '') + '>' + pic(p.image, p.title, artOf(p.title)) + '</div><div class="mb"><div class="tags"><span class="chip st-' + p.status + '">' + ic(stIcon(p)) + stLabel(p) + '</span>' + (p.q ? '<span class="chip">' + ic('star') + esc(p.q) + '</span>' : '') + '</div>' +
       '<h2>' + esc(p.title) + '</h2><p class="au">' + bold(p.authors) + '</p>' +
       (p.status === 'published' ? '<div class="info"><div>' + ic('book') + '<span>' + esc(p.journal) + '</span></div><div>' + ic('cal') + '<span>' + esc(p.year) + '</span></div></div>' : '') +
-      (p.summary ? '<p>' + esc(p.summary) + '</p>' : '<div class="note">' + ic('clock') + ' This manuscript is ' + (p.status === 'review' ? 'under review' : 'in preparation') + '. Details will be added after publication.</div>') +
+      (p.summary ? '<p>' + esc(p.summary) + '</p>' : '') +
       (rows.length ? '<dl class="defs">' + rows.map(function (r) { return '<div><dt>' + ic(r[0]) + r[1] + '</dt><dd>' + esc(r[2]) + '</dd></div>'; }).join('') + '</dl>' : '') +
       (p.findings && p.findings.length ? '<h4 class="bh">Key findings</h4>' + listHTML(p.findings) : '') +
       '<div class="tags" style="margin-top:18px">' + (p.keywords && p.keywords.length ? p.keywords : tagsOf(p.title)).map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div>' +
@@ -220,6 +225,15 @@
     return '<article class="card conf lift btnlike rv" tabindex="0" role="button" data-conf="' + i + '"><div class="top"><span class="yr">' + esc(c.year) + '</span>' + (c.award ? '<span class="ribbon">' + ic('award') + 'Award</span>' : '<span class="tag">' + ic('mic') + 'Conference</span>') + '</div>' +
       '<h3 class="clamp">' + esc(c.title) + '</h3><div class="ven">' + ic('pin') + '<span>' + esc(v.venue) + (v.date ? ' · ' + esc(v.date) : '') + '</span></div><span class="more">Details ' + ic('arrow') + '</span></article>';
   }
+  function confPapers(g) { var r = []; S.conferences.forEach(function (c, i) { if (c.conf === g.id) r.push(i); }); return r; }
+  function confGroupCard(g) {
+    var n = confPapers(g).length;
+    var o = { art: g.award ? 'medal' : 'people', tone: 'gold', kicker: g.date, kickerIcon: 'cal', title: g.name, sub: g.short !== g.name ? g.short : '',
+      chips: g.award ? ['Participation award'] : [], text: g.award ? ['I presented at this conference and received a participation award.'] : [],
+      confs: confPapers(g), confsH: n > 1 ? 'Papers presented (' + n + ')' : 'Paper presented', gallery: g.gallery, galleryH: g.galleryH, galleryAlbum: g.short };
+    return '<article class="card conf cg lift btnlike rv"' + btn(o) + '><div class="top"><span class="yr">' + esc(g.year) + '</span>' + (g.award ? '<span class="ribbon">' + ic('award') + 'Participation award</span>' : '') + '</div>' +
+      '<h3>' + esc(g.short) + '</h3>' + (g.name === g.short ? '' : '<div class="ven">' + ic('pin') + '<span class="clamp">' + esc(g.name) + '</span></div>') + '<div class="cmeta"><span>' + ic('cal') + esc(g.date) + '</span><span>' + ic('mic') + n + (n === 1 ? ' paper' : ' papers') + '</span></div><span class="more">View papers ' + ic('arrow') + '</span></article>';
+  }
   function confModal(i) {
     var c = S.conferences[i], v = confParts(c), imgs = c.images || [];
     var h = (imgs[0] ? '<div class="mh">' + pic(imgs[0], c.title, 'people') + '</div>' : '<div class="mh art gold">' + cont('', 4) + U.art(c.award ? 'medal' : 'people') + '</div>') + '<div class="mb"><div class="tags"><span class="chip">' + ic('mic') + 'Conference paper</span>' + (c.award ? '<span class="ribbon">' + ic('award') + 'Presenting Paper Award</span>' : '') + '</div>' +
@@ -228,7 +242,7 @@
       (c.desc ? '<p>' + esc(c.desc) + '</p>' : '') +
       (imgs.length > 1 ? '<div class="imgs">' + imgs.slice(1).map(function (f) { return '<div>' + pic(f, c.title, 'camera') + '</div>'; }).join('') + '</div>' : '') +
       galHTML(c.gallery, c.galleryH || 'Photos') +
-      ((imgs.length || (c.gallery && c.gallery.length)) ? '' : '<div class="note">' + ic('clock') + ' Photos and more details from this conference will be added here.</div>') + '</div>';
+      '</div>';
     openModal(h);
     galBind(c.gallery, c.galleryAlbum || v.venue);
   }
@@ -250,7 +264,7 @@
   }
   function statsHTML() {
     return '<section class="stats"><div class="wrap"><div class="grid">' + S.stats.map(function (s, i) {
-      return '<div class="stat rv d' + i + '">' + ib(s.icon, ['', 'sky', 'gold', 'rose'][i % 4], 'lg') + '<div><b data-n="' + (s.auto === 'projects' ? S.projects.length : s.n) + '">' + (s.auto === 'projects' ? S.projects.length : s.n) + '</b><span class="l">' + esc(s.label) + '</span></div></div>';
+      return '<div class="stat rv d' + i + '">' + ib(s.icon, ['', 'sky', 'gold', 'rose'][i % 4], 'lg') + '<div><b data-n="' + (s.auto === 'projects' ? S.projects.length : s.auto === 'confs' ? S.confList.length : s.n) + '">' + (s.auto === 'projects' ? S.projects.length : s.auto === 'confs' ? S.confList.length : s.n) + '</b><span class="l">' + esc(s.label) + '</span></div></div>';
     }).join('') + '</div></div></section>';
   }
   function phdBand() {
@@ -307,7 +321,7 @@
   U.SOC = SOC; U.socials = socials; U.bold = bold; U.cvBtn = cvBtn; U.sh = sh; U.phead = phead; U.band = band; U.ctaBand = ctaBand; U.lensSwitch = lensSwitch;
   U.openModal = openModal; U.closeModal = closeModal; U.info = info; U.reg = reg; U.btn = btn; U.bindCards = bindCards; U.listHTML = listHTML;
   U.galHTML = galHTML; U.galBind = galBind; U.pubCard = pubCard; U.pubModal = pubModal; U.pubIndex = pubIndex; U.pubThumb = pubThumb; U.tagsOf = tagsOf; U.artOf = artOf; U.jshort = jshort;
-  U.KT = KT; U.confCard = confCard; U.projectCard = projectCard; U.statsHTML = statsHTML; U.phdBand = phdBand; U.NAV = NAV;
+  U.KT = KT; U.confCard = confCard; U.confGroupCard = confGroupCard; U.projectCard = projectCard; U.statsHTML = statsHTML; U.phdBand = phdBand; U.NAV = NAV;
   U.pages = {};
 
   /* ---------- শুরু ---------- */

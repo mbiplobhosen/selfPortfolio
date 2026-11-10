@@ -77,16 +77,17 @@
       var byName = {}; G.d.forEach(function (d) { byName[d.n] = d; });
       var hit = {}; M.groups.forEach(function (g, gi) { g.districts.forEach(function (n) { hit[n] = gi; }); });
       var base = G.d.filter(function (d) { return hit[d.n] === undefined; }).map(function (d) { return '<path class="bd" d="' + d.p + '"><title>' + esc(d.n) + '</title></path>'; }).join('');
+      var lbls = '';
       var shapes = M.groups.map(function (g) {
         var inner = g.districts.map(function (n) { return byName[n] ? '<path class="bd on ' + g.tone + '" d="' + byName[n].p + '"/>' : ''; }).join('');
         var ds = g.districts.map(function (n) { return byName[n]; }).filter(Boolean), cx = 0, cy = 0;
         ds.forEach(function (d) { cx += d.c[0]; cy += d.c[1]; }); cx = cx / ds.length; cy = cy / ds.length;
-        if (g.districts.length > 2) cy += 62;
+        cx += g.dx || 0; cy += g.dy || 0;
         cx = Math.max(110, Math.min(G.w - 110, cx));
-        var lbl = '<text class="bl" x="' + cx.toFixed(0) + '" y="' + cy.toFixed(0) + '" text-anchor="middle">' + esc(L(g.label)) + '</text>';
+        lbls += '<text class="bl" x="' + cx.toFixed(0) + '" y="' + cy.toFixed(0) + '" text-anchor="middle">' + esc(L(g.label)) + '</text>';
         var open = g.soon ? '<g class="bg ' + g.tone + '" aria-label="' + esc(L(g.label)) + ' (' + esc(L(M.soonText)) + ')">' : '<a class="bg ' + g.tone + '" href="travel.html?p=' + esc(g.post) + '&lang=' + lang + '" aria-label="' + esc(L(g.label)) + '">';
-        return open + '<title>' + esc(L(g.label)) + (g.soon ? ' · ' + esc(L(M.soonText)) : '') + '</title>' + inner + lbl + (g.soon ? '</g>' : '</a>');
-      }).join('');
+        return open + '<title>' + esc(L(g.label)) + (g.soon ? ' · ' + esc(L(M.soonText)) : '') + '</title>' + inner + (g.soon ? '</g>' : '</a>');
+      }).join('') + lbls;
       var list = M.groups.map(function (g) {
         var inner = '<span class="sw ' + g.tone + '"></span><span><b>' + esc(L(g.label)) + '</b><small>' + esc(L(g.sub)) + '</small></span>' + (g.soon ? '<em>' + esc(L(M.soonText)) + '</em>' : ic('arrow'));
         return g.soon ? '<div class="bi soon">' + inner + '</div>' : '<a class="bi lift" href="travel.html?p=' + esc(g.post) + '&lang=' + lang + '">' + inner + '</a>';

@@ -55,7 +55,7 @@ window.SITE = {
   stats: [
     { n: 9,  label: "Journal articles",         icon: "book" },
     { n: 17, label: "Conference papers",        icon: "mic" },
-    { n: 2,  label: "Presenting-paper awards",  icon: "award" },
+    { n: 6,  label: "Conference participation awards",  icon: "award", auto: "confs" },
     { n: 11, label: "Projects & tools",         icon: "folder", auto: "projects" }
   ],
 
@@ -113,7 +113,7 @@ window.SITE = {
       points: ["AHP and Fuzzy AHP weighting with consistency checks", "Artificial neural networks for prediction and comparison", "Site suitability for crops, solar hydrogen plants and EV charging stations", "Comparing methods against each other (AHP, Fuzzy AHP, frequency ratio, ANN)"],
       tools: ["AHP", "Fuzzy AHP", "ANN", "MATLAB"],
       pubs: ["dragonfruit", "hydrogen", "gazipur"],
-      work: ["Research project: EV charging station siting in Dhaka District with AHP, Fuzzy AHP and ANN", "Conference paper: AHP and Fuzzy-AHP for solid waste disposal site selection in Barishal Division (Presenting Paper Award, IICASD 2024)"] },
+      work: ["Research project: EV charging station siting in Dhaka District with AHP, Fuzzy AHP and ANN", "Conference paper: AHP and Fuzzy-AHP for solid waste disposal site selection in Barishal Division (IICASD 2024)"] },
 
     { id: "nbs", art: "nature", tone: "", title: "Nature-based solutions",
       short: "Working with wetlands, floodplains and vegetation instead of only concrete.",
@@ -174,7 +174,7 @@ window.SITE = {
       ["Position",   "Research Assistant, DUET · Lead Consultant, BGRC"],
       ["Degree",     "MSc, Water & Environmental Management (thesis ongoing)"],
       ["Looking for","PhD position (2026 →)"],
-      ["Languages",  "Bangla, English"]
+      ["Languages",  "Bangla, English, Hindi, Urdu (all fluent)"]
     ]
   },
 
@@ -198,7 +198,7 @@ window.SITE = {
     { art: "camera",  tone: "gold", title: "Photography", short: "Landscapes, wildlife and people of Bangladesh.",
       text: ["Photography is how I look at the world beyond maps: rivers, fields, cities and the people who live in them. I treat each frame as a small piece of fieldwork, noticing the light, the landscape and the context before I press the shutter.",
              "I shoot with a Canon EOS 77D, and a selection of my favourite frames lives in the gallery."],
-      points: ["Landscapes, wildlife and people of Bangladesh", "Founder of the DUET Photographic Society; Chief Instructor 2024–2025, now its Advisor", "Photographer for Green Voice (GSTU) and Photography Secretary of RDSA", "I also train others, through workshops on framing, composition and manual camera settings"],
+      points: ["Landscapes, wildlife and people of Bangladesh", "Founder of the DUET Photographic Society; Chief Instructor 2024–2025, now its Advisor", "Environment related secretary of Green Voice (GSTU) and Photography Secretary of RDSA", "I also train others, through workshops on framing, composition and manual camera settings"],
       chips: ["Landscape", "Wildlife", "People", "Field photography"],
       link: { label: "Open the gallery", href: "photography.html" } },
     { art: "drone",   tone: "rose", title: "Drone & aerial", short: "Aerial photography and drone surveys.",
@@ -258,23 +258,23 @@ window.SITE = {
       points: ["B.Sc. (Honors), 2018–2021, CGPA 3.01 / 4.00", "Final-year thesis on saline-water intrusion and agriculture in Gobra Union, Gopalganj"] },
     { year: "2018", art: "people", title: "Societies and student organisations", short: "Photography, student and environmental organisations at GSTU.",
       text: ["Alongside classes I joined student and environmental organisations at GSTU. They were where I found my community, and where photography became a way of serving a cause."],
-      points: ["GSTU Photographic Society (until 2023; former Vice-president)", "RDSA: Environmental Secretary and Photography Secretary", "Green Voice: photographer of the GSTU branch, convener of the Ranisankail Upazila branch", "Member of the Thakurgaon Students Association"] },
+      points: ["GSTU Photographic Society (until 2023; former Vice-president)", "RDSA: Environmental Secretary and Photography Secretary", "Green Voice: Environment related secretary of the GSTU team (2020 – 2023), convener of the Ranisankail Upazila branch", "Member of the Thakurgaon Students Association"] },
     { year: "2022", art: "satellite", title: "GIS & remote sensing training", short: "Application of GIS and Remote Sensing in Research.",
       text: ["A structured training, in September and October 2022, on applying GIS and remote sensing in research. These are the tools that now sit at the centre of my work."],
       points: ["Sept – Oct 2022", "Using GIS and remote sensing in research work"] },
     { year: "2023", art: "lab",    title: "M.Sc. at DUET", short: "Water and Environmental Management, CGPA 3.92.",
       text: ["I joined the M.Sc. in Water and Environmental Management at the Institute of Water & Environment, DUET, in Gazipur. My thesis studies how land use and climate change alter streamflow in the Sangu River."],
       points: ["CGPA 3.92 / 4.00 in coursework", "Supervisor: Md. Rabiul Islam", "Training in numerical modelling, AI and GIS technology (July 2023)"] },
-    { year: "2024", art: "medal",  title: "Research and first award", short: "Research roles, GIS training and the IICASD 2024 award.",
-      text: ["2024 was the year research became my work. I carried out two UGC-funded teachers' research projects at DUET, joined the Kuakata erosion research as a Research Associate, and began training others in GIS. I won a Presenting Paper Award at IICASD 2024 and became Chief Instructor of the DUET Photographic Society, which I founded."],
-      points: ["Research Assistant on UGC teachers' projects at IWE, DUET (2024–2026)", "Research Associate, M/S Tuhin Associates: Kuakata sea beach research", "Trainer: GIS & RS Certification Course (BGRC) and a practical training session (Geo-Science Learning Center)", "Presenting Paper Award, IICASD 2024"],
+    { year: "2024", art: "medal",  title: "Research and first conferences", short: "Research roles, GIS training and my first conference papers.",
+      text: ["2024 was the year research became my work. I carried out two UGC-funded teachers' research projects at DUET, joined the Kuakata erosion research as a Research Associate, and began training others in GIS. I presented papers at two conferences (Khulna University in March and IICASD 2024 at DUET in November), received a participation award at each, and became Chief Instructor of the DUET Photographic Society, which I founded."],
+      points: ["Research Assistant on UGC teachers' projects at IWE, DUET (2024–2026)", "Research Associate, M/S Tuhin Associates: Kuakata sea beach research", "Trainer: GIS & RS Certification Course (BGRC) and a practical training session (Geo-Science Learning Center)", "Conference papers and participation awards: Khulna University (March) and IICASD 2024 (November)"],
       galleryH: "At IICASD 2024", galleryAlbum: "IICASD 2024, DUET",
       gallery: [ { file: "photos/conf/iicasd-2024-presenting.jpg", title: "Presenting at IICASD 2024" }, { file: "photos/conf/iicasd-2024-a.jpg", title: "IICASD 2024, DUET" }, { file: "photos/conf/iicasd-2024-b.jpg", title: "IICASD 2024, DUET" } ] },
-    { year: "2025", art: "chart",  title: "Papers in Q1 journals", short: "Co-authored papers, a second award and BGRC.",
-      text: ["Co-authored articles appeared in Renewable Energy, Smart Agricultural Technology, Earth Systems and Environment and more. I won a second Presenting Paper Award (ICSHSD 2025), began work with BlueGreen Research and Consultancy (BGRC) as Lead Consultant, Environmental Research, and became Advisor of the DUET Photographic Society."],
-      points: ["Presenting Paper Award, ICSHSD 2025", "Lead Consultant, Environmental Research, BGRC", "Webinar on the research roadmap for beginners (July)", "Documentary for the GCA–BUET Coastal Towns Climate Resilience Project (November)"] },
+    { year: "2025", art: "chart",  title: "Papers in Q1 journals", short: "Co-authored papers, conferences and BGRC.",
+      text: ["Co-authored articles appeared in Renewable Energy, Smart Agricultural Technology, Earth Systems and Environment and more. I presented at ICSHSD 2025 (DUET) and the RUET conference, received a participation award at each, began work with BlueGreen Research and Consultancy (BGRC) as Lead Consultant, Environmental Research, and became Advisor of the DUET Photographic Society."],
+      points: ["Conference papers and participation awards: ICSHSD 2025 (October) and RUET (December)", "Lead Consultant, Environmental Research, BGRC", "Webinar on the research roadmap for beginners (July)", "Documentary for the GCA–BUET Coastal Towns Climate Resilience Project (November)"] },
     { year: "2026", art: "code",   title: "Flood paper, training and a new role", short: "Sylhet paper in Discover Environment; Python at IICT.",
-      text: ["A fuzzy AHP flood vulnerability study of Sylhet was published in Discover Environment. I completed a 60-hour Python course at IICT, DUET, trained in the BGRC GIS & RS Certification Course, and in October 2026 returned to DUET's Institute of Water & Environment as an official Research Assistant."],
+      text: ["A fuzzy AHP flood vulnerability study of Sylhet was published in Discover Environment. I completed a 60-hour Python course at IICT, DUET, trained in the BGRC GIS & RS Certification Course, and in October 2026 returned to DUET's Institute of Water & Environment as a Research Assistant."],
       points: ["Sylhet flood vulnerability paper in Discover Environment", "8th ICCESD papers on Sylhet flood vulnerability and the Halda multi-hazard study (February)", "Python, 60-hour course at IICT, DUET (June)", "Official Research Assistant, IWE DUET (October)"],
       galleryH: "At ICCESD 2026", galleryAlbum: "ICCESD 2026",
       gallery: [ { file: "photos/conf/iccesd-2026.jpg", title: "At ICCESD 2026" } ] },
@@ -292,9 +292,9 @@ window.SITE = {
 
   /* Experience = পদ/দায়িত্ব, ছোট করে। প্রজেক্টের বিস্তারিত থাকে Projects ট্যাবে (links দিয়ে যুক্ত) */
   experience: [
-    { when: "October 2026 – present", art: "lab", icon: "flask", title: "Official Research Assistant", org: "Institute of Water & Environment (IWE), DUET", now: true,
-      points: ["Back at IWE as an official Research Assistant."],
-      text: ["In October 2026 I rejoined the Institute of Water & Environment (IWE), DUET, as an official Research Assistant."],
+    { when: "October 2026 – present", art: "lab", icon: "flask", title: "Research Assistant", org: "Institute of Water & Environment (IWE), DUET", now: true,
+      points: ["Back at IWE as a Research Assistant."],
+      text: ["In October 2026 I rejoined the Institute of Water & Environment (IWE), DUET, as a Research Assistant."],
       tags: ["Water & environment", "Research"] },
     { when: "2025 – present", art: "work", icon: "briefcase", title: "Lead Consultant, Environmental Research", org: "BlueGreen Research and Consultancy (BGRC)", now: true,
       points: ["Environmental research and consulting: IEE and EIA, flood and drought risk, GIS and remote sensing, hydrological modelling."],
@@ -350,11 +350,20 @@ window.SITE = {
       more: ["RDSA, the Rangpur Divisional Students Association, brings together students of Rangpur division at Gopalganj Science and Technology University.", "I served on its executive side as Environmental Secretary and Photography Secretary."],
       roles: [ { role: "Environmental Secretary" }, { role: "Photography Secretary" } ], images: [] },
     { icon: "leaf", art: "nature", tone: "", org: "Green Voice", when: "", text: "Environmental volunteer organisation.",
-      more: ["Green Voice is an environmental volunteer organisation.", "I was the photographer of its GSTU branch and convener of its Ranisankail Upazila branch."],
-      roles: [ { role: "Photographer, GSTU branch" }, { role: "Convener, Ranisankail Upazila branch" } ], images: [] },
+      more: ["Green Voice is an environmental volunteer organisation.", "I was the Environment related secretary of its GSTU team (2020 – 2023) and convener of its Ranisankail Upazila branch."],
+      roles: [ { role: "Environment related secretary, GSTU team", when: "2020 – 2023" }, { role: "Convener, Ranisankail Upazila branch" } ], images: [] },
     { icon: "camera", art: "camera", tone: "rose", org: "GSTU Photographic Society", when: "2018 – 2023", text: "Part of the society through my undergraduate years.",
       more: ["I was part of the Photographic Society at Gopalganj Science and Technology University through my undergraduate years, from 2018 to 2023."],
-      roles: [ { role: "Member", when: "2018 – 2023" }, { role: "Former Vice-president" } ], images: [] }
+      roles: [ { role: "Member", when: "2018 – 2023" }, { role: "Former Vice-president" } ], images: [] },
+    { icon: "news", art: "people", tone: "rose", org: "Bishal Bangla Online", when: "Sep 2020 – Aug 2023", text: "Campus journalist from September 2020 to August 2023.",
+      more: ["I worked as a campus journalist for Bishal Bangla Online from September 2020 to August 2023."],
+      roles: [ { role: "Campus Journalist", when: "Sep 2020 – Aug 2023" } ], images: [] },
+    { icon: "news", art: "flood", tone: "sky", org: "Khola Kagoj Pathok Forum \"Egarojon\", GSTU", when: "May 2019 – Aug 2023", text: "Disaster and Relief Affairs Editor of a readers' forum at GSTU.",
+      more: ["I was the Disaster and Relief Affairs Editor of the Khola Kagoj Pathok Forum \"Egarojon\" at GSTU, from May 2019 to August 2023."],
+      roles: [ { role: "Disaster and Relief Affairs Editor", when: "May 2019 – Aug 2023" } ], images: [] },
+    { icon: "shield", art: "leaf", tone: "gold", org: "Keya Students Forum Bangladesh (KSFB)", when: "Feb 2020 – Aug 2023", text: "Environmental Compliance Inspector from February 2020 to August 2023.",
+      more: ["I served as an Environmental Compliance Inspector with the Keya Students Forum Bangladesh from February 2020 to August 2023."],
+      roles: [ { role: "Environmental Compliance Inspector", when: "Feb 2020 – Aug 2023" } ], images: [] }
   ],
 
   /* Learning on the ground — ⚠ involves/builds সাধারণভাবে Claude লিখেছে, আপনি নিজের অভিজ্ঞতা অনুযায়ী ঠিক করুন */
@@ -425,10 +434,15 @@ window.SITE = {
   ],
 
   awards: [
-    { when: "October 2025",  title: "Presenting Paper Award", where: "1st International Conference on Science and Humanities for Sustainable Development (ICSHSD 2025), DUET", paper: "Evaluating drinking water quality and health risks in communities adjacent to the Modhumoti River, Bangladesh" },
-    { when: "November 2024", title: "Presenting Paper Award", where: "1st International Conference on Recent Innovation in Civil Engineering and Architecture for Sustainable Development (IICASD 2024), DUET", paper: "A comparative study of AHP and Fuzzy-AHP approach in selecting solid waste disposal site in Barishal Division",
-      galleryH: "At IICASD 2024", galleryAlbum: "IICASD 2024, DUET", gallery: [ { file: "photos/conf/iicasd-2024-presenting.jpg", title: "Presenting at IICASD 2024" }, { file: "photos/conf/iicasd-2024-a.jpg", title: "IICASD 2024, DUET" }, { file: "photos/conf/iicasd-2024-b.jpg", title: "IICASD 2024, DUET" } ] }
+    { when: "April 2026",    title: "Participation Award", where: "ICSWER 2026" },
+    { when: "February 2026", title: "Participation Award", where: "8th International Conference on Civil Engineering for Sustainable Development (ICCESD 2026)", galleryH: "At ICCESD 2026", galleryAlbum: "ICCESD 2026", gallery: [ { file: "photos/conf/iccesd-2026.jpg", title: "At ICCESD 2026" } ] },
+    { when: "December 2025", title: "Participation Award", where: "International Conference on Civil Engineering Research & Innovations, RUET" },
+    { when: "October 2025",  title: "Participation Award", where: "1st International Conference on Science and Humanities for Sustainable Development (ICSHSD 2025), DUET" },
+    { when: "November 2024", title: "Participation Award", where: "1st International Conference on Recent Innovation in Civil Engineering and Architecture for Sustainable Development (IICASD 2024), DUET",
+      galleryH: "At IICASD 2024", galleryAlbum: "IICASD 2024, DUET", gallery: [ { file: "photos/conf/iicasd-2024-presenting.jpg", title: "Presenting at IICASD 2024" }, { file: "photos/conf/iicasd-2024-a.jpg", title: "IICASD 2024, DUET" }, { file: "photos/conf/iicasd-2024-b.jpg", title: "IICASD 2024, DUET" } ] },
+    { when: "March 2024",    title: "Participation Award", where: "2nd International Conference on Environment, Khulna University" }
   ],
+
 
   /* ---------- ৭. Research ---------- */
   research: {
@@ -533,28 +547,64 @@ window.SITE = {
     { status: "review", year: 2025, authors: "Miah, M., Islam, M. R., Kader, Z., Aziz, M. T., Hosen, M. B., Tahera-Tun-Humayra, U., Haque, A., Pervin, R., Hossain, M. A., & Hasan, M.",
       title: "Delineating groundwater recharge potential zones: A geoinformatics-based spatial analysis" },
 
+    { status: "review", year: "", authors: "", id: "evcs-dhaka",
+      title: "Site suitability analysis of electric vehicle charging stations in Dhaka District using AHP, Fuzzy AHP and ANN",
+      summary: "Choosing sites for electric-vehicle charging stations in Dhaka by comparing AHP, Fuzzy AHP and an artificial neural network.",
+      area: "Dhaka District, Bangladesh", method: "GIS-based multi-criteria site suitability analysis with AHP, Fuzzy AHP and ANN.",
+      keywords: ["EV charging", "AHP", "Fuzzy AHP", "ANN", "Dhaka"] },
+
+    { status: "review", year: "", authors: "", id: "bgwsi-shitalakshya",
+      title: "Assessing water security in the Shitalakshya River Basin through multi-temporal blue and green water footprints",
+      summary: "Water security of the Shitalakshya River Basin assessed with blue and green water footprints over several periods, combined into the Green, Blue and overall Water Security Indices.",
+      area: "Shitalakshya River Basin, Bangladesh", method: "Blue and green water footprints combined into GWSI, BWSI and WSI.",
+      keywords: ["Water security", "Blue water", "Green water", "GWSI", "BWSI", "WSI"] },
+
     { status: "prep", year: "", authors: "Hosen, M. B., et al.",
-      title: "Spatiotemporal assessment of meteorological drought using SPEI-12 in Barisal and Khulna divisions, Bangladesh" }
+      title: "Spatiotemporal assessment of meteorological drought using SPEI-12 in Barisal and Khulna divisions, Bangladesh" },
+
+    { status: "prep", year: "", authors: "Hosen, M. B.", id: "thesis-draft",
+      title: "Land use and climate change impacts on streamflow in the Sangu River (MSc thesis draft)",
+      summary: "My MSc thesis on how land use change and a changing climate alter the flow of the Sangu River; the thesis draft is being written.",
+      area: "Sangu River basin, southeastern Bangladesh" },
+
+    { status: "prep", year: "", authors: "", id: "halda-eflow",
+      title: "Environmental flow assessment of the Halda River Basin using HEC-HMS",
+      summary: "An environmental flow assessment of the Halda River Basin, built on HEC-HMS hydrological modelling. The work is in progress.",
+      area: "Halda River Basin, Bangladesh", method: "Hydrological modelling with HEC-HMS.",
+      keywords: ["Environmental flow", "HEC-HMS", "Halda River", "Hydrology"] }
+  ],
+
+  /* সম্মেলনের তালিকা (Research পেজে নাম অনুযায়ী কার্ড; নতুন সম্মেলনে একটা ব্লক যোগ করুন, পেপারে একই id দিন `conf: "id"`)
+     সবগুলোতেই participation award — award: true */
+  confList: [
+    { id: "icswer2026",  year: 2026, short: "ICSWER 2026", name: "ICSWER 2026", date: "April 2026", award: true },
+    { id: "iccesd2026",  year: 2026, short: "ICCESD 2026", name: "8th International Conference on Civil Engineering for Sustainable Development", date: "February 2026", award: true,
+      galleryH: "At ICCESD 2026", gallery: [ { file: "photos/conf/iccesd-2026.jpg", title: "At ICCESD 2026" } ] },
+    { id: "ruet2025",    year: 2025, short: "RUET Civil Engineering Conference", name: "International Conference on Civil Engineering Research & Innovations, RUET", date: "December 2025", award: true },
+    { id: "icshsd2025",  year: 2025, short: "ICSHSD 2025", name: "1st International Conference on Science and Humanities for Sustainable Development, DUET", date: "October 2025", award: true },
+    { id: "iicasd2024",  year: 2024, short: "IICASD 2024", name: "1st International Conference on Recent Innovation in Civil Engineering and Architecture for Sustainable Development, DUET", date: "November 2024", award: true,
+      galleryH: "At IICASD 2024", gallery: [ { file: "photos/conf/iicasd-2024-presenting.jpg", title: "Presenting at IICASD 2024" }, { file: "photos/conf/iicasd-2024-a.jpg", title: "IICASD 2024, DUET" }, { file: "photos/conf/iicasd-2024-b.jpg", title: "IICASD 2024, DUET" } ] },
+    { id: "icekhulna2024", year: 2024, short: "Environment Conference, Khulna University", name: "2nd International Conference on Environment, Khulna University", date: "March 2024", award: true }
   ],
 
   conferences: [
-    { year: 2026, title: "Spatiotemporal assessment of LST and LULC variability during summer in Narayanganj District, Bangladesh", venue: "ICSWER 2026 · April 2026" },
-    { year: 2026, title: "City-specific cooling thresholds of urban green and blue spaces for urban heat island mitigation in Bangladesh", venue: "ICSWER 2026 · April 2026" },
-    { year: 2026, title: "Satellite-based assessment of air quality dynamics in the industrial city of Gazipur, Bangladesh", venue: "ICSWER 2026 · April 2026" },
-    { year: 2026, title: "Assessing flood vulnerability in Sylhet District with an AHP-based GIS approach", venue: "8th International Conference on Civil Engineering for Sustainable Development · February 2026", galleryH: "At ICCESD 2026", gallery: [ { file: "photos/conf/iccesd-2026.jpg", title: "At ICCESD 2026" } ] },
-    { year: 2026, title: "Spatial analysis of multi-hazard risks in the Halda River Basin through AHP-based modeling", venue: "8th International Conference on Civil Engineering for Sustainable Development · February 2026", galleryH: "At ICCESD 2026", gallery: [ { file: "photos/conf/iccesd-2026.jpg", title: "At ICCESD 2026" } ] },
-    { year: 2025, title: "Assessing the future flood hazard in the Matamuhuri River Basin using HEC-HMS and HEC-RAS", venue: "Intl. Conf. on Civil Engineering Research & Innovations, RUET · December 2025" },
-    { year: 2025, title: "Assessment of runoff and potential soil erosion in the Dakatia river basin, Bangladesh", venue: "Intl. Conf. on Civil Engineering Research & Innovations, RUET · December 2025" },
-    { year: 2025, title: "Evaluating drinking water quality and health risks in communities adjacent to the Modhumoti River, Bangladesh", venue: "ICSHSD 2025, DUET · October 2025", award: true },
-    { year: 2025, title: "Hydro-chemical assessment of groundwater and river water quality for drinking in Paikgachha Upazila, Khulna District", venue: "ICSHSD 2025, DUET · October 2025" },
-    { year: 2025, title: "Assessment of heavy metal concentration and the physicochemical parameters of the outlet wastewater: industrial zone, Gazipur", venue: "ICSHSD 2025, DUET · October 2025" },
-    { year: 2024, title: "A comparative study of AHP and Fuzzy-AHP approach in selecting solid waste disposal site in Barishal Division", venue: "IICASD 2024, DUET · November 2024", award: true, galleryH: "At IICASD 2024", gallery: [ { file: "photos/conf/iicasd-2024-presenting.jpg", title: "Presenting at IICASD 2024" }, { file: "photos/conf/iicasd-2024-a.jpg", title: "IICASD 2024, DUET" }, { file: "photos/conf/iicasd-2024-b.jpg", title: "IICASD 2024, DUET" } ] },
-    { year: 2024, title: "Shoreline change assessment using DSAS technique: A case study on the coast of Kuakata", venue: "IICASD 2024, DUET · November 2024" },
-    { year: 2024, title: "Measuring land surface temperature (LST) response to LULC indices in Dhaka District, Bangladesh", venue: "IICASD 2024, DUET · November 2024" },
-    { year: 2024, title: "Assessment of temporal changes in soil erosion at the Halda River Basin, Bangladesh", venue: "IICASD 2024, DUET · November 2024" },
-    { year: 2024, title: "Evaluating the saline water impact on agriculture in Gobra Union, Gopalganj", venue: "2nd International Conference on Environment, Khulna University · March 2024" },
-    { year: 2024, title: "An evaluation of socio-economic condition and water quality parameters of Kopotokkho River", venue: "2nd International Conference on Environment, Khulna University · March 2024" },
-    { year: 2024, title: "Groundwater potential zone mapping using AHP and GIS for Narayanganj District, Bangladesh", venue: "2nd International Conference on Environment, Khulna University · March 2024" }
+    { year: 2026, conf: "icswer2026", title: "Spatiotemporal assessment of LST and LULC variability during summer in Narayanganj District, Bangladesh", venue: "ICSWER 2026 · April 2026" },
+    { year: 2026, conf: "icswer2026", title: "City-specific cooling thresholds of urban green and blue spaces for urban heat island mitigation in Bangladesh", venue: "ICSWER 2026 · April 2026" },
+    { year: 2026, conf: "icswer2026", title: "Satellite-based assessment of air quality dynamics in the industrial city of Gazipur, Bangladesh", venue: "ICSWER 2026 · April 2026" },
+    { year: 2026, conf: "iccesd2026", title: "Assessing flood vulnerability in Sylhet District with an AHP-based GIS approach", venue: "8th International Conference on Civil Engineering for Sustainable Development · February 2026", galleryH: "At ICCESD 2026", gallery: [ { file: "photos/conf/iccesd-2026.jpg", title: "At ICCESD 2026" } ] },
+    { year: 2026, conf: "iccesd2026", title: "Spatial analysis of multi-hazard risks in the Halda River Basin through AHP-based modeling", venue: "8th International Conference on Civil Engineering for Sustainable Development · February 2026", galleryH: "At ICCESD 2026", gallery: [ { file: "photos/conf/iccesd-2026.jpg", title: "At ICCESD 2026" } ] },
+    { year: 2025, conf: "ruet2025", title: "Assessing the future flood hazard in the Matamuhuri River Basin using HEC-HMS and HEC-RAS", venue: "Intl. Conf. on Civil Engineering Research & Innovations, RUET · December 2025" },
+    { year: 2025, conf: "ruet2025", title: "Assessment of runoff and potential soil erosion in the Dakatia river basin, Bangladesh", venue: "Intl. Conf. on Civil Engineering Research & Innovations, RUET · December 2025" },
+    { year: 2025, conf: "icshsd2025", title: "Evaluating drinking water quality and health risks in communities adjacent to the Modhumoti River, Bangladesh", venue: "ICSHSD 2025, DUET · October 2025" },
+    { year: 2025, conf: "icshsd2025", title: "Hydro-chemical assessment of groundwater and river water quality for drinking in Paikgachha Upazila, Khulna District", venue: "ICSHSD 2025, DUET · October 2025" },
+    { year: 2025, conf: "icshsd2025", title: "Assessment of heavy metal concentration and the physicochemical parameters of the outlet wastewater: industrial zone, Gazipur", venue: "ICSHSD 2025, DUET · October 2025" },
+    { year: 2024, conf: "iicasd2024", title: "A comparative study of AHP and Fuzzy-AHP approach in selecting solid waste disposal site in Barishal Division", venue: "IICASD 2024, DUET · November 2024", galleryH: "At IICASD 2024", gallery: [ { file: "photos/conf/iicasd-2024-presenting.jpg", title: "Presenting at IICASD 2024" }, { file: "photos/conf/iicasd-2024-a.jpg", title: "IICASD 2024, DUET" }, { file: "photos/conf/iicasd-2024-b.jpg", title: "IICASD 2024, DUET" } ] },
+    { year: 2024, conf: "iicasd2024", title: "Shoreline change assessment using DSAS technique: A case study on the coast of Kuakata", venue: "IICASD 2024, DUET · November 2024" },
+    { year: 2024, conf: "iicasd2024", title: "Measuring land surface temperature (LST) response to LULC indices in Dhaka District, Bangladesh", venue: "IICASD 2024, DUET · November 2024" },
+    { year: 2024, conf: "iicasd2024", title: "Assessment of temporal changes in soil erosion at the Halda River Basin, Bangladesh", venue: "IICASD 2024, DUET · November 2024" },
+    { year: 2024, conf: "icekhulna2024", title: "Evaluating the saline water impact on agriculture in Gobra Union, Gopalganj", venue: "2nd International Conference on Environment, Khulna University · March 2024" },
+    { year: 2024, conf: "icekhulna2024", title: "An evaluation of socio-economic condition and water quality parameters of Kopotokkho River", venue: "2nd International Conference on Environment, Khulna University · March 2024" },
+    { year: 2024, conf: "icekhulna2024", title: "Groundwater potential zone mapping using AHP and GIS for Narayanganj District, Bangladesh", venue: "2nd International Conference on Environment, Khulna University · March 2024" }
   ],
 
   /* ---------- ৮. Projects (প্রকাশনা নয়, আলাদা ট্যাব) ----------
@@ -744,7 +794,10 @@ window.SITE = {
       groups: [
         { districts: ["Patuakhali"], post: "kuakata", tone: "gold", label: { en: "Kuakata", bn: "কুয়াকাটা" }, sub: { en: "Patuakhali · coast", bn: "পটুয়াখালী · উপকূল" } },
         { districts: ["Sylhet"], post: "sylhet", tone: "sky", label: { en: "Sylhet", bn: "সিলেট" }, sub: { en: "Sylhet · haors and tea hills", bn: "সিলেট · হাওর ও চা-বাগান" } },
-        { districts: ["Khulna", "Bagerhat", "Satkhira"], post: "sundarban", tone: "teal", label: { en: "Sundarban", bn: "সুন্দরবন" }, sub: { en: "Khulna · Bagerhat · Satkhira", bn: "খুলনা · বাগেরহাট · সাতক্ষীরা" } },
+        { districts: ["Bagerhat", "Satkhira"], post: "sundarban", tone: "teal", dy: 120, label: { en: "Sundarban", bn: "সুন্দরবন" }, sub: { en: "Bagerhat · Satkhira · the forest", bn: "বাগেরহাট · সাতক্ষীরা · বন" } },
+        { districts: ["Khulna"], post: "khulna", tone: "lav", dy: -70, label: { en: "Khulna", bn: "খুলনা" }, sub: { en: "Khulna · river port and delta", bn: "খুলনা · নদী-বন্দর ও ব-দ্বীপ" } },
+        { districts: ["Rajshahi"], post: "rajshahi", tone: "rose", label: { en: "Rajshahi", bn: "রাজশাহী" }, sub: { en: "Rajshahi · Padma and Barind", bn: "রাজশাহী · পদ্মা ও বরেন্দ্র" } },
+        { districts: ["Kushtia"], post: "kushtia", tone: "sage", label: { en: "Kushtia", bn: "কুষ্টিয়া" }, sub: { en: "Kushtia · Lalon and the Padma", bn: "কুষ্টিয়া · লালন ও পদ্মা" } },
         { districts: ["Bogra"], post: "bogura", tone: "soon", soon: true, label: { en: "Bogura", bn: "বগুড়া" }, sub: { en: "Bogura · coming soon", bn: "বগুড়া · শিগগিরই" } }
       ]
     },
@@ -836,6 +889,94 @@ window.SITE = {
                "## যেতে চাইলে",
                "সাধারণত শীতকালে সুন্দরবন ভ্রমণ করা হয়, আর পানিপথই একমাত্র পথ বলে ভ্রমণ হয় নৌকায়। অনুমোদিত অপারেটরের সঙ্গে যান এবং বনের নিয়ম মেনে চলুন: এটি সংরক্ষিত এলাকা এবং বাঘের আবাসস্থল।",
                "সুন্দরবন মনে করিয়ে দেয়, উপকূল রক্ষার সেরা কাজগুলোর অনেকই প্রকৃতি বহু আগেই করে রেখেছে, আর আমাদের কাজ প্রায়ই তাকে রক্ষা করা।"] } },
+
+      { id: "rajshahi", date: "", when: "", place: "Rajshahi", region: { en: "North-west", bn: "উত্তর-পশ্চিম" }, tags: ["Padma", "Heritage", "Groundwater"],
+        art: "ground", tone: "rose", cover: "", photos: [],
+        title: { en: "Rajshahi: silk, mangoes and the thirsty land behind the city", bn: "রাজশাহী: রেশম, আম আর শহরের পেছনের তৃষ্ণার্ত জমি" },
+        summary: { en: "A calm city on the Padma with old temples and a museum, and behind it the dry Barind land, where groundwater tells the real story.",
+                   bn: "পদ্মার তীরের শান্ত শহর, পুরোনো মন্দির আর জাদুঘর, আর পেছনে শুষ্ক বরেন্দ্র অঞ্চল, যেখানে ভূগর্ভস্থ পানিই আসল গল্প বলে।" },
+        related: [ { label: { en: "See my groundwater research", bn: "আমার ভূগর্ভস্থ পানির গবেষণা দেখুন" }, href: "research.html#pubs" } ],
+        body: {
+          en: ["Rajshahi lies in the north-west of Bangladesh on the bank of the Padma. It is known as the Silk City and the city of mangoes, and it is a calm, leafy place where the river sets the pace of the evenings.",
+               "## History close to the river",
+               "The Varendra Research Museum, set up in 1910, is regarded as the oldest museum in Bangladesh and holds sculpture and artefacts from Hindu, Buddhist and Muslim periods. It is looked after by Rajshahi University. Roughly 25 km east of the city, Puthia has a cluster of terracotta temples and a palace of the old Puthia Raj family, and the stone Bagha Mosque stands near the Padma in the same district.",
+               "## Silk and mango country",
+               "Rajshahi is a historic centre of silk, and the sericulture of this region accounts for almost all of the country's silk. Mango orchards fill the countryside around it, and May to July is the season to see them.",
+               "## The thirsty land behind the city",
+               "Behind the green orchards lies the Barind Tract, an older, drier plateau that stretches across Rajshahi, Chapainawabganj and Naogaon. Rainfall here is lower than in most of Bangladesh, so farmers depend heavily on groundwater irrigation for rice and wheat. Decades of pumping have pulled the water table down: Water Development Board figures reported by Dialogue Earth show it falling from about 3.5 m below the surface in 1980 to about 25 m in 2017 in Nachole, Chapainawabganj.",
+               "The irrigation authority has since rationed water and encouraged less thirsty crops. For a water researcher this is the most interesting part of Rajshahi. The problem is not too much water, as in Sylhet, but too little, and groundwater maps help decide where farming can continue.",
+               "My own groundwater work is in other districts, for example mapping groundwater potential zones in Narayanganj with AHP and GIS, but the questions are the same: where does water collect, how fast is it used, and how much is left?",
+               "## If you go",
+               "May to July is the season for mangoes, and the Padma bank is a good place to end the day at sunset. Puthia and the Bagha Mosque make an easy day trip from the city, and a morning at the museum fits well before it.",
+               "Rajshahi shows a different side of water in Bangladesh: not flood or tide, but the slow, quiet pressure of a falling aquifer."],
+          bn: ["রাজশাহী বাংলাদেশের উত্তর-পশ্চিমে, পদ্মার তীরে। এটি রেশম নগরী আর আমের শহর নামে পরিচিত। শান্ত, সবুজ এই শহরে নদীই সন্ধ্যার ছন্দ ঠিক করে দেয়।",
+               "## নদীর কাছে ইতিহাস",
+               "১৯১০ সালে প্রতিষ্ঠিত বরেন্দ্র গবেষণা জাদুঘরকে বাংলাদেশের সবচেয়ে পুরোনো জাদুঘর ধরা হয়। এখানে হিন্দু, বৌদ্ধ ও মুসলিম যুগের ভাস্কর্য ও নিদর্শন আছে। জাদুঘরটির দেখভাল করে রাজশাহী বিশ্ববিদ্যালয়। শহর থেকে প্রায় ২৫ কিলোমিটার পূর্বে পুঠিয়ায় আছে পোড়ামাটির অলংকরণের মন্দিরের সারি আর পুঠিয়া রাজ পরিবারের রাজবাড়ি। একই জেলায় পদ্মার কাছে দাঁড়িয়ে আছে পাথরের বাঘা মসজিদ।",
+               "## রেশম আর আমের দেশ",
+               "রাজশাহী ঐতিহ্যগতভাবে রেশমের কেন্দ্র, আর দেশের প্রায় সব রেশম উৎপাদন হয় এই অঞ্চলের রেশমচাষ থেকে। চারপাশের গ্রামজুড়ে আমবাগান, আর মে থেকে জুলাই সেগুলো দেখার মৌসুম।",
+               "## শহরের পেছনের তৃষ্ণার্ত জমি",
+               "সবুজ বাগানের পেছনেই বরেন্দ্র অঞ্চল: রাজশাহী, চাঁপাইনবাবগঞ্জ ও নওগাঁজুড়ে ছড়ানো এক পুরোনো, শুষ্ক উঁচু ভূমি। দেশের বেশিরভাগ জায়গার চেয়ে এখানে বৃষ্টি কম, তাই ধান ও গমের জন্য কৃষক ভূগর্ভস্থ পানির সেচের ওপর অনেকটাই নির্ভর করেন। দশকের পর দশক পানি তোলার ফলে পানির স্তর নেমে গেছে। ডায়ালগ আর্থের প্রতিবেদনে উদ্ধৃত পানি উন্নয়ন বোর্ডের তথ্য অনুযায়ী চাঁপাইনবাবগঞ্জের নাচোলে স্তরটি ১৯৮০ সালে ভূপৃষ্ঠ থেকে প্রায় ৩.৫ মিটার নিচে ছিল, ২০১৭ সালে নেমেছে প্রায় ২৫ মিটারে।",
+               "সেচ কর্তৃপক্ষ তারপর থেকে পানির বরাদ্দ নিয়ন্ত্রণ করছে এবং কম পানি লাগে এমন ফসলে উৎসাহ দিচ্ছে। একজন পানি-গবেষকের কাছে রাজশাহীর এটাই সবচেয়ে আকর্ষণীয় দিক। এখানকার সমস্যা সিলেটের মতো বেশি পানি নয়, বরং কম পানি, আর ভূগর্ভস্থ পানির মানচিত্র ঠিক করতে সাহায্য করে কোথায় চাষ চালিয়ে যাওয়া যাবে।",
+               "আমার নিজের ভূগর্ভস্থ পানির কাজ অন্য জেলায়, যেমন AHP ও GIS দিয়ে নারায়ণগঞ্জের ভূগর্ভস্থ পানির সম্ভাবনাময় অঞ্চল চিহ্নিত করা। তবে প্রশ্নগুলো একই: পানি কোথায় জমে, কত দ্রুত খরচ হয়, আর কতটা বাকি থাকে?",
+               "## যেতে চাইলে",
+               "মে থেকে জুলাই আমের মৌসুম, আর দিনের শেষে সূর্যাস্ত দেখার জন্য পদ্মার পাড় ভালো জায়গা। পুঠিয়া আর বাঘা মসজিদ শহর থেকে সহজেই একদিনে ঘুরে আসা যায়, আর তার আগে সকালটা জাদুঘরে কাটানো যায়।",
+               "রাজশাহী বাংলাদেশের পানির আরেকটি রূপ দেখায়: বন্যা বা জোয়ার নয়, একটি নেমে যাওয়া জলস্তরের ধীর, নীরব চাপ।"] } },
+
+      { id: "kushtia", date: "", when: "", place: "Kushtia", region: { en: "West", bn: "পশ্চিম" }, tags: ["Culture", "Padma", "Rivers"],
+        art: "river", tone: "", cover: "", photos: [],
+        title: { en: "Kushtia: Lalon, Tagore and the Padma–Gorai river system", bn: "কুষ্টিয়া: লালন, রবীন্দ্রনাথ আর পদ্মা-গড়াই নদীব্যবস্থা" },
+        summary: { en: "Baul songs, Tagore's riverside house and the Padma and Gorai rivers, whose dry-season flow matters to the whole south-west.",
+                   bn: "বাউল গান, রবীন্দ্রনাথের নদীতীরের কুঠিবাড়ি আর পদ্মা ও গড়াই নদী, যাদের শুকনো মৌসুমের প্রবাহ পুরো দক্ষিণ-পশ্চিমের জন্য গুরুত্বপূর্ণ।" },
+        related: [ { label: { en: "See my salinity paper (Conferences)", bn: "আমার লবণাক্ততা বিষয়ক গবেষণাপত্র দেখুন (Conferences)" }, href: "research.html#conferences" } ],
+        body: {
+          en: ["Kushtia lies in the west of Bangladesh, roughly 150 km from Dhaka, between the Padma and its distributary the Gorai. It is the place of Lalon Shah, the Baul mystic poet, and it is closely tied to Rabindranath Tagore.",
+               "## Songs and a riverside house",
+               "Lalon's shrine and akhra are at Chheuriya, about 2 km from Kushtia railway station. Bauls gather there for song festivals twice a year: around Dol Purnima in February or March, and again in October, on the anniversary of his death.",
+               "At Shilaidaha in Kumarkhali, about 20 km from the town, Tagore's Kuthibari stands near the Padma. It was the family's estate house, where Tagore managed the zamindari and wrote many poems. Today it is a museum looked after by the archaeology department.",
+               "Further out, the Hardinge Bridge, completed in 1912, crosses the Padma, with the newer Lalon Shah Bridge (opened 2004) just downstream.",
+               "## A river system that depends on the Padma",
+               "The Gorai draws its water from the Padma, and so does the Ganges–Kobadak (G-K) Project, a large surface irrigation system serving Kushtia and neighbouring south-western districts. In the dry season the Padma runs low, and the river and the irrigation canals both feel it. Banglapedia notes that the dry-season flow of the Ganges has been cut by about half since 1976, and that silt is threatening the connection between the Gorai and the Ganges.",
+               "Less fresh water moving down the Gorai matters far beyond Kushtia, because it is one of the reasons salt water reaches further inland in the south-west. Salinity is a theme I keep returning to: my B.Sc. thesis looked at the effect of saline water on agriculture in Gobra Union, Gopalganj, and a paper I co-authored studies how disasters and poverty shape water access in south-western Bangladesh.",
+               "## If you go",
+               "The main places can be seen in a day from Dhaka: Lalon's akhra in town, Shilaidaha Kuthibari (check its opening hours first) and the bridges over the Padma. Time the trip with a Lalon festival if you want to hear the Bauls sing.",
+               "Kushtia is a reminder that a river is not just scenery. It is a supply line, and what happens upstream is felt a long way downstream."],
+          bn: ["কুষ্টিয়া বাংলাদেশের পশ্চিমে, ঢাকা থেকে প্রায় ১৫০ কিলোমিটার দূরে, পদ্মা আর তার শাখানদী গড়াইয়ের মাঝখানে। এটি বাউল সাধক-কবি লালন শাহের এলাকা, আর রবীন্দ্রনাথ ঠাকুরের সঙ্গেও এর নিবিড় সম্পর্ক।",
+               "## গান আর নদীতীরের বাড়ি",
+               "কুষ্টিয়া রেলস্টেশন থেকে প্রায় ২ কিলোমিটার দূরে ছেঁউড়িয়ায় লালনের মাজার ও আখড়া। বছরে দুবার সেখানে বাউলদের গানের উৎসবে মানুষ জড়ো হয়: ফেব্রুয়ারি বা মার্চে দোলপূর্ণিমার সময়, আর অক্টোবরে তাঁর মৃত্যুবার্ষিকীতে।",
+               "শহর থেকে প্রায় ২০ কিলোমিটার দূরে কুমারখালীর শিলাইদহে পদ্মার কাছে রবীন্দ্রনাথের কুঠিবাড়ি। এটি ছিল ঠাকুর পরিবারের জমিদারি-বাড়ি, যেখানে রবীন্দ্রনাথ জমিদারি দেখাশোনা করতেন আর অনেক কবিতা লিখেছেন। এখন এটি একটি জাদুঘর, যার দেখভাল করে প্রত্নতত্ত্ব বিভাগ।",
+               "আরও কিছুটা দূরে পদ্মার ওপর ১৯১২ সালে নির্মিত হার্ডিঞ্জ ব্রিজ, আর তার ঠিক ভাটিতে ২০০৪ সালে চালু হওয়া নতুন লালন শাহ সেতু।",
+               "## পদ্মার ওপর নির্ভরশীল এক নদীব্যবস্থা",
+               "গড়াই তার পানি পায় পদ্মা থেকে, গঙ্গা-কপোতাক্ষ (জি-কে) প্রকল্পও তাই। এটি কুষ্টিয়া ও আশপাশের দক্ষিণ-পশ্চিমের জেলাগুলোর জন্য একটি বড় সারফেস সেচব্যবস্থা। শুকনো মৌসুমে পদ্মা কমে যায়, আর নদী ও সেচখাল দুটোই তার ধাক্কা পায়। বাংলাপিডিয়া জানায়, ১৯৭৬ সালের পর গঙ্গার শুকনো মৌসুমের প্রবাহ প্রায় অর্ধেক কমে গেছে, আর পলি গড়াই ও গঙ্গার সংযোগ বন্ধ করে দেওয়ার ঝুঁকি তৈরি করছে।",
+               "গড়াই দিয়ে মিঠা পানি কম নামার প্রভাব কুষ্টিয়ার বাইরেও অনেক দূর পর্যন্ত পড়ে, কারণ দক্ষিণ-পশ্চিমে লোনা পানি আরও ভেতরে ঢোকার একটি কারণ এটি। লবণাক্ততা আমার কাজে বারবার ফিরে আসে: আমার বি.এসসি. থিসিস ছিল গোপালগঞ্জের গোবরা ইউনিয়নে কৃষিতে লবণাক্ত পানির প্রভাব নিয়ে, আর আমার সহ-লেখা একটি গবেষণাপত্র দেখেছে দক্ষিণ-পশ্চিম বাংলাদেশে দুর্যোগ ও দারিদ্র্য কীভাবে পানি পাওয়াকে প্রভাবিত করে।",
+               "## যেতে চাইলে",
+               "ঢাকা থেকে এক দিনেই প্রধান জায়গাগুলো দেখা যায়: শহরের লালন আখড়া, শিলাইদহ কুঠিবাড়ি (আগে খোলার সময় দেখে নেবেন) আর পদ্মার সেতুগুলো। বাউলদের গান শুনতে চাইলে লালন উৎসবের সময় মিলিয়ে যান।",
+               "কুষ্টিয়া মনে করিয়ে দেয়, নদী শুধু দৃশ্য নয়। এটি একটি সরবরাহ-লাইন, আর উজানে যা ঘটে তার ফল অনেক দূর ভাটিতে অনুভূত হয়।"] } },
+
+      { id: "khulna", date: "", when: "", place: "Khulna", region: { en: "South-west", bn: "দক্ষিণ-পশ্চিম" }, tags: ["River port", "Delta", "Salinity"],
+        art: "city", tone: "sky", cover: "", photos: [],
+        title: { en: "Khulna: a river port at the edge of the Sundarban", bn: "খুলনা: সুন্দরবনের কিনারে এক নদী-বন্দর শহর" },
+        summary: { en: "A working river city on the Rupsha and Bhairab, the usual gateway to the Sundarban, and a region where salinity shapes the water people can drink.",
+                   bn: "রূপসা ও ভৈরব নদীর তীরের কর্মব্যস্ত শহর, সুন্দরবনের চেনা প্রবেশদ্বার, আর এমন এক অঞ্চল যেখানে লবণাক্ততা ঠিক করে দেয় মানুষ কী পানি খেতে পারবে।" },
+        related: [ { label: { en: "Read about the Sundarban", bn: "সুন্দরবনের লেখাটি পড়ুন" }, href: "travel.html?p=sundarban" }, { label: { en: "See my Paikgachha water-quality paper", bn: "আমার পাইকগাছার পানির মান বিষয়ক গবেষণাপত্র দেখুন" }, href: "research.html#conferences" } ],
+        body: {
+          en: ["Khulna is the third-largest city of Bangladesh, in the south-west on the Rupsha and Bhairab rivers. It is an old river port and an industrial hub, close to Mongla Port, the country's second-largest seaport, and it is the usual starting point for trips to the Sundarban.",
+               "## A working river city",
+               "The city is built around its rivers: the Khulna river port, the shipyard, jute and seafood industries, and the Khan Jahan Ali Bridge, which has linked Khulna with the rest of the country across the Rupsha since 2005. An evening on the Rupsha embankment is a good way to watch the boats and the light.",
+               "## Where salt shapes the water",
+               "Khulna district lies just north of the Sundarban, and its southern upazilas border the forest. Tidal rivers cut through the land, and Paikgachha is known for shrimp farming in ponds called ghers. Salt water travels inland along these rivers, so what people can drink and what farmers can grow is always tied to salinity.",
+               "This is the setting of several of my papers. One studies the hydro-chemical quality of groundwater and river water for drinking in Paikgachha Upazila, and I have worked on meteorological drought across the Barisal and Khulna divisions with SPEI-12, a manuscript still in preparation. Three of my conference papers were also part of the 2nd International Conference on Environment, held by Khulna University in March 2024.",
+               "## If you go",
+               "Khulna works well as a base. From the city, roads and rivers lead to the Sundarban and to Bagerhat, the UNESCO World Heritage mosque city. I wrote about the forest itself in my Sundarban post.",
+               "Khulna reminds me that in the delta, cities, forests and salt water share one river system, and that water planning here has to account for all three."],
+          bn: ["খুলনা বাংলাদেশের তৃতীয় বৃহত্তম শহর, দক্ষিণ-পশ্চিমে রূপসা ও ভৈরব নদীর তীরে। এটি একটি পুরোনো নদী-বন্দর ও শিল্পকেন্দ্র, দেশের দ্বিতীয় বৃহত্তম সমুদ্রবন্দর মোংলার কাছে, আর সুন্দরবন ভ্রমণের চেনা শুরুর জায়গা।",
+               "## কর্মব্যস্ত নদীর শহর",
+               "শহরটি গড়ে উঠেছে নদীকে ঘিরে: খুলনা নদী-বন্দর, শিপইয়ার্ড, পাট ও সামুদ্রিক খাদ্য শিল্প, আর খান জাহান আলী সেতু, যা ২০০৫ সাল থেকে রূপসার ওপর দিয়ে খুলনাকে দেশের বাকি অংশের সঙ্গে জুড়েছে। রূপসার পাড়ে একটি সন্ধ্যা কাটিয়ে নৌকা আর আলোর খেলা দেখা যায়।",
+               "## যেখানে লবণ পানির চরিত্র ঠিক করে",
+               "খুলনা জেলা সুন্দরবনের ঠিক উত্তরে, আর এর দক্ষিণের উপজেলাগুলো বনের সীমানায়। জোয়ার-ভাটার নদী জমিকে কেটে গেছে, আর পাইকগাছা ঘের বা পুকুরে চিংড়ি চাষের জন্য পরিচিত। এই নদীগুলো ধরে লোনা পানি ভেতরে ঢোকে, তাই মানুষ কী পানি খেতে পারবে আর কৃষক কী ফলাতে পারবেন, তা সবসময় লবণাক্ততার সঙ্গে জড়িয়ে থাকে।",
+               "আমার বেশ কয়েকটি গবেষণাপত্রের পটভূমি এটি। একটিতে পাইকগাছা উপজেলার খাওয়ার পানির জন্য ভূগর্ভস্থ ও নদীর পানির হাইড্রো-কেমিক্যাল মান দেখা হয়েছে, আর বরিশাল ও খুলনা বিভাগজুড়ে SPEI-12 দিয়ে আবহাওয়াগত খরা নিয়ে কাজ করেছি, যার পাণ্ডুলিপি এখনো প্রস্তুতির পর্যায়ে। ২০২৪ সালের মার্চে খুলনা বিশ্ববিদ্যালয় আয়োজিত ২য় আন্তর্জাতিক পরিবেশ সম্মেলনেও আমার তিনটি সম্মেলন-গবেষণাপত্র ছিল।",
+               "## যেতে চাইলে",
+               "খুলনা ভ্রমণের ঘাঁটি হিসেবে ভালো। শহর থেকে সড়ক ও নদীপথে যাওয়া যায় সুন্দরবনে আর ইউনেস্কোর বিশ্ব ঐতিহ্য মসজিদ-নগরী বাগেরহাটে। বনটি নিয়ে আমি সুন্দরবনের লেখায় আলাদা করে লিখেছি।",
+               "খুলনা মনে করিয়ে দেয়, ব-দ্বীপে শহর, বন আর লোনা পানি একই নদীব্যবস্থার অংশ, আর এখানকার পানি-পরিকল্পনায় তিনটিকেই হিসাবে রাখতে হয়।"] } },
 
       { id: "bogura", soon: true, date: "", when: "", place: "Bogura", region: { en: "Northern Bangladesh", bn: "উত্তরবঙ্গ" }, tags: ["North", "Heritage"],
         art: "city", tone: "sand", cover: "", photos: [],

@@ -17,7 +17,7 @@
     var R = S.research, T = S.thesis, pubs = S.publications, cf = S.conferences;
     var cnt = function (st) { return pubs.filter(function (p) { return p.status === st; }).length; };
     var years = []; cf.forEach(function (c) { if (years.indexOf(c.year) < 0) years.push(c.year); });
-    var rs = '<div class="rstats">' + [[cnt('published'), 'journal articles', 'book'], [cnt('review') + cnt('prep'), 'under review or in preparation', 'clock'], [cf.length, 'conference papers', 'mic'], [cf.filter(function (c) { return c.award; }).length, 'presenting-paper awards', 'award']].map(function (x) { return '<span>' + ic(x[2]) + '<b>' + x[0] + '</b> ' + x[1] + '</span>'; }).join('') + '</div>';
+    var rs = '<div class="rstats">' + [[cnt('published'), 'journal articles', 'book'], [cnt('review') + cnt('prep'), 'under review or in progress', 'clock'], [cf.length, 'conference papers', 'mic'], [S.confList.length, 'conferences, each with a participation award', 'award']].map(function (x) { return '<span>' + ic(x[2]) + '<b>' + x[0] + '</b> ' + x[1] + '</span>'; }).join('') + '</div>';
     $('#app').innerHTML = phead('flask', R.kicker, R.headline, R.statement, rs, '', ['drop', 'chart']) +
       '<section><div class="wrap">' + sh('Research areas', 'What I <em>explore</em>', 'Four broad areas of work. Open a card to see the questions and the studies behind it.') + '<div class="cards c4">' + S.areas.map(areaCard).join('') + '</div>' +
       '<h3 class="subh rv"><i></i><span>Topics I keep coming back to</span><i></i></h3><div class="cards c4 sm-2">' + S.interests.map(function (it) { return U.pages._interestCard(it, true); }).join('') + '</div></div></section>' +
@@ -25,16 +25,14 @@
       '<article class="card thesis rv"><div class="tart">' + artTile('river', 'sky') + '</div><div><span class="chip">' + ic('clock') + esc(T.status) + '</span><h3>' + esc(T.title) + '</h3><dl>' +
       [['Supervisor', T.supervisor], ['Where', T.where], ['Question', T.question], ['Study area', T.area], ['Methods', T.methods], ['Progress', T.progress]].filter(function (r) { return r[1]; }).map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join('') + '</dl></div></article></div></section>' +
       '<section id="pubs"><div class="wrap">' + sh('Journal articles', 'Peer-reviewed <em>publications</em>', 'Open any card for the study area, method, key findings and a ready citation.') +
-      '<div class="tabs" id="ptabs"><button class="on" data-f="all">All <small>' + pubs.length + '</small></button><button data-f="published">Published <small>' + cnt('published') + '</small></button><button data-f="review">Under review <small>' + cnt('review') + '</small></button><button data-f="prep">In preparation <small>' + cnt('prep') + '</small></button></div>' +
+      '<div class="tabs" id="ptabs"><button class="on" data-f="all">All <small>' + pubs.length + '</small></button><button data-f="published">Published <small>' + cnt('published') + '</small></button><button data-f="review">Under review <small>' + cnt('review') + '</small></button><button data-f="prep">In progress <small>' + cnt('prep') + '</small></button></div>' +
       '<div class="cards c3" id="pg"></div></div></section>' +
-      '<section class="tint"><div class="wrap">' + sh('Conferences', 'Conference <em>papers</em>', 'Open a card to see the details.') +
-      '<div class="tabs" id="ctabs"><button class="on" data-f="all">All <small>' + cf.length + '</small></button>' + years.map(function (y) { return '<button data-f="' + y + '">' + y + '</button>'; }).join('') + '<button data-f="award">' + ic('award') + ' Awards</button></div>' +
-      '<div class="cards c3" id="cg"></div></div></section>' +
+      '<section class="tint" id="conferences"><div class="wrap">' + sh('Conferences', 'Conferences I have <em>presented at</em>', 'Open a conference to see the paper or papers I presented there.') +
+      '<div class="cards c3" id="cg">' + S.confList.map(function (g) { return U.confGroupCard(g).replace(' rv"', ' rv in"'); }).join('') + '</div></div></section>' +
       U.band('Read more of my work', 'Full lists are on my academic profiles.', ['scholar', 'researchgate', 'orcid'].filter(function (k) { return S.links[k]; }).map(function (k, i) { return '<a class="btn ' + (i ? '' : 'pri') + '" target="_blank" rel="noopener" href="' + esc(S.links[k]) + '">' + ic(k === 'scholar' ? 'grad' : k === 'orcid' ? 'orcid' : 'rg') + ' ' + { scholar: 'Google Scholar', researchgate: 'ResearchGate', orcid: 'ORCID' }[k] + '</a>'; }).join(''));
     function drawP(f) { $('#pg').innerHTML = pubs.map(function (p, i) { return (f === 'all' || p.status === f) ? U.pubCard(p, i).replace(' rv"', ' rv in"') : ''; }).join(''); bindCards($('#pg')); }
-    function drawC(f) { $('#cg').innerHTML = cf.map(function (c, i) { return (f === 'all' || (f === 'award' ? c.award : String(c.year) === f)) ? U.confCard(c, i).replace(' rv"', ' rv in"') : ''; }).join(''); bindCards($('#cg')); }
-    drawP('all'); drawC('all');
-    [['#ptabs', drawP], ['#ctabs', drawC]].forEach(function (x) { $$(x[0] + ' button').forEach(function (b) { b.addEventListener('click', function () { $$(x[0] + ' button').forEach(function (y) { y.classList.toggle('on', y === b); }); x[1](b.dataset.f); }); }); });
+    drawP('all'); bindCards($('#cg'));
+    [['#ptabs', drawP]].forEach(function (x) { $$(x[0] + ' button').forEach(function (b) { b.addEventListener('click', function () { $$(x[0] + ' button').forEach(function (y) { y.classList.toggle('on', y === b); }); x[1](b.dataset.f); }); }); });
   }
 
   /* ---------- Projects ---------- */
@@ -68,7 +66,7 @@
     $('#app').innerHTML = phead('folder', 'Project', p.title, p.summary, '<div class="tags" style="margin-top:20px">' + tags(p.tags) + '</div>', '<a class="crumb" href="projects.html">' + ic('back') + ' All projects</a><br>', ['bolt', 'leaf']) +
       '<section><div class="wrap pd"><div><div class="figure">' + pic(p.photo || p.map, p.title, p.art || 'folder', '', U.KT[p.kind] || '') + '</div>' + (p.gallery && p.gallery.length ? '<div class="imgs shots">' + p.gallery.map(function (f) { return '<div>' + pic(f, p.title, 'camera') + '</div>'; }).join('') + '</div>' : '') +
       fullT + sec('The problem', p.problem, 'target') + sec('Approach', p.method, 'layers') + toolz + sec('Results', p.results, 'chart') + finds + vid +
-      (p.results || p.video || p.findings ? '' : '<div class="soon" style="margin-top:24px">' + ic('clock') + ' More details, photos and results will be added soon.</div>') + mats + relH + ack + '</div>' +
+      mats + relH + ack + '</div>' +
       '<aside class="side">' + rows.map(function (r) { return '<div>' + ib(r[2]) + '<span><small>' + r[0] + '</small>' + esc(r[1]) + '</span></div>'; }).join('') + '</aside></div></section>' +
       '<section class="tint"><div class="wrap">' + sh('More', 'Other <em>projects</em>', '') + '<div class="cards c3">' + others.map(U.projectCard).join('') + '</div></div></section>' + U.ctaBand();
   }

@@ -720,9 +720,9 @@ p,.modal li,.blk li{text-align:justify;text-justify:inter-word;-webkit-hyphens:a
 .stat{min-width:0}.stat>div{min-width:0}.stat .l{overflow-wrap:anywhere}
 @media (max-width:420px){.stat{flex-direction:column;align-items:flex-start;gap:8px}}
 
-/* phones: narrow columns look gappy when justified, so paragraphs go back to left-aligned there */
+/* phones: keep paragraphs justified (hyphenation keeps word gaps small) */
 @media (max-width:600px){
-  p,.modal li,.blk li{text-align:left;-webkit-hyphens:manual;hyphens:manual}
+  p,.modal li,.blk li{text-align:justify;text-justify:inter-word;-webkit-hyphens:auto;hyphens:auto;word-spacing:-.02em}
   .sh .lead,p.ctr{text-align:center}
   .pf{max-width:318px}
   .pf .lay.l1{transform:translate(10px,10px)}
@@ -865,7 +865,7 @@ body.pg-out{opacity:0;transition:opacity .2s ease}
 .bdmap svg{display:block;width:100%;height:auto}
 .bd{fill:#E4EBE7;stroke:#fff;stroke-width:1.4;stroke-linejoin:round}
 .bd.on{stroke:#fff;stroke-width:1.6;transition:filter .2s}
-.bd.on.gold{fill:#C9A06A}.bd.on.sky{fill:#5C97BC}.bd.on.teal{fill:#2C7F79}.bd.on.soon{fill:#E9DCC3}
+.bd.on.gold{fill:#C9A06A}.bd.on.sky{fill:#5C97BC}.bd.on.teal{fill:#2C7F79}.bd.on.soon{fill:#E9DCC3}.bd.on.rose{fill:#CB8C8A}.bd.on.sage{fill:#8DAE80}.bd.on.lav{fill:#9B8FC4}
 a.bg{cursor:pointer}
 a.bg:hover .bd.on{filter:brightness(.9)}
 .bl{font:700 34px var(--sans);fill:#1F2933;paint-order:stroke;stroke:#fff;stroke-width:8px;stroke-linejoin:round;pointer-events:none}
@@ -877,8 +877,16 @@ a.bg:hover .bd.on{filter:brightness(.9)}
 .bi em{font-style:normal;font-size:.76rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#94693A}
 .bi.soon{opacity:.8;box-shadow:none}
 .sw{flex:none;width:18px;height:18px;border-radius:6px;background:#2C7F79}
-.sw.gold{background:#C9A06A}.sw.sky{background:#5C97BC}.sw.soon{background:#E9DCC3}
+.sw.gold{background:#C9A06A}.sw.sky{background:#5C97BC}.sw.soon{background:#E9DCC3}.sw.teal{background:#2C7F79}.sw.rose{background:#CB8C8A}.sw.sage{background:#8DAE80}.sw.lav{background:#9B8FC4}
 .bdl .src{display:block;margin-top:14px;color:var(--mute);font-size:.74rem}
 .bdnote{margin-top:26px;color:var(--mute);font-size:.9rem}
 .bdnote a{color:var(--teal);font-weight:700}
 @media (max-width:860px){.bdm{grid-template-columns:1fr;gap:26px;max-width:480px}.bdmap{padding:12px}}
+
+/* conference group cards */
+.conf.cg h3{font-size:1.18rem}
+.conf.cg .cmeta{display:flex;flex-wrap:wrap;gap:8px 16px;color:var(--mute);font-size:.84rem;font-weight:600}
+.conf.cg .cmeta span{display:inline-flex;align-items:center;gap:6px}
+.conf.cg .cmeta .ic{color:var(--gold)}
+.conf .ribbon{position:static;font-size:.72rem}
+@media (min-width:761px){.cards.c2>.org:last-child:nth-child(odd){grid-column:1/-1;width:calc(50% - 12px);justify-self:center}}
