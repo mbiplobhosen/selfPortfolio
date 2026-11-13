@@ -39,6 +39,6 @@
     if (field.title === 'Drone surveys') field.images = ['photos/photo-01.jpg'];
   });
   S.trainings.forEach(function (training) {
-    if (training.title === 'Framing, Composition and Camera Manual Setting') training.images = ['photos/dps/dps-05.jpg'];
+    if (training.title === 'Framing, Composition and Camera Manual Setting') training.images = ['photos/dps/dps-07.jpg', 'photos/dps/dps-05.jpg'];
   });
 })();

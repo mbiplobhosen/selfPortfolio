@@ -19,25 +19,29 @@
    } else media.appendChild(img);
    el.prepend(media);
   }
-  scene(document.querySelector('.hero'),'home-hero','scenic-home');
-  if(page==='photography')scene(document.querySelector('#app>.ph'),'photography-original','scenic-photo');
+  if(page==='photography')scene(document.querySelector('#app>.ph'),'photography-v13','scenic-photo');
   else scene(document.querySelector('#app>.ph'),page==='project'?'projects-hero':page+'-hero','scenic-header');
   var rules={
    home:{'Photography':['home-gallery'],'Explore':['home-explore','panel']},
    about:{'Education':['about-education'],'More about me':['about-beyond'],'Journey':['about-journey','panel']},
    experience:{'Work experience':['experience-work'],'Training & workshops':['experience-training'],'Field experience':['experience-field','panel']},
-   skills:{'Toolbox':['skills-toolbox'],'Equipment & level':['skills-gear','panel']},
+   skills:{'Toolbox':['skills-toolbox'],'Equipment & level':['skills-gear','cards']},
    research:{'MSc thesis':['research-thesis'],'Conferences':['research-conferences','panel']}
   };
   document.querySelectorAll('#app>section .sh .eb span').forEach(function(label){
    var rule=(rules[page]||{})[label.textContent.trim()];if(!rule)return;
-   var section=label.closest('section');scene(rule[1]==='panel'?section.querySelector('.wrap'):section,rule[0],rule[1]==='panel'?'scenic-panel':'scenic-section');
+   var section=label.closest('section');
+   if (rule[1] === 'cards') {
+    scene(section.querySelector('.cards'),rule[0],'scenic-gear');
+   } else {
+    scene(rule[1]==='panel'?section.querySelector('.wrap'):section,rule[0],rule[1]==='panel'?'scenic-panel':'scenic-section');
+   }
   });
   scene(document.querySelector('.about .ar'),'about-story','scenic-column');
   scene(document.querySelector('.behind>div:last-child'),'photography-camera','scenic-column');
   scene(document.querySelector('.bdl'),'travel-places','scenic-column');
   document.querySelectorAll('.band').forEach(function(el){scene(el,'cta-'+page,'scenic-band');});
-  scene(document.querySelector('.phd2'),'home-phd','scenic-band');
+  scene(document.querySelector('.phd2'),'home-phd','scenic-phd');
   scene(document.querySelector('.foot'),'footer-panorama','scenic-footer');
  });
 })();

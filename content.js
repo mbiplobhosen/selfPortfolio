@@ -190,7 +190,7 @@ window.SITE = {
       badgesH: "Societies and organisations",
       badges: [ { t: "GSTU Photographic Society", icon: "camera", tone: "gold" }, { t: "RDSA · Rangpur Divisional Students Association", icon: "users", tone: "sky" }, { t: "Thakurgaon Students Association", icon: "users", tone: "rose" }, { t: "Green Voice", icon: "leaf", tone: "" } ],
       galleryH: "Campus memories", galleryAlbum: "GSTU · 2018 – 2021",
-      gallery: [ { file: "photos/bsc/gstu-06.jpg", title: "On campus" }, { file: "photos/bsc/gstu-07.jpg", title: "At an event" }, { file: "photos/bsc/gstu-08.jpg", title: "At an event" }, { file: "photos/bsc/gstu-09.jpg", title: "On the field" }, { file: "photos/bsc/gstu-10.jpg", title: "Among the lotuses" }, { file: "photos/bsc/gstu-03.jpg", title: "Group on campus" }, { file: "photos/bsc/gstu-04.jpg", title: "My thesis" }, { file: "photos/bsc/gstu-01.jpg", title: "With friends" }, { file: "photos/bsc/gstu-02.jpg", title: "With friends" }, { file: "photos/bsc/gstu-05.jpg", title: "With friends on campus" } ] }
+      gallery: [ { file: "photos/bsc/gstu-campus-group.webp", title: "With friends on campus" }, { file: "photos/bsc/gstu-07.jpg", title: "At an event" }, { file: "photos/bsc/gstu-08.jpg", title: "At an event" }, { file: "photos/bsc/gstu-09.jpg", title: "On the field" }, { file: "photos/bsc/gstu-10.jpg", title: "Among the lotuses" }, { file: "photos/bsc/gstu-04.jpg", title: "My thesis" }, { file: "photos/bsc/gstu-01.jpg", title: "With friends" }, { file: "photos/bsc/gstu-02.jpg", title: "With friends" }, { file: "photos/bsc/gstu-05.jpg", title: "With friends on campus" } ] }
   ],
 
   /* Beyond the lab (About পেজ — ক্লিকে popup). link = popup-এর নিচের বাটন */
@@ -345,11 +345,11 @@ window.SITE = {
     { icon: "camera", art: "camera", tone: "gold", org: "DUET Photographic Society", when: "", text: "Started the society at DUET and trained members through photography workshops.",
       more: ["I founded the DUET Photographic Society and later served as its Chief Instructor and then its Advisor.", "The society runs workshops on camera settings, composition and light for students at DUET."],
       roles: [ { role: "Founder" }, { role: "Chief Instructor", when: "2024 – 2025" }, { role: "Advisor", when: "2025 – present" } ],
-      images: [], link: { label: "See workshop photos", href: "photography.html" } },
+      images: ["photos/dps/dps-07.jpg"], link: { label: "See workshop photos", href: "photography.html" } },
     { icon: "users", art: "people", tone: "sky", org: "Rangpur Divisional Students Association (RDSA), GSTU", when: "", text: "Students' association of Rangpur division at Gopalganj Science and Technology University.",
       more: ["RDSA, the Rangpur Divisional Students Association, brings together students of Rangpur division at Gopalganj Science and Technology University.", "I served on its executive side as Environmental Secretary and Photography Secretary."],
       roles: [ { role: "Environmental Secretary" }, { role: "Photography Secretary" } ], images: [] },
-    { icon: "leaf", art: "nature", tone: "", org: "Green Voice", when: "", text: "Environmental volunteer organisation.",
+    { icon: "leaf", art: "leaf", tone: "", org: "Green Voice", when: "", text: "Environmental volunteer organisation.",
       more: ["Green Voice is an environmental volunteer organisation.", "I was the Environment related secretary of its GSTU team (2020 – 2023) and convener of its Ranisankail Upazila branch."],
       roles: [ { role: "Environment related secretary, GSTU team", when: "2020 – 2023" }, { role: "Convener, Ranisankail Upazila branch" } ], images: [] },
     { icon: "camera", art: "camera", tone: "rose", org: "GSTU Photographic Society", when: "2018 – 2023", text: "Part of the society through my undergraduate years.",
@@ -358,7 +358,7 @@ window.SITE = {
     { icon: "news", art: "people", tone: "rose", org: "Bishal Bangla Online", when: "Sep 2020 – Aug 2023", text: "Campus journalist from September 2020 to August 2023.",
       more: ["I worked as a campus journalist for Bishal Bangla Online from September 2020 to August 2023."],
       roles: [ { role: "Campus Journalist", when: "Sep 2020 – Aug 2023" } ], images: [] },
-    { icon: "news", art: "flood", tone: "sky", org: "Khola Kagoj Pathok Forum \"Egarojon\", GSTU", when: "May 2019 – Aug 2023", text: "Disaster and Relief Affairs Editor of a readers' forum at GSTU.",
+    { icon: "news", art: "relief", tone: "sky", org: "Khola Kagoj Pathok Forum \"Egarojon\", GSTU", when: "May 2019 – Aug 2023", text: "Disaster and Relief Affairs Editor of a readers' forum at GSTU.",
       more: ["I was the Disaster and Relief Affairs Editor of the Khola Kagoj Pathok Forum \"Egarojon\" at GSTU, from May 2019 to August 2023."],
       roles: [ { role: "Disaster and Relief Affairs Editor", when: "May 2019 – Aug 2023" } ], images: [] },
     { icon: "shield", art: "leaf", tone: "gold", org: "Keya Students Forum Bangladesh (KSFB)", when: "Feb 2020 – Aug 2023", text: "Environmental Compliance Inspector from February 2020 to August 2023.",
@@ -665,7 +665,7 @@ window.SITE = {
       tools: ["ArcGIS", "DSAS", "Satellite imagery", "Borehole soil sampling", "Delft3D"],
       ack: "Supported by the Youth-Led Research Grant of the project \"Enhancing Coastal Resilience Through Nature-Based Solutions\" at the Institute of Water and Flood Management (IWFM), BUET, with the Global Center on Adaptation (GCA).",
       related: ["ctcrp-documentary"],
-      materials: [], photo: "photos/projects/kuakata-field.jpg", photoNote: "Field visit at Kuakata Sea Beach", map: "" },
+      materials: [], photo: "photos/projects/kuakata-coast.webp", photoNote: "Aerial view of the Kuakata coast (AI-assisted edit)", map: "" },
 
     { id: "ctcrp-documentary", kind: "media", art: "film", featured: false, status: "done", statusLabel: "Video documentary",
       title: "Video documentary: Coastal Towns Climate Resilience Project", period: "November 2025",
@@ -783,9 +783,9 @@ window.SITE = {
      soon: true দিলে কার্ডে "Story coming soon" দেখায়; লেখা শেষ হলে লাইনটা মুছে দিন।        */
   travel: {
     kicker: "Travel blog",
-    headline: "Notes from the road, in English and Bangla.",
-    intro: { en: "Stories and photographs from the places I travel to around Bangladesh. Every post comes in English and in Bangla.",
-             bn: "বাংলাদেশের বিভিন্ন জায়গায় ভ্রমণের গল্প ও ছবি। প্রতিটা লেখা ইংরেজি ও বাংলা দুই ভাষাতেই থাকবে।" },
+    headline: "Along the roads and rivers of Bangladesh",
+    intro: { en: "Stories and photographs of river towns, quiet roads, and the people I meet along the way.",
+             bn: "নদীর পাড়ের জনপদ, নিরিবিলি পথ আর পথে দেখা মানুষের গল্প ও ছবি।" },
     /* ভ্রমণের মানচিত্র: districts = শেপফাইলের জেলার নাম (ইংরেজি বানানে), post = নিচের পোস্টের id */
     map: {
       title: { en: "Places I have been", bn: "যেসব জায়গায় গিয়েছি" },

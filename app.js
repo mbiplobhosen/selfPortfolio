@@ -246,7 +246,11 @@
     var o = { art: g.award ? 'medal' : 'people', tone: 'gold', kicker: g.date, kickerIcon: 'cal', title: g.name, sub: g.short !== g.name ? g.short : '',
       chips: g.award ? ['Participation award'] : [], text: g.award ? ['I presented at this conference and received a participation award.'] : [],
       confs: confPapers(g), confsH: n > 1 ? 'Papers presented (' + n + ')' : 'Paper presented', gallery: g.gallery, galleryH: g.galleryH, galleryAlbum: g.short };
-    return '<article class="card conf cg lift btnlike rv"' + btn(o) + '>' + (g.gallery && g.gallery.length ? '<div class="conference-photo">' + pic(g.gallery[0].file, g.short, 'people') + '</div>' : '') + '<div class="top"><span class="yr">' + esc(g.year) + '</span>' + (g.award ? '<span class="ribbon">' + ic('award') + 'Participation award</span>' : '') + '</div>' +
+    var conferenceArt = { icswer2026: 'river', ruet2025: 'work', icshsd2025: 'people', icekhulna2024: 'leaf' };
+    var visual = g.gallery && g.gallery.length
+      ? pic(g.gallery[0].file, g.gallery[0].title, 'people', g.id === 'iccesd2026' ? 'conference-portrait' : '')
+      : artTile(conferenceArt[g.id] || 'people', 'gold');
+    return '<article class="card conf cg lift btnlike rv"' + btn(o) + '><div class="conference-photo">' + visual + '</div>' + '<div class="top"><span class="yr">' + esc(g.year) + '</span>' + (g.award ? '<span class="ribbon">' + ic('award') + 'Participation award</span>' : '') + '</div>' +
       '<h3>' + esc(g.short) + '</h3>' + (g.name === g.short ? '' : '<div class="ven">' + ic('pin') + '<span class="clamp">' + esc(g.name) + '</span></div>') + '<div class="cmeta"><span>' + ic('cal') + esc(g.date) + '</span><span>' + ic('mic') + n + (n === 1 ? ' paper' : ' papers') + '</span></div><span class="more">View papers ' + ic('arrow') + '</span></article>';
   }
   function confModal(i) {
@@ -274,7 +278,7 @@
 
   var KT = { research: '', consulting: 'gold', tool: 'sky', media: 'rose', web: 'sand' };
   function projectCard(p) {
-    return '<a class="card pcard lift rv" href="project.html?p=' + esc(p.id) + '"><div class="tw"><div class="thumb">' + pic(p.photo || p.map, p.title, p.art || 'folder', '', KT[p.kind] || '') + '</div><span class="chip st">' + esc(p.statusLabel) + '</span></div>' +
+    return '<a class="card pcard lift rv" href="project.html?p=' + esc(p.id) + '"><div class="tw"><div class="thumb">' + pic(p.photo || p.map, p.title, p.art || 'folder', p.id === 'kuakata-research' ? 'kuakata-cover' : '', KT[p.kind] || '') + '</div><span class="chip st">' + esc(p.statusLabel) + '</span></div>' +
       '<div class="cb"><h3>' + esc(p.title) + '</h3><p class="clamp">' + esc(p.summary) + '</p><div class="tags">' + p.tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div><span class="more">' + (p.period ? esc(p.period) + ' · ' : '') + 'View project ' + ic('arrow') + '</span></div></a>';
   }
   function statsHTML() {

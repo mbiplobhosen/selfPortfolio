@@ -10,9 +10,8 @@ body :is(#app,#foot) .scenic::before,body #app section.scenic::after{display:non
 .scenic-header,.scenic-home{background:var(--bg)}
 .scenic-header .scene-media img,.scenic-home .scene-media img{height:100%;width:100%;max-width:2400px;object-fit:contain;object-position:right center;opacity:1}
 .scenic-header .scene-media::after,.scenic-home .scene-media::after{background:linear-gradient(0deg,var(--bg),transparent 24%),linear-gradient(90deg,var(--bg) 0%,#f7f8f5f5 32%,#f7f8f580 56%,#f7f8f510 80%,transparent)}
-.scenic-header>.cont,.scenic-header .pg,.scenic-header .dots{display:none}
+.scenic-header>.cont,.scenic-header .dots{display:none}
 .scenic-header .pt{max-width:800px}
-body #app .hero::before{display:none}
 .scenic-panel{padding:44px 32px;border-radius:30px;border:1px solid #d8e5df;overflow:hidden;background:#f2f5ef}
 .scenic-panel .scene-media img{opacity:.52;bottom:0}
 .scenic-column{padding:28px;border-radius:26px;min-width:0;overflow:hidden;background:#f4f6f0}
@@ -35,7 +34,7 @@ body #app .scenic-photo{background:#132c29;padding:95px 0 120px;min-height:650px
 .scenic-photo .pt{max-width:680px}
 .scenic-photo h1,.scenic-photo h1 em,.scenic-photo .s{color:#fff}
 .scenic-photo h1{font-size:clamp(2.3rem,4.3vw,4.2rem)}
-.scenic-photo .pg,.scenic-photo>.cont,.scenic-photo .hbadge{display:none}
+.scenic-photo>.cont,.scenic-photo .hbadge{display:none}
 .scenic-photo .s{max-width:590px}
 .photo-themes{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
 .photo-themes span{display:inline-flex;align-items:center;gap:9px;padding:12px 16px;border:1px solid #ffffff50;border-radius:28px;background:#173c37b0;color:white}
@@ -108,4 +107,146 @@ body :is(#app,#foot) .scenic>.scene-media{position:absolute;inset:0;z-index:0}
 /* Fade the actual panorama bounds, including on ultrawide displays. */
 @media(min-width:761px){
  .scenic-footer .scene-media img{height:auto;width:100%;max-width:2172px;top:auto;bottom:0;mask-image:linear-gradient(transparent,#000 26%),linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-composite:intersect;-webkit-mask-image:linear-gradient(transparent,#000 26%),linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-composite:source-in}
+}
+
+/* Place the illustration behind the original PhD layout. */
+.scenic-phd .scene-media img {
+  inset: 0 0 auto auto;
+  transform: none;
+  width: min(52%, 750px);
+  height: clamp(180px, 25vw, 340px);
+  object-fit: cover;
+  object-position: right center;
+  opacity: .9;
+  mask-image: radial-gradient(ellipse 100% 110% at top right, #000 17%, transparent 87%);
+}
+.scenic-phd .scene-media::after { content: none; }
+
+.scenic-gear .scene-media img {
+  height: 100%;
+  object-fit: cover;
+  mask-image: linear-gradient(transparent, #000 20%, #000 78%, transparent);
+}
+.scenic-gear > .card { position: relative; z-index: 1; }
+
+.conference-photo img, #orgs .aw > img.organisation-photo {
+  object-fit: cover;
+}
+.conference-photo img.conference-portrait { object-position: center 20%; }
+.conference-photo > .arttile { width: 100%; height: 100%; aspect-ratio: auto; }
+#orgs .aw > img.organisation-photo { object-position: center 40%; }
+
+body .f .fplane { aspect-ratio: 2.05; overflow: hidden; }
+body .f .fplane img {
+  height: 100%;
+  object-fit: cover;
+  object-position: center 68%;
+}
+
+.scenic-header .pg, .scenic-photo .pg { display: block; scale: .82; }
+.scenic-header .pg .ring {
+  border-color: #21625c9c;
+}
+.scenic-header .pg .ring.r2 { border-color: #ae7839ad; }
+.scenic-photo .pg {
+  align-self: start;
+  justify-self: end;
+  scale: .56;
+  transform-origin: top right;
+}
+.scenic-photo .pg .ring { border-color: #e6f5ed9c; }
+.scenic-photo .pg .ring.r2 { border-color: #f0d39db3; }
+.scenic-photo .scene-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 69% center;
+}
+.scenic-photo .scene-media::after {
+  background: linear-gradient(90deg,#102c29ec 0%,#102c29bd 36%,#102c2933 69%,transparent 92%),
+    linear-gradient(0deg,#102c2955,transparent 38%);
+}
+
+@media (max-width: 760px) {
+  .scenic-phd .scene-media img { width: 65%; opacity: .45; }
+  .scenic-header .pg, .scenic-photo .pg {
+    justify-self: end;
+    margin: -50px -36px -48px 0;
+    scale: .48;
+    transform-origin: right center;
+    pointer-events: none;
+  }
+  body #app .scenic-photo { min-height: 630px; padding: 50px 0 45px; }
+  .scenic-photo .scene-media img { object-position: 65% center; }
+  .scenic-photo .scene-media::after {
+    background: linear-gradient(180deg,#102c29ef 0%,#102c29ad 47%,#102c2933 82%);
+  }
+}
+body .f .fplane { display: block; }
+@media (max-width: 360px) {
+  .scenic-header .pg, .scenic-photo .pg { margin-right: -16px; }
+}
+@media (max-width: 760px) {
+  .scenic-header .pg, .scenic-photo .pg { margin-right: 0; }
+}
+
+/* Keep the hero artwork clear of the decorative orbit. */
+body #app .ph .pg { display: none; }
+
+/* Keep the fade away from the upper-right focal point. */
+.phd2 > .cont { display: none; }
+.scenic-phd .scene-media img {
+  opacity: 1;
+  mask-image: radial-gradient(ellipse 100% 110% at top right, #000 28%, transparent 87%);
+}
+@media (max-width: 760px) {
+  .scenic-phd .scene-media img { opacity: .58; }
+}
+
+/* Anchor the artwork to the outer edge while keeping a light text area. */
+.scenic-header .scene-media img {
+  inset: 0 0 auto auto;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  transform: none;
+  object-fit: cover;
+  object-position: right 22%;
+  mask-image: none;
+}
+.scenic-header .scene-media::after {
+  background: linear-gradient(90deg, var(--bg) 8%, #f7f8f5f0 31%, #f7f8f577 58%, transparent 83%),
+    linear-gradient(0deg, var(--bg), transparent 22%);
+}
+.mosaic .mi img, .edu .aw > img.education-cover,
+#training .aw > img.workshop-cover, .thumb > img.kuakata-cover {
+  object-fit: cover;
+}
+.edu .education-cover { object-position: center 37%; }
+#training .workshop-cover { object-position: center 36%; }
+.mosaic .mi img[src$="/photo-03.jpg"] { object-position: center 43%; }
+.mosaic .mi span {
+  right: auto;
+  max-width: calc(100% - 24px);
+  background: #102c29e8;
+  color: white;
+}
+@media (max-width: 760px) {
+  .scenic-header .scene-media img { object-position: 75% 20%; opacity: .85; }
+  .scenic-header .scene-media::after {
+    background: linear-gradient(180deg, #f7f8f5f7 0%, #f7f8f5e8 32%, #f7f8f5a0 68%, var(--bg));
+  }
+  body[data-page="experience"] .scenic-header { padding-bottom: clamp(190px, 48vw, 310px); }
+  body[data-page="experience"] .scenic-header .scene-media img {
+    top: auto;
+    bottom: 0;
+    height: clamp(185px, 48vw, 300px);
+    object-position: 79% 12%;
+  }
+  body[data-page="experience"] .scenic-header .scene-media::after {
+    background: linear-gradient(180deg, var(--bg) 0%, transparent 35%, transparent 84%, var(--bg));
+    inset: auto 0 0;
+    height: clamp(185px, 48vw, 300px);
+  }
 }
