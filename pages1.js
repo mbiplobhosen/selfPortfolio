@@ -74,7 +74,7 @@
       '<div class="rv" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">' + U.cvBtn('pri') + '<a class="btn" href="contact.html">' + ic('mail') + ' Contact me</a></div></div></div></section>' +
       '<section class="tint"><div class="wrap">' + sh('Education', 'Where I <em>studied</em>', 'Open a card for the details.') + '<div class="cards c2">' + S.education.map(function (e, i) {
         var o = { art: e.art, tone: tone(i + 1), kicker: e.when, kickerIcon: 'cal', title: e.title, sub: e.org, text: e.text, blocks: [{ h: 'Highlights', list: e.points }], badges: e.badges, badgesH: e.badgesH, gallery: e.gallery, galleryH: e.galleryH, galleryAlbum: e.galleryAlbum };
-        return '<article class="card edu lift rv"' + btn(o) + '><div class="aw">' + artTile(e.art, tone(i + 1)) + '</div><div class="cb"><span class="when">' + esc(e.when) + '</span><h3>' + esc(e.title) + '</h3><div class="org">' + esc(e.org) + '</div><p>' + esc(e.note) + '</p>' + more() + '</div></article>';
+        return '<article class="card edu lift rv"' + btn(o) + '><div class="aw">' + (e.gallery && e.gallery.length ? pic(e.gallery[0].file, e.org, e.art) : artTile(e.art, tone(i + 1))) + '</div><div class="cb"><span class="when">' + esc(e.when) + '</span><h3>' + esc(e.title) + '</h3><div class="org">' + esc(e.org) + '</div><p>' + esc(e.note) + '</p>' + more() + '</div></article>';
       }).join('') + '</div></div></section>' +
       '<section><div class="wrap">' + sh('More about me', 'Beyond the <em>lab</em>', 'The other half of the picture. Open a card to read more.') + '<div class="cards c3' + (S.beyond.length % 3 === 2 ? ' c5' : '') + '">' + S.beyond.map(function (b, i) {
         var o = { art: b.art, tone: b.tone, kicker: 'Beyond the lab', kickerIcon: 'star', title: b.title, text: b.text, blocks: [b.points ? { h: 'Highlights', list: b.points } : null, b.chips ? { h: 'Focus', chips: b.chips } : null], links: b.link ? [b.link] : [] };
@@ -90,8 +90,8 @@
     return '<section class="tint" id="training"><div class="wrap">' + sh('Training & workshops', 'Training I have <em>delivered</em>', S.trainingIntro) +
       '<div class="tags tp rv">' + (S.trainTopics || []).map(function (t) { return '<span class="chip">' + ic('check') + esc(t) + '</span>'; }).join('') + '</div>' +
       '<div class="cards c3">' + T.map(function (t, i) {
-        var o = { art: t.art, tone: t.tone, kicker: t.when, kickerIcon: 'cal', title: t.title, sub: t.org, text: t.text, chips: [t.role, t.mode].filter(Boolean), blocks: [t.points ? { h: 'Highlights', list: t.points } : null], links: t.link ? [t.link] : [] };
-        return '<article class="card ifc lift rv"' + btn(o) + '><div class="aw">' + artTile(t.art, t.tone) + '<span class="ribbon cur">' + ic('cal') + esc(t.when) + '</span></div><div class="cb"><span class="when">' + esc(t.role) + '</span><h3>' + esc(t.title) + '</h3><p>' + esc(t.org) + (t.mode ? ' · ' + esc(t.mode) : '') + '</p>' + more() + '</div></article>';
+        var o = { images: t.images, art: t.art, tone: t.tone, kicker: t.when, kickerIcon: 'cal', title: t.title, sub: t.org, text: t.text, chips: [t.role, t.mode].filter(Boolean), blocks: [t.points ? { h: 'Highlights', list: t.points } : null], links: t.link ? [t.link] : [] };
+        return '<article class="card ifc lift rv"' + btn(o) + '><div class="aw">' + (t.images ? pic(t.images[0], t.title || t.group, t.art) : artTile(t.art, t.tone)) + '<span class="ribbon cur">' + ic('cal') + esc(t.when) + '</span></div><div class="cb"><span class="when">' + esc(t.role) + '</span><h3>' + esc(t.title) + '</h3><p>' + esc(t.org) + (t.mode ? ' · ' + esc(t.mode) : '') + '</p>' + more() + '</div></article>';
       }).join('') + '</div></div></section>';
   }
   function experience() {
@@ -107,8 +107,8 @@
         return '<article class="card org lift rv"' + btn(o) + '><div class="aw">' + artTile(l.art, l.tone) + '</div><div class="cb"><h3>' + esc(l.org) + '</h3>' + (l.when ? '<span class="meta">' + esc(l.when) + '</span>' : '') + '<p>' + esc(l.text) + '</p><div class="tags">' + (l.roles || []).map(function (r) { return '<span class="tag">' + esc(r.role) + (r.when ? ' · ' + esc(r.when) : '') + '</span>'; }).join('') + '</div>' + more() + '</div></article>';
       }).join('') + '</div></div></section>' +
       '<section class="tint" id="field"><div class="wrap">' + sh('Field experience', 'Learning on the <em>ground</em>', 'The surveys and field work behind the data. Open a card to see what each one involves.') + '<div class="cards c4">' + S.fieldwork.map(function (f, i) {
-        var o = { art: f.art, tone: f.tone, kicker: 'Field experience', kickerIcon: 'leaf', title: f.title, text: [f.text], blocks: [{ h: 'What it involves', list: f.involves }, { h: 'What it builds', list: f.builds }] };
-        return '<article class="card ifc lift rv"' + btn(o) + '><div class="aw">' + artTile(f.art, f.tone) + '</div><div class="cb"><h3>' + esc(f.title) + '</h3><p>' + esc(f.text) + '</p>' + more('What I learned') + '</div></article>';
+        var o = { images: f.images, art: f.art, tone: f.tone, kicker: 'Field experience', kickerIcon: 'leaf', title: f.title, text: [f.text], blocks: [{ h: 'What it involves', list: f.involves }, { h: 'What it builds', list: f.builds }] };
+        return '<article class="card ifc lift rv"' + btn(o) + '><div class="aw">' + (f.images ? pic(f.images[0], f.title || f.group, f.art) : artTile(f.art, f.tone)) + '</div><div class="cb"><h3>' + esc(f.title) + '</h3><p>' + esc(f.text) + '</p>' + more('What I learned') + '</div></article>';
       }).join('') + '</div></div></section>' +
       '<section id="recognition"><div class="wrap">' + sh('Recognition', 'Awards & <em>memberships</em>', '') + '<div class="cards c2">' + A.map(function (a, i) {
         var o = { art: 'medal', tone: 'gold', kicker: a.when, kickerIcon: 'cal', title: a.title, sub: a.where, text: ['Participation award received at this conference, where I presented a paper. The papers are listed under Conferences on the Research page.'], blocks: [], links: [{ label: 'See the conference papers', href: 'research.html#conferences', icon: 'mic' }], gallery: a.gallery, galleryH: a.galleryH, galleryAlbum: a.galleryAlbum };
@@ -123,15 +123,15 @@
     $('#app').innerHTML = phead('tools', 'Skills & Training', 'Tools, methods and the craft behind my work', 'From satellite data and hydrological models to a drone, a camera and a code editor: the software, methods and training I rely on, and what I use each one for.', '', '', ['code', 'layers']) +
       '<section><div class="wrap">' + sh('Toolbox', 'What I can <em>do</em>', S.skills.length + ' groups of tools and methods. Open a card to see each tool and how I use it.') + '<div class="cards c4">' +
       S.skills.map(function (k, i) {
-        var o = { art: k.art, tone: k.tone, kicker: 'Skills', kickerIcon: 'tools', title: k.group, text: [k.used], blocks: [{ h: 'Tools', defs: k.tools }, { h: 'How I use it', list: k.uses }], pubs: k.pubs, links: k.link ? [k.link] : [] };
-        return '<article class="card skill lift rv"' + btn(o) + '><div class="aw">' + artTile(k.art, k.tone) + '</div><div class="cb"><h3>' + esc(k.group) + '</h3><div class="it">' + k.items.map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div><p>' + esc(k.used) + '</p>' + more() + '</div></article>';
+        var o = { images: k.images, art: k.art, tone: k.tone, kicker: 'Skills', kickerIcon: 'tools', title: k.group, text: [k.used], blocks: [{ h: 'Tools', defs: k.tools }, { h: 'How I use it', list: k.uses }], pubs: k.pubs, links: k.link ? [k.link] : [] };
+        return '<article class="card skill lift rv"' + btn(o) + '><div class="aw">' + (k.images ? pic(k.images[0], k.title || k.group, k.art) : artTile(k.art, k.tone)) + '</div><div class="cb"><h3>' + esc(k.group) + '</h3><div class="it">' + k.items.map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div><p>' + esc(k.used) + '</p>' + more() + '</div></article>';
       }).join('') + '</div></div></section>' +
       '<section class="tint"><div class="wrap">' + sh('Equipment & level', 'Gear and <em>programming</em>', '') + '<div class="cards c3">' + S.gear.map(function (g) {
         var o = { art: g.art, tone: g.tone, kicker: 'Equipment', kickerIcon: g.icon, title: g.name, sub: g.note, text: g.text, links: g.link ? [g.link] : [] };
         return '<article class="card ifc lift rv"' + btn(o) + '><div class="aw">' + artTile(g.art, g.tone) + '</div><div class="cb"><h3>' + esc(g.name) + (g.level ? ' <span class="lvl"><i class="on"></i><i class="on"></i><i></i></span>' : '') + '</h3><p>' + esc(g.note) + '</p>' + more() + '</div></article>';
       }).join('') + '</div></div></section>' +
       '<section><div class="wrap">' + sh('Training', 'Courses and <em>training</em>', '') + '<div class="cards c3">' + S.training.map(function (t, i) {
-        var o = { art: t.art, tone: tone(i), kicker: t.when, kickerIcon: 'cal', title: t.title, sub: t.where, text: [t.text] };
+        var o = { images: t.images, art: t.art, tone: tone(i), kicker: t.when, kickerIcon: 'cal', title: t.title, sub: t.where, text: [t.text] };
         return '<article class="card ifc lift rv"' + btn(o) + '><div class="aw">' + artTile(t.art, tone(i)) + '<span class="ribbon cur">' + ic('cal') + esc(t.when) + '</span></div><div class="cb"><h3>' + esc(t.title) + '</h3>' + (t.where ? '<p>' + esc(t.where) + '</p>' : '') + more() + '</div></article>';
       }).join('') + '</div></div></section>' + U.ctaBand();
   }

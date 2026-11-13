@@ -10,7 +10,7 @@
 
   /* ---------- Research ---------- */
   function areaCard(a) {
-    var o = { art: a.art, tone: a.tone, kicker: 'Research area', kickerIcon: 'flask', title: a.title, text: a.more, blocks: [{ h: 'Questions and work', list: a.points }, { h: 'Methods', chips: a.tags }], pubs: a.pubs };
+    var o = { images: a.images, art: a.art, tone: a.tone, kicker: 'Research area', kickerIcon: 'flask', title: a.title, text: a.more, blocks: [{ h: 'Questions and work', list: a.points }, { h: 'Methods', chips: a.tags }], pubs: a.pubs };
     return '<article class="card ifc area2 lift rv"' + btn(o) + '><div class="aw">' + artTile(a.art, a.tone) + '</div><div class="cb"><h3>' + esc(a.title) + '</h3><p>' + esc(a.text) + '</p><div class="tags">' + tags(a.tags) + '</div>' + more('Explore') + '</div></article>';
   }
   function research() {
@@ -22,8 +22,8 @@
       '<section><div class="wrap">' + sh('Research areas', 'What I <em>explore</em>', 'Four broad areas of work. Open a card to see the questions and the studies behind it.') + '<div class="cards c4">' + S.areas.map(areaCard).join('') + '</div>' +
       '<h3 class="subh rv"><i></i><span>Topics I keep coming back to</span><i></i></h3><div class="cards c4 sm-2">' + S.interests.map(function (it) { return U.pages._interestCard(it, true); }).join('') + '</div></div></section>' +
       '<section class="tint"><div class="wrap">' + sh('MSc thesis', 'Thesis <em>work</em>', '') +
-      '<article class="card thesis rv"><div class="tart">' + artTile('river', 'sky') + '</div><div><span class="chip">' + ic('clock') + esc(T.status) + '</span><h3>' + esc(T.title) + '</h3><dl>' +
-      [['Supervisor', T.supervisor], ['Where', T.where], ['Question', T.question], ['Study area', T.area], ['Methods', T.methods], ['Progress', T.progress]].filter(function (r) { return r[1]; }).map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join('') + '</dl></div></article></div></section>' +
+      '<article class="card thesis rv"><div class="tart">' + pic(T.visual, 'Land use, climate and streamflow relationships', 'river') + '</div><div><span class="chip">' + ic('clock') + esc(T.status) + '</span><h3>' + esc(T.title) + '</h3><dl>' +
+      [['Supervisor', T.supervisor], ['Where', T.where], ['Question', T.question], ['Study area', T.area], ['Methods', T.methods], ['Progress', T.progress]].filter(function (r) { return r[1]; }).map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join('') + '</dl><p class="visual-note">Conceptual illustration of land use, climate and streamflow.</p></div></article>' + U.visualFigure(T.visual, 'Land use, climate and streamflow', 'Conceptual overview of the thesis question.') + '</div></section>' +
       '<section id="pubs"><div class="wrap">' + sh('Journal articles', 'Peer-reviewed <em>publications</em>', 'Open any card for the study area, method, key findings and a ready citation.') +
       '<div class="tabs" id="ptabs"><button class="on" data-f="all">All <small>' + pubs.length + '</small></button><button data-f="published">Published <small>' + cnt('published') + '</small></button><button data-f="review">Under review <small>' + cnt('review') + '</small></button><button data-f="prep">In progress <small>' + cnt('prep') + '</small></button></div>' +
       '<div class="cards c3" id="pg"></div></div></section>' +
@@ -64,8 +64,8 @@
     var rows = [['Status', p.statusLabel, 'check'], ['Period', p.period, 'cal'], ['My role', p.role, 'user'], ['Lead', p.lead, 'users'], ['Institution', p.org, 'pin']].filter(function (r) { return r[1]; });
     var others = S.projects.filter(function (x) { return x.id !== p.id; }).slice(0, 3);
     $('#app').innerHTML = phead('folder', 'Project', p.title, p.summary, '<div class="tags" style="margin-top:20px">' + tags(p.tags) + '</div>', '<a class="crumb" href="projects.html">' + ic('back') + ' All projects</a><br>', ['bolt', 'leaf']) +
-      '<section><div class="wrap pd"><div><div class="figure">' + pic(p.photo || p.map, p.title, p.art || 'folder', '', U.KT[p.kind] || '') + '</div>' + (p.gallery && p.gallery.length ? '<div class="imgs shots">' + p.gallery.map(function (f) { return '<div>' + pic(f, p.title, 'camera') + '</div>'; }).join('') + '</div>' : '') +
-      fullT + sec('The problem', p.problem, 'target') + sec('Approach', p.method, 'layers') + toolz + sec('Results', p.results, 'chart') + finds + vid +
+      '<section><div class="wrap pd"><div><div class="figure">' + pic(p.photo || p.map, p.title, p.art || 'folder', '', U.KT[p.kind] || '') + '</div>' + (p.photoNote ? '<p class="visual-note">' + esc(p.photoNote) + '</p>' : '') + (p.gallery && p.gallery.length ? '<div class="imgs shots">' + p.gallery.map(function (f) { return '<div>' + pic(f, p.title, 'camera') + '</div>'; }).join('') + '</div>' : '') +
+      fullT + sec('The problem', p.problem, 'target') + sec('Approach', p.method, 'layers') + (p.workflow ? U.visualFigure(p.workflow, p.title + ' workflow', 'Method overview based on the project description.') : '') + toolz + sec('Results', p.results, 'chart') + finds + vid +
       mats + relH + ack + '</div>' +
       '<aside class="side">' + rows.map(function (r) { return '<div>' + ib(r[2]) + '<span><small>' + r[0] + '</small>' + esc(r[1]) + '</span></div>'; }).join('') + '</aside></div></section>' +
       '<section class="tint"><div class="wrap">' + sh('More', 'Other <em>projects</em>', '') + '<div class="cards c3">' + others.map(U.projectCard).join('') + '</div></div></section>' + U.ctaBand();

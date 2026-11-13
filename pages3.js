@@ -9,14 +9,14 @@
 
   /* ---------- Lightbox (Photography page and Home gallery) ---------- */
   function makeLightbox() {
-    var list = [], cur = 0, lb = document.createElement('div'); lb.className = 'lb';
-    function cap(p) { return (p.place ? esc(p.place) + ' · ' : '') + esc(p.album); }
+    var opener, list = [], cur = 0, lb = document.createElement('div'); lb.className = 'lb';
+    function cap(p) { return (p.place ? esc(p.place) + ' · ' : '') + esc(p.album || ''); }
     lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true');
     lb.innerHTML = '<button class="x" aria-label="Close">' + ic('close') + '</button><button class="pv" aria-label="Previous">' + ic('back') + '</button><div class="stage"></div><div class="lc"></div><button class="nx" aria-label="Next">' + ic('arrow') + '</button>';
     document.body.appendChild(lb);
-    function show() { var p = list[cur]; $('.stage', lb).innerHTML = pic(p.file, p.title, 'camera'); $('.lc', lb).innerHTML = '<b>' + esc(p.title) + '</b><div>' + cap(p) + '</div>'; }
-    function open(arr, i) { list = arr; cur = i; show(); lb.classList.add('on'); document.body.style.overflow = 'hidden'; }
-    function close() { lb.classList.remove('on'); document.body.style.overflow = ''; }
+    function show() { var p = list[cur]; $('.stage', lb).innerHTML = pic(p.file, p.title, 'camera'); $('.lc', lb).innerHTML = '<b>' + esc(p.title) + '</b><div>' + cap(p) + '</div><a class="original-image" href="' + esc(p.file) + '" target="_blank" rel="noopener">Open full-resolution image</a>'; }
+    function open(arr, i) { opener = document.activeElement; list = arr; cur = i; show(); lb.classList.add('on'); $('.x', lb).focus(); document.body.style.overflow = 'hidden'; }
+    function close() { lb.classList.remove('on'); document.body.style.overflow = document.querySelector('.mo.on') ? 'hidden' : ''; if (opener && opener.isConnected) opener.focus(); }
     function step(d) { cur = (cur + d + list.length) % list.length; show(); }
     $('.x', lb).onclick = close; $('.pv', lb).onclick = function () { step(-1); }; $('.nx', lb).onclick = function () { step(1); };
     lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
@@ -39,7 +39,7 @@
       '<div class="rv"><div class="gears">' + S.gear.slice(0, 2).map(function (g) { return '<div class="gearm"><div class="gthumb">' + U.artTile(g.icon === 'drone' ? 'drone' : 'camera', g.tone) + '</div><div><h4>' + esc(g.name) + '</h4><p>' + esc(g.note) + '</p></div></div>'; }).join('') + '</div>' +
       '<h4 class="bh" style="margin-top:26px">Photographic societies</h4><div class="roles big">' + P.roles.map(function (r, i) { return '<div class="role t' + (i % 3) + '"><span class="rb">' + ic('camera') + '</span><span><b>' + esc(r.role) + '</b><em>' + esc(r.org) + '</em></span>' + (r.years ? '<small>' + esc(r.years) + '</small>' : '') + '</div>'; }).join('') + '</div></div></div></div></section>';
     var list = P.photos.slice(), cur = 0;
-    function cap(p) { return (p.place ? esc(p.place) + ' · ' : '') + esc(p.album); }
+    function cap(p) { return (p.place ? esc(p.place) + ' · ' : '') + esc(p.album || ''); }
     function draw(a) {
       list = P.photos.filter(function (p) { return a === 'all' || p.album === a; });
       $('#gal').innerHTML = list.map(function (p, i) {
@@ -115,6 +115,7 @@
         '<div class="bdnote">' + (lang === 'bn' ? 'ভ্রমণের মানচিত্র দেখুন' : 'See the travel map') + ': <a href="travel.html?lang=' + lang + '#map">' + (lang === 'bn' ? 'যেসব জায়গায় গিয়েছি' : 'Places I have been') + '</a></div>' +
         '<div class="pns">' + pn(prev, 'p') + pn(next, 'n') + '</div></article></div></section>';
     } else {
+      document.body.classList.add('travel-index');
       var posts = T.posts, real = posts.filter(function (p) { return !p.soon; }), feat = real[0] || posts[0], rest = posts.filter(function (p) { return p !== feat; });
       var places = []; posts.forEach(function (p) { if (p.place && places.indexOf(p.place) < 0) places.push(p.place); });
       $('#app').innerHTML = phead('compass', '', T.headline, L(T.intro), '<div style="margin-top:20px">' + langSw + '</div>', U.lensSwitch('travel'), ['pin', 'mountain'], ['compass', 'sky']) +
@@ -138,7 +139,7 @@
       '<div class="crow">' + ib('clock', 'sky', '') + '<span><small>Reply time</small>Usually within a few days</span></div></div>' +
       '<h4 class="bh rv" style="margin-top:28px">What would you like to talk about?</h4><div class="topics rv">' + C.topics.map(function (t, i) { return '<button type="button" class="tp' + (i ? '' : ' on') + '" data-k="' + esc(t.key) + '">' + ib(t.icon, ['', 'gold', 'sky'][i % 3], '') + '<span><b>' + esc(t.key) + '</b><small>' + esc(t.text) + '</small></span></button>'; }).join('') + '</div>' +
       '<h4 class="bh rv" style="margin-top:28px">Find me elsewhere</h4><div class="sl rv">' + U.SOC.filter(function (s) { return S.links[s[0]]; }).map(function (s) { return '<a href="' + esc(S.links[s[0]]) + '" target="_blank" rel="noopener">' + ic(s[2]) + s[1] + '</a>'; }).join('') + '</div>' + (S.cv ? '<div class="rv" style="margin-top:20px">' + U.cvBtn('pri') + '</div>' : '') + '</div>' +
-      '<form class="f rv" id="cf"><div class="fplane">' + U.art('plane') + '</div><h3>Send a message</h3><p class="fs">' + (S.formKey ? 'Write your message below and it will reach my inbox directly. I usually reply within a few days.' : 'Fill in the form and your email app will open with the message ready to send.') + '</p>' +
+      '<form class="f rv" id="cf"><div class="fplane">' + pic('assets/visuals/contact-paper-plane.webp', '', 'plane') + '</div><h3>Send a message</h3><p class="fs">' + (S.formKey ? 'Write your message below and it will reach my inbox directly. I usually reply within a few days.' : 'Fill in the form and your email app will open with the message ready to send.') + '</p>' +
       '<label>Your name<span class="fi">' + ic('user') + '<input name="name" required autocomplete="name" placeholder="Your full name"></span></label>' +
       '<label>Your email<span class="fi">' + ic('mail') + '<input name="email" type="email" required autocomplete="email" placeholder="you@example.com"></span></label>' +
       '<label>What is this about?<span class="fi">' + ic('target') + '<select name="category" id="cat">' + C.topics.map(function (t) { return '<option>' + esc(t.key) + '</option>'; }).join('') + '</select></span></label>' +
@@ -169,3 +170,4 @@
 
   U.pages.photography = photography; U.pages.travel = travel; U.pages.contact = contact;
 })();
+

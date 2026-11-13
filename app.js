@@ -41,10 +41,12 @@
 
   /* ---------- ছবি ও ছবি-আঁকা (illustration tile) ---------- */
   var SPARSE = ' camera cert work compass medal plane leaf air raster lab ev film code people ';
-  function artTile(name, tone, cls) { return '<div class="arttile ' + (tone || '') + ' ' + (cls || '') + (SPARSE.indexOf(' ' + name + ' ') > -1 ? ' sp' : '') + '">' + cont('', 3 + (name ? name.length : 0)) + U.art(name) + '</div>'; }
+  function artTile(name, tone, cls) {
+    if (S.visualArt && S.visualArt[name]) return '<div class="arttile visual-tile ' + (cls || '') + '"><img src="assets/visuals/' + S.visualArt[name] + '.webp" alt="" loading="lazy" decoding="async" width="1536" height="1024"></div>';
+    return '<div class="arttile ' + (tone || '') + ' ' + (cls || '') + (SPARSE.indexOf(' ' + name + ' ') > -1 ? ' sp' : '') + '">' + cont('', 3 + (name ? name.length : 0)) + U.art(name) + '</div>'; }
   function pic(src, alt, art, cls, tone) {
     if (!src) return artTile(art, tone);
-    return '<img src="' + esc(src) + '" alt="' + esc(alt || '') + '" loading="lazy" data-art="' + esc(art || 'camera') + '" data-tone="' + esc(tone || '') + '"' + (cls ? ' class="' + cls + '"' : '') + '>';
+    return '<img src="' + esc(src) + '" alt="' + esc(alt || '') + '" loading="lazy" decoding="async" data-art="' + esc(art || 'camera') + '" data-tone="' + esc(tone || '') + '"' + (cls ? ' class="' + cls + '"' : '') + '>';
   }
   document.addEventListener('error', function (e) {
     var t = e.target;
@@ -73,8 +75,21 @@
       '<a href="travel.html"' + (cur === 'travel' ? ' class="on"' : '') + '>' + ib('compass', 'sky') + '<span><b>' + esc(L.travel) + '</b><small>Stories and photographs</small></span></a></div></div>' +
       '<a href="contact.html"' + (cur === 'contact' ? ' class="on"' : '') + '>' + ic('mail') + 'Contact</a>' +
       '</nav>' +
-      '<button class="burger" id="bg" aria-label="Menu" aria-expanded="false">' + ic('menu') + '</button></div></header>';
-    $('#bg').addEventListener('click', function () { var o = $('#nl').classList.toggle('open'); this.setAttribute('aria-expanded', o); document.body.style.overflow = o ? 'hidden' : ''; });
+      '<button class="burger" id="bg" aria-label="Menu" aria-controls="nl" aria-expanded="false">' + ic('menu') + '</button></div></header>';
+    function closeMenu() {
+      $('#nl').classList.remove('open');
+      $('#bg').setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    $('#bg').addEventListener('click', function () {
+      var open = $('#nl').classList.toggle('open');
+      this.setAttribute('aria-expanded', String(open));
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && $('#nl').classList.contains('open')) { closeMenu(); $('#bg').focus(); }
+    });
+    window.matchMedia('(min-width:1101px)').addEventListener('change', function (e) { if (e.matches) closeMenu(); });
     var dd = $('.dd'), btn = $('.ddb');
     btn.addEventListener('click', function (e) { e.stopPropagation(); var o = dd.classList.toggle('open'); btn.setAttribute('aria-expanded', o); });
     document.addEventListener('click', function () { dd.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); });
@@ -111,16 +126,16 @@
   }
 
   /* ---------- মোডাল (পপআপ) ---------- */
-  var mo;
+  var mo, modalOpener;
   function initModal() {
     mo = document.createElement('div'); mo.className = 'mo'; mo.setAttribute('role', 'dialog'); mo.setAttribute('aria-modal', 'true');
     mo.innerHTML = '<div class="box"><button class="x" aria-label="Close">' + ic('close') + '</button><div id="mc"></div></div>';
     document.body.appendChild(mo);
     mo.addEventListener('click', function (e) { if (e.target === mo || e.target.closest('.x')) closeModal(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mo.classList.contains('on')) closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mo.classList.contains('on') && !document.querySelector('.lb.on')) closeModal(); });
   }
-  function openModal(html) { $('#mc').innerHTML = html; mo.classList.add('on'); mo.scrollTop = 0; document.body.style.overflow = 'hidden'; $('.x', mo).focus(); }
-  function closeModal() { mo.classList.remove('on'); document.body.style.overflow = ''; }
+  function openModal(html) { modalOpener = document.activeElement; $('#mc').innerHTML = html; mo.classList.add('on'); mo.scrollTop = 0; document.body.style.overflow = 'hidden'; $('.x', mo).focus(); }
+  function closeModal() { mo.classList.remove('on'); document.body.style.overflow = ''; if (modalOpener && modalOpener.isConnected) modalOpener.focus(); }
 
   /* popup photo gallery (opens the shared lightbox) */
   function galHTML(g, h) {
@@ -231,7 +246,7 @@
     var o = { art: g.award ? 'medal' : 'people', tone: 'gold', kicker: g.date, kickerIcon: 'cal', title: g.name, sub: g.short !== g.name ? g.short : '',
       chips: g.award ? ['Participation award'] : [], text: g.award ? ['I presented at this conference and received a participation award.'] : [],
       confs: confPapers(g), confsH: n > 1 ? 'Papers presented (' + n + ')' : 'Paper presented', gallery: g.gallery, galleryH: g.galleryH, galleryAlbum: g.short };
-    return '<article class="card conf cg lift btnlike rv"' + btn(o) + '><div class="top"><span class="yr">' + esc(g.year) + '</span>' + (g.award ? '<span class="ribbon">' + ic('award') + 'Participation award</span>' : '') + '</div>' +
+    return '<article class="card conf cg lift btnlike rv"' + btn(o) + '>' + (g.gallery && g.gallery.length ? '<div class="conference-photo">' + pic(g.gallery[0].file, g.short, 'people') + '</div>' : '') + '<div class="top"><span class="yr">' + esc(g.year) + '</span>' + (g.award ? '<span class="ribbon">' + ic('award') + 'Participation award</span>' : '') + '</div>' +
       '<h3>' + esc(g.short) + '</h3>' + (g.name === g.short ? '' : '<div class="ven">' + ic('pin') + '<span class="clamp">' + esc(g.name) + '</span></div>') + '<div class="cmeta"><span>' + ic('cal') + esc(g.date) + '</span><span>' + ic('mic') + n + (n === 1 ? ' paper' : ' papers') + '</span></div><span class="more">View papers ' + ic('arrow') + '</span></article>';
   }
   function confModal(i) {
@@ -301,19 +316,32 @@
 
   /* ---------- পেজ বদলের নরম ট্রানজিশন ---------- */
   function pageFx() {
-    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    document.addEventListener('click', function (e) {
-      var a = e.target.closest && e.target.closest('a[href]');
-      if (!a || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      if ((a.target && a.target !== '_self') || a.hasAttribute('download')) return;
-      var h = a.getAttribute('href');
-      if (!h || h.charAt(0) === '#' || /^(mailto:|tel:|javascript:)/i.test(h)) return;
-      if (a.origin !== location.origin) return;
-      if (a.pathname === location.pathname && a.search === location.search) return;
-      e.preventDefault(); document.body.classList.add('pg-out');
-      setTimeout(function () { location.href = a.href; }, 220);
+    window.addEventListener('pageshow', function () { document.body.classList.remove('pg-out'); });
+  }
+
+  function visualFigure(src, alt, caption) {
+    return '<figure class="visual-figure"><button type="button" class="visual-zoom" data-visual="' + esc(src) + '" data-title="' + esc(alt) + '" aria-label="Enlarge ' + esc(alt) + '">' + pic(src, alt, 'river') + '<span class="zoom-label">' + ic('expand') + ' View full image</span></button><figcaption>' + esc(caption || '') + '</figcaption></figure>';
+  }
+  U.visualFigure = visualFigure;
+  function enhanceVisuals() {
+    var portrait = document.querySelector('.hero .arch img');
+    if (portrait) { portrait.loading = 'eager'; portrait.fetchPriority = 'high'; }
+    document.addEventListener('click', function (event) {
+      var button = event.target.closest('[data-visual]');
+      if (!button) return;
+      U._lb = U._lb || U.makeLightbox();
+      U._lb.open([{ file: button.dataset.visual, title: button.dataset.title, album: '' }], 0);
     });
-    window.addEventListener('pageshow', function (e) { if (e.persisted) document.body.classList.remove('pg-out'); });
+    document.addEventListener('keydown', function (event) {
+      if (event.key !== 'Tab') return;
+      var dialog = document.querySelector('.lb.on') || document.querySelector('.mo.on');
+      if (!dialog) return;
+      var focusable = Array.from(dialog.querySelectorAll('button, a[href], input, select, textarea, [tabindex="0"]')).filter(function (el) { return el.getClientRects().length; });
+      if (!focusable.length) return;
+      var first = focusable[0], last = focusable[focusable.length - 1];
+      if (event.shiftKey && (document.activeElement === first || !dialog.contains(document.activeElement))) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && (document.activeElement === last || !dialog.contains(document.activeElement))) { event.preventDefault(); first.focus(); }
+    });
   }
 
   /* বাইরে থেকে পেজ-ফাইলগুলো যা ব্যবহার করবে */
@@ -329,6 +357,6 @@
     setBg(); nav(); initModal();
     var pg = document.body.dataset.page;
     try { (U.pages[pg] || U.pages.home)(); } catch (err) { $('#app').innerHTML = '<section><div class="wrap"><p>Something went wrong while loading this page.</p></div></section>'; if (window.console) console.error(err); }
-    footer(); bindCards(document); reveal(); count(); pageFx();
+    footer(); bindCards(document); reveal(); count(); pageFx(); enhanceVisuals();
   });
 })();
