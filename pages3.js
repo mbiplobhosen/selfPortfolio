@@ -29,10 +29,10 @@
   function photography() {
     var P = S.photography;
     var me = P.photos.filter(function (p) { return p.title === 'Colour-fest photographer'; })[0];
-    var chips = '<div class="rstats">' + [[P.photos.length, 'photographs', 'camera'], [P.albums.length, 'albums', 'layers']].map(function (x) { return '<span>' + ic(x[2]) + '<b>' + x[0] + '</b> ' + x[1] + '</span>'; }).join('') + '</div>';
+    var chips = '<div class="photo-themes"><span>' + ic('drop') + ' Rivers & landscapes</span><span>' + ic('camera') + ' Life through my lens</span></div>';
     $('#app').innerHTML = phead('camera', '', P.headline, P.intro, chips, U.lensSwitch('photography'), ['drone', 'sun'], ['camera', '']) +
       '<section><div class="wrap">' + sh('Gallery', 'Selected <em>frames</em>', 'Browse by album, and tap any photograph to see it large.') +
-      '<div class="tabs" id="atabs"><button class="on" data-a="all">All <small>' + P.photos.length + '</small></button>' + P.albums.map(function (a) { return '<button data-a="' + esc(a) + '">' + esc(a) + '</button>'; }).join('') + '</div>' +
+      '<div class="tabs" id="atabs"><button class="on" data-a="all">All</button>' + P.albums.map(function (a) { return '<button data-a="' + esc(a) + '">' + esc(a) + '</button>'; }).join('') + '</div>' +
       '<div class="masonry" id="gal"></div></div></section>' +
       '<section class="tint"><div class="wrap">' + sh('Behind the lens', 'Camera in <em>hand</em>', 'The gear I shoot with and the photographic societies I belong to.') +
       '<div class="behind"><div class="vf rv"><span class="plate p1"></span><span class="plate p2"></span>' + cont('', 6) + '<div class="vfimg land">' + pic(me ? me.file : 'photos/photo-21.jpg', 'Md. Biplob Hosen with a camera', 'camera') + '</div><i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i></div>' +

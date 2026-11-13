@@ -1,86 +1,43 @@
-/* Page and section background artwork. */
+/* Each placement has a deliberate image and uncropped display mode. */
 (function () {
-  'use strict';
-  document.addEventListener('DOMContentLoaded', function () {
-    var page = document.body.dataset.page;
-    var headers = {
-      about: 'about-riverside', experience: 'experience-fieldwork',
-      skills: 'skills-workspace', research: 'research-watershed',
-      projects: 'projects-landscape', photography: 'photography-dramatic',
-      travel: 'journey-trail', contact: 'contact-confluence'
-    };
-    var sectionScenes = {
-      'Photography': 'wetland-mist',
-      'Explore': 'journey-trail',
-      'Education': 'academic-campus',
-      'More about me': 'camera-still-life',
-      'Journey': 'journey-trail',
-      'Work experience': 'skills-workspace',
-      'Training & workshops': 'training-room',
-      'Field experience': 'coastal-mangroves',
-      'Toolbox': 'research-watershed',
-      'Equipment & level': 'camera-still-life',
-      'MSc thesis': 'research-watershed',
-      'Conferences': 'conference-hall',
-      'More': 'projects-landscape',
-    };
-    var projectScenes = {
-      'iee-etp-sirajganj': 'projects-landscape',
-      'ev-charging-dhaka': 'projects-landscape',
-      'shitalakshya-water': 'research-watershed',
-      'msc-thesis': 'research-watershed',
-      'kuakata-research': 'coastal-mangroves',
-      'ctcrp-documentary': 'coastal-mangroves',
-      'raster-downscaling-tool': 'skills-workspace',
-      'bgrc-website': 'skills-workspace',
-      'bgrc-gis-training': 'education-path',
-      'bgrc-duet-thesis': 'research-watershed',
-      'bgrc-iubat-thesis': 'education-path'
-    };
-    var targets = [];
-    function scene(element, name, type) {
-      if (!element || !name) return;
-      element.classList.add('scenic', type || 'scenic-section');
-      element.dataset.scene = name;
-      targets.push(element);
-    }
-    var header = document.querySelector('#app > .ph');
-    var headerScene = headers[page];
-    if (page === 'project') {
-      headerScene = projectScenes[new URLSearchParams(location.search).get('p')] || 'projects-landscape';
-      scene(document.querySelector('.pd')?.closest('section'), headerScene, 'scenic-detail');
-    }
-    scene(header, headerScene, page === 'photography' ? 'scenic-photo' : 'scenic-header');
-    document.querySelectorAll('#app > section .sh .eb span').forEach(function (label) {
-      var key=label.textContent.trim(),section=label.closest('section'),contained=['Explore','Journey','Field experience','Equipment & level','Conferences'].includes(key); scene(contained?section.querySelector('.wrap'):section,sectionScenes[key],contained?'scenic-panel':'scenic-section');
-    });
-    scene(document.querySelector('.about .ar'),'wetland-mist','scenic-column'); scene(document.querySelector('.behind > div:last-child'),'camera-still-life','scenic-column'); scene(document.querySelector('.bdl'),'journey-trail','scenic-column');
-    
-    document.querySelectorAll('.band').forEach(function (el) { scene(el,({home:'about-riverside',about:'journey-trail',experience:'experience-fieldwork',skills:'skills-workspace',research:'research-watershed',projects:'projects-landscape',travel:'coastal-mangroves'})[page]||'camera-still-life','scenic-band'); });
-    scene(document.querySelector('.phd2'), 'journey-trail', 'scenic-band');
-    document.querySelector('.foot')?.classList.add('footer-refined');
-
-    // Load lower-page backgrounds as they approach the viewport.
-    var narrow = window.matchMedia('(max-width:760px)');
-    function loadScene(element) {
-      var suffix = narrow.matches ? '-mobile' : '';
-      element.style.setProperty('--scene-image', 'url("assets/backgrounds/' + element.dataset.scene + suffix + '.webp")');
-      element.dataset.sceneLoaded = 'true';
-    }
-    if ('IntersectionObserver' in window) {
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          loadScene(entry.target);
-          observer.unobserve(entry.target);
-        });
-      }, { rootMargin: '300px' });
-      targets.forEach(function (el) { observer.observe(el); });
-    } else {
-      targets.forEach(loadScene);
-    }
-    narrow.addEventListener('change', function () {
-      targets.filter(function (el) { return el.dataset.sceneLoaded; }).forEach(loadScene);
-    });
+ 'use strict';
+ document.addEventListener('DOMContentLoaded', function () {
+  var page=document.body.dataset.page;
+  var manifest=window.SCENE_ASSETS || {};
+  function scene(el,key,type) {
+   if(!el || !manifest[key])return;
+   el.classList.add('scenic',type||'scenic-section');el.dataset.scene=key;
+   var asset=manifest[key],media=document.createElement('div'),img=document.createElement('img');
+   media.className='scene-media';media.setAttribute('aria-hidden','true');
+   img.alt='';img.src=asset.src;img.width=asset.width;img.height=asset.height;
+   img.loading=(type==='scenic-header'||type==='scenic-home'||type==='scenic-photo')?'eager':'lazy';img.decoding='async';
+   if(asset.mobile){img.srcset=asset.mobile+' 1000w, '+asset.src+' '+asset.width+'w';img.sizes=type==='scenic-column'?'(max-width:760px) 100vw, 650px':'100vw';}
+   if(type==='scenic-footer'){
+    var picture=document.createElement('picture'),source=document.createElement('source');
+    source.media='(max-width:760px)';source.srcset='assets/scenes/footer-mobile.webp';
+    picture.appendChild(source);picture.appendChild(img);media.appendChild(picture);
+   } else media.appendChild(img);
+   el.prepend(media);
+  }
+  scene(document.querySelector('.hero'),'home-hero','scenic-home');
+  if(page==='photography')scene(document.querySelector('#app>.ph'),'photography-original','scenic-photo');
+  else scene(document.querySelector('#app>.ph'),page==='project'?'projects-hero':page+'-hero','scenic-header');
+  var rules={
+   home:{'Photography':['home-gallery'],'Explore':['home-explore','panel']},
+   about:{'Education':['about-education'],'More about me':['about-beyond'],'Journey':['about-journey','panel']},
+   experience:{'Work experience':['experience-work'],'Training & workshops':['experience-training'],'Field experience':['experience-field','panel']},
+   skills:{'Toolbox':['skills-toolbox'],'Equipment & level':['skills-gear','panel']},
+   research:{'MSc thesis':['research-thesis'],'Conferences':['research-conferences','panel']}
+  };
+  document.querySelectorAll('#app>section .sh .eb span').forEach(function(label){
+   var rule=(rules[page]||{})[label.textContent.trim()];if(!rule)return;
+   var section=label.closest('section');scene(rule[1]==='panel'?section.querySelector('.wrap'):section,rule[0],rule[1]==='panel'?'scenic-panel':'scenic-section');
   });
+  scene(document.querySelector('.about .ar'),'about-story','scenic-column');
+  scene(document.querySelector('.behind>div:last-child'),'photography-camera','scenic-column');
+  scene(document.querySelector('.bdl'),'travel-places','scenic-column');
+  document.querySelectorAll('.band').forEach(function(el){scene(el,'cta-'+page,'scenic-band');});
+  scene(document.querySelector('.phd2'),'home-phd','scenic-band');
+  scene(document.querySelector('.foot'),'footer-panorama','scenic-footer');
+ });
 })();
