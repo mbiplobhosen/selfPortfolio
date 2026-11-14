@@ -128,6 +128,7 @@ body :is(#app,#foot) .scenic>.scene-media{position:absolute;inset:0;z-index:0}
   mask-image: linear-gradient(transparent, #000 20%, #000 78%, transparent);
 }
 .scenic-gear > .card { position: relative; z-index: 1; }
+@media(min-width:961px){ .cards.c3.scenic-gear > .card:last-child { grid-column: auto; } }
 
 .conference-photo img, #orgs .aw > img.organisation-photo {
   object-fit: cover;

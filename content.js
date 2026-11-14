@@ -13,9 +13,9 @@ window.SITE = {
   firstName: "Biplob",
   lastName: "Hosen",
   role: "Research Assistant",
-  email: "mdbiplob9123@gmail.com",
+  email: "contact@biplobhosen.com",
   location: "Gazipur, Bangladesh",
-  siteUrl: "https://mbiplobhosen.github.io/selfPortfolio/",
+  siteUrl: "https://biplobhosen.com/",
 
   /* মেনুর "Photography + Travel" গ্রুপের নাম — এখানে বদলালেই হবে */
   lens: { name: "Lens & Journeys", photography: "Photography", travel: "Travel blog" },
@@ -190,7 +190,7 @@ window.SITE = {
       badgesH: "Societies and organisations",
       badges: [ { t: "GSTU Photographic Society", icon: "camera", tone: "gold" }, { t: "RDSA · Rangpur Divisional Students Association", icon: "users", tone: "sky" }, { t: "Thakurgaon Students Association", icon: "users", tone: "rose" }, { t: "Green Voice", icon: "leaf", tone: "" } ],
       galleryH: "Campus memories", galleryAlbum: "GSTU · 2018 – 2021",
-      gallery: [ { file: "photos/bsc/gstu-campus-group.webp", title: "With friends on campus" }, { file: "photos/bsc/gstu-07.jpg", title: "At an event" }, { file: "photos/bsc/gstu-08.jpg", title: "At an event" }, { file: "photos/bsc/gstu-09.jpg", title: "On the field" }, { file: "photos/bsc/gstu-10.jpg", title: "Among the lotuses" }, { file: "photos/bsc/gstu-04.jpg", title: "My thesis" }, { file: "photos/bsc/gstu-01.jpg", title: "With friends" }, { file: "photos/bsc/gstu-02.jpg", title: "With friends" }, { file: "photos/bsc/gstu-05.jpg", title: "With friends on campus" } ] }
+      gallery: [ { file: "photos/bsc/gstu-campus-group.jpg", title: "With friends on campus" }, { file: "photos/bsc/gstu-07.jpg", title: "At an event" }, { file: "photos/bsc/gstu-08.jpg", title: "At an event" }, { file: "photos/bsc/gstu-09.jpg", title: "On the field" }, { file: "photos/bsc/gstu-10.jpg", title: "Among the lotuses" }, { file: "photos/bsc/gstu-04.jpg", title: "My thesis" }, { file: "photos/bsc/gstu-01.jpg", title: "With friends" }, { file: "photos/bsc/gstu-02.jpg", title: "With friends" }, { file: "photos/bsc/gstu-05.jpg", title: "With friends on campus" } ] }
   ],
 
   /* Beyond the lab (About পেজ — ক্লিকে popup). link = popup-এর নিচের বাটন */
@@ -323,7 +323,7 @@ window.SITE = {
       text: ["I train in the GIS & Remote Sensing Certification Course of BlueGreen Research and Consultancy (BGRC). Classes began on 10 February 2026 and run online."],
       points: ["Builds a strong foundation in ArcGIS", "Online classes, with certificates on attendance", "Part of BGRC's ongoing GIS and remote-sensing training programme"],
       link: { label: "See the BGRC training programme", href: "project.html?p=bgrc-gis-training" } },
-    { when: "17 Jan 2026", role: "Keynote speaker", art: "camera", tone: "gold", title: "Framing, Composition and Camera Manual Setting", org: "DUET Photographic Society (DUETPS)", mode: "Workshop · DUET campus",
+    { when: "17 Jan 2026", role: "Keynote speaker", art: "camera", tone: "gold", title: "Framing, Composition and Camera Manual Setting", org: "DUET Photographic Society (DUET_ps)", mode: "Workshop · DUET campus",
       text: ["A free photography workshop for everyone at DUET, held with the society's fresher's reception. I spoke on framing, composition and setting the camera manually."],
       points: ["Free and open to all", "Framing, composition and manual camera settings", "Organised by the DUET Photographic Society"],
       link: { label: "See photography", href: "photography.html" } },
@@ -621,7 +621,7 @@ window.SITE = {
       tags: ["IEE", "Sirajganj", "Industrial wastewater"],
       problem: "Paper manufacturing uses large volumes of water and releases wastewater that must be treated before it reaches rivers. This project covers the environmental assessment (IEE report) for the factory.",
       method: "An IEE describes the factory's environmental setting, the likely impacts and the measures to reduce them.",
-      results: "", materials: [], photo: "photos/projects/sirajganj-etp.jpg", map: "" },
+      results: "", materials: [], photo: "", map: "" },
 
     { id: "ev-charging-dhaka", kind: "research", art: "ev", featured: true, status: "ongoing", statusLabel: "Research project",
       title: "EV charging station siting, Dhaka District", period: "2024 – 2025",
@@ -630,7 +630,7 @@ window.SITE = {
       tags: ["AHP", "Fuzzy AHP", "ANN", "Dhaka"],
       problem: "Charging stations need to sit where demand, access and the power grid line up; a poor siting decision wastes money and slows adoption.",
       method: "Multi-criteria site suitability analysis in GIS, with weights from AHP and Fuzzy AHP, and an artificial neural network used for comparison.",
-      results: "", materials: [], photo: "photos/projects/ev-charging-dhaka.jpg", map: "maps/evcs-dhaka.jpg" },
+      results: "", materials: [], photo: "", map: "" },
 
     { id: "shitalakshya-water", kind: "research", art: "river", featured: true, status: "ongoing", statusLabel: "Research project",
       title: "Blue and Green Water security in the Shitalakshya River Basin", period: "2025 – 2026",
@@ -650,7 +650,7 @@ window.SITE = {
       role: "MSc student", lead: "Supervisor: Md. Rabiul Islam", org: "Institute of Water & Environment, DUET",
       summary: "How land-use change and a changing climate alter streamflow in the Sangu River basin.",
       tags: ["Streamflow", "Land use", "Climate"],
-      problem: "", method: "", results: "", materials: [], photo: "photos/projects/sangu.jpg", map: "maps/sangu.jpg" },
+      problem: "", method: "", results: "", materials: [], photo: "", map: "" },
 
     { id: "kuakata-research", kind: "research", art: "coast", featured: true, status: "done", statusLabel: "Completed research project",
       title: "Kuakata Sea Beach: nature-based erosion reduction", period: "2024 – 2025",
@@ -686,7 +686,7 @@ window.SITE = {
       tags: ["Python", "Machine learning", "GeoTIFF"],
       problem: "Many climate and land-surface datasets are too coarse for local planning.",
       method: "Trains several ML models on a coarse raster and its covariates, checks accuracy, and downscales using the best model.",
-      results: "", materials: [], photo: "maps/downscaling-tool.jpg", map: "" },
+      results: "", materials: [], photo: "", map: "" },
 
     { id: "bgrc-website", kind: "web", art: "code", featured: false, status: "completed", statusLabel: "Live website",
       title: "BGRC website: design, development and hosting", period: "August 2026 – present",
@@ -798,7 +798,7 @@ window.SITE = {
         { districts: ["Khulna"], post: "khulna", tone: "lav", dy: -70, label: { en: "Khulna", bn: "খুলনা" }, sub: { en: "Khulna · river port and delta", bn: "খুলনা · নদী-বন্দর ও ব-দ্বীপ" } },
         { districts: ["Rajshahi"], post: "rajshahi", tone: "rose", label: { en: "Rajshahi", bn: "রাজশাহী" }, sub: { en: "Rajshahi · Padma and Barind", bn: "রাজশাহী · পদ্মা ও বরেন্দ্র" } },
         { districts: ["Kushtia"], post: "kushtia", tone: "sage", label: { en: "Kushtia", bn: "কুষ্টিয়া" }, sub: { en: "Kushtia · Lalon and the Padma", bn: "কুষ্টিয়া · লালন ও পদ্মা" } },
-        { districts: ["Bogra"], post: "bogura", tone: "soon", soon: true, label: { en: "Bogura", bn: "বগুড়া" }, sub: { en: "Bogura · coming soon", bn: "বগুড়া · শিগগিরই" } }
+        { districts: ["Bogra"], post: "bogura", tone: "soon", soon: true, label: { en: "Bogura", bn: "বগুড়া" }, sub: { en: "Bogura · northern Bangladesh", bn: "বগুড়া · উত্তরবঙ্গ" } }
       ]
     },
 
@@ -979,12 +979,11 @@ window.SITE = {
                "খুলনা মনে করিয়ে দেয়, ব-দ্বীপে শহর, বন আর লোনা পানি একই নদীব্যবস্থার অংশ, আর এখানকার পানি-পরিকল্পনায় তিনটিকেই হিসাবে রাখতে হয়।"] } },
 
       { id: "bogura", soon: true, date: "", when: "", place: "Bogura", region: { en: "Northern Bangladesh", bn: "উত্তরবঙ্গ" }, tags: ["North", "Heritage"],
-        art: "city", tone: "sand", cover: "", photos: [],
+        art: "compass", tone: "sand", cover: "", photos: [],
         title: { en: "Bogura", bn: "বগুড়া" },
         summary: { en: "A district in northern Bangladesh, in the Rajshahi division.",
                    bn: "রাজশাহী বিভাগের অন্তর্গত উত্তরবঙ্গের একটি জেলা।" },
-        body: { en: ["Notes and photographs from this trip are on their way."],
-                bn: ["এই ভ্রমণের লেখা ও ছবি শিগগিরই যোগ হচ্ছে।"] } }
+        body: { en: [], bn: [] } }
     ]
   },
 

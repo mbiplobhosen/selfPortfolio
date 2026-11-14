@@ -85,16 +85,16 @@
         cx += g.dx || 0; cy += g.dy || 0;
         cx = Math.max(110, Math.min(G.w - 110, cx));
         lbls += '<text class="bl" x="' + cx.toFixed(0) + '" y="' + cy.toFixed(0) + '" text-anchor="middle">' + esc(L(g.label)) + '</text>';
-        var open = g.soon ? '<g class="bg ' + g.tone + '" aria-label="' + esc(L(g.label)) + ' (' + esc(L(M.soonText)) + ')">' : '<a class="bg ' + g.tone + '" href="travel.html?p=' + esc(g.post) + '&lang=' + lang + '" aria-label="' + esc(L(g.label)) + '">';
-        return open + '<title>' + esc(L(g.label)) + (g.soon ? ' · ' + esc(L(M.soonText)) : '') + '</title>' + inner + (g.soon ? '</g>' : '</a>');
+        var open = g.soon ? '<g class="bg ' + g.tone + '" aria-label="' + esc(L(g.label)) + '">' : '<a class="bg ' + g.tone + '" href="travel.html?p=' + esc(g.post) + '&lang=' + lang + '" aria-label="' + esc(L(g.label)) + '">';
+        return open + '<title>' + esc(L(g.label)) + '</title>' + inner + (g.soon ? '</g>' : '</a>');
       }).join('') + lbls;
       var list = M.groups.map(function (g) {
-        var inner = '<span class="sw ' + g.tone + '"></span><span><b>' + esc(L(g.label)) + '</b><small>' + esc(L(g.sub)) + '</small></span>' + (g.soon ? '<em>' + esc(L(M.soonText)) + '</em>' : ic('arrow'));
+        var inner = '<span class="sw ' + g.tone + '"></span><span><b>' + esc(L(g.label)) + '</b><small>' + esc(L(g.sub)) + '</small></span>' + (g.soon ? '' : ic('arrow'));
         return g.soon ? '<div class="bi soon">' + inner + '</div>' : '<a class="bi lift" href="travel.html?p=' + esc(g.post) + '&lang=' + lang + '">' + inner + '</a>';
       }).join('');
       return '<div class="bdm rv" id="map"><div class="bdmap"><svg viewBox="0 0 ' + G.w + ' ' + G.h + '" role="img" aria-label="' + esc(L(M.title)) + '"><g class="base">' + base + '</g>' + shapes + '</svg></div><div class="bdl"><p>' + esc(L(M.note)) + '</p>' + list + '<small class="src">' + (lang === 'bn' ? 'জেলার সীমানা: বিবিএস (২০২০)' : 'District boundaries: BBS, 2020') + '</small></div></div>';
     }
-    var tr = T.posts.filter(function (x) { return x.id === id; })[0];
+    var tr = T.posts.filter(function (x) { return x.id === id && !x.soon; })[0];
     if (tr) {
       document.title = L(tr.title) + ' — ' + S.name;
       var meta = '<div class="pmeta">' + [['cal', fdate(tr.date) || tr.when], ['pin', tr.place], ['clock', readTxt(tr)]].filter(function (m) { return m[1]; }).map(function (m) { return '<span>' + ic(m[0]) + esc(m[1]) + '</span>'; }).join('') + '</div>';
@@ -116,7 +116,7 @@
         '<div class="pns">' + pn(prev, 'p') + pn(next, 'n') + '</div></article></div></section>';
     } else {
       document.body.classList.add('travel-index');
-      var posts = T.posts, real = posts.filter(function (p) { return !p.soon; }), feat = real[0] || posts[0], rest = posts.filter(function (p) { return p !== feat; });
+      var posts = T.posts, real = posts.filter(function (p) { return !p.soon; }), feat = real[0] || posts[0], rest = real.filter(function (p) { return p !== feat; });
       var places = []; posts.forEach(function (p) { if (p.place && places.indexOf(p.place) < 0) places.push(p.place); });
       $('#app').innerHTML = phead('compass', '', T.headline, L(T.intro), '<div style="margin-top:20px">' + langSw + '</div>', U.lensSwitch('travel'), ['pin', 'mountain'], ['compass', 'sky']) +
         '<section><div class="wrap">' + sh(lang === 'bn' ? 'সাম্প্রতিক' : 'Latest', lang === 'bn' ? 'সবচেয়ে নতুন <em>গল্প</em>' : 'The newest <em>story</em>', '') +
