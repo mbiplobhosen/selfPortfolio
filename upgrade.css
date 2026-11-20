@@ -68,3 +68,31 @@ a.bg:focus-visible .bd.on{filter:brightness(.8)}
 
 .card p{text-align:left;word-spacing:normal}
 .original-image{display:inline-block;margin-top:8px;color:var(--teal);text-decoration:underline;font-weight:700;font-size:.85rem}
+
+/* ---------- v19: Photography album folders ---------- */
+.afolders{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.afold{display:block;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;text-decoration:none;color:inherit;box-shadow:0 10px 28px rgba(31,41,51,.06)}
+.afold .afc{display:block;position:relative;aspect-ratio:3/2;overflow:hidden;background:#EEF1EC}
+.afold .afc img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.afold:hover .afc img{transform:scale(1.04)}
+.afold .afb{display:grid;grid-template-columns:auto 1fr auto;gap:2px 12px;align-items:center;padding:16px 18px 18px}
+.afold .afi{grid-row:1/3;width:40px;height:40px;border-radius:12px;background:#E6F0EE;color:var(--teal);display:grid;place-items:center}
+.afold .afi svg{width:21px;height:21px}
+.afold b{font-size:1.08rem;color:#1F2933}
+.afold small{color:var(--teal);font-weight:700;font-size:.82rem;justify-self:end}
+.afold em{grid-column:2/4;font-style:normal;color:var(--mute);font-size:.9rem;line-height:1.5;margin-top:4px}
+.aback{margin-bottom:18px}
+.atitle{font-size:1.7rem;margin:0 0 6px;color:#1F2933}
+.adesc{color:var(--mute);margin:0 0 24px;max-width:70ch}
+.adesc .acount{display:inline-block;margin-left:8px;padding:2px 10px;border-radius:99px;background:#E6F0EE;color:var(--teal);font-weight:700;font-size:.8rem}
+.agrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start}
+.aph{margin:0;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 8px 24px rgba(31,41,51,.05)}
+.aph .gi{display:block;width:100%;position:relative;overflow:hidden;background:#EEF1EC;border:0;padding:0;cursor:zoom-in}
+.aph .gi img{width:100%;height:100%;object-fit:cover;display:block}
+.aph figcaption{padding:12px 16px 16px}
+.aph figcaption b{display:block;color:#1F2933;font-size:1rem;margin-bottom:4px}
+.aph figcaption span{display:block;color:var(--mute);font-size:.9rem;line-height:1.55}
+.lb .lc .ln{margin:6px auto 4px;max-width:60ch;color:inherit;opacity:.85;font-size:.92rem}
+@media(max-width:960px){.afolders,.agrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.afolders,.agrid{grid-template-columns:1fr}.afold .afb{padding:14px 16px 16px}}
+.afolders[hidden],#aview[hidden]{display:none!important}

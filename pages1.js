@@ -84,12 +84,19 @@
   }
 
   /* ---------- Experience ---------- */
+  function batchCard() {
+    var B = S.gisBatches; if (!B || !B.items || !B.items.length) return '';
+    var on = B.items.filter(function (b) { return /^Online/i.test(b.mode); }).length, off = B.items.length - on;
+    var o = { art: 'satellite', tone: 'gold', kicker: B.items.length + ' batches', kickerIcon: 'cal', title: B.title, sub: 'Online and in person', text: B.text,
+      chips: ['Trainer', on + ' online', off + ' in person'], blocks: [B.covers ? { h: 'What the course covers', list: B.covers } : null], batches: B.items, batchesH: 'The ' + B.items.length + ' batches' };
+    return '<article class="card ifc lift rv"' + btn(o) + '><div class="aw">' + artTile('satellite', 'gold') + '<span class="ribbon cur">' + ic('users') + B.items.length + ' batches</span></div><div class="cb"><span class="when">Trainer</span><h3>' + esc(B.title) + '</h3><p>' + esc(B.short) + '</p>' + more() + '</div></article>';
+  }
   function trainingSection() {
     var T = S.trainings || [];
     if (!T.length) return '';
     return '<section class="tint" id="training"><div class="wrap">' + sh('Training & workshops', 'Training I have <em>delivered</em>', S.trainingIntro) +
       '<div class="tags tp rv">' + (S.trainTopics || []).map(function (t) { return '<span class="chip">' + ic('check') + esc(t) + '</span>'; }).join('') + '</div>' +
-      '<div class="cards c3">' + T.map(function (t, i) {
+      '<div class="cards c3">' + batchCard() + T.map(function (t, i) {
         var o = { images: t.images, art: t.art, tone: t.tone, kicker: t.when, kickerIcon: 'cal', title: t.title, sub: t.org, text: t.text, chips: [t.role, t.mode].filter(Boolean), blocks: [t.points ? { h: 'Highlights', list: t.points } : null], links: t.link ? [t.link] : [] };
         return '<article class="card ifc lift rv"' + btn(o) + '><div class="aw">' + (t.images ? pic(t.images[0], t.title || t.group, t.art, t.images[0] === 'photos/dps/dps-07.jpg' ? 'workshop-cover' : '') : artTile(t.art, t.tone)) + '<span class="ribbon cur">' + ic('cal') + esc(t.when) + '</span></div><div class="cb"><span class="when">' + esc(t.role) + '</span><h3>' + esc(t.title) + '</h3><p>' + esc(t.org) + (t.mode ? ' · ' + esc(t.mode) : '') + '</p>' + more() + '</div></article>';
       }).join('') + '</div></div></section>';

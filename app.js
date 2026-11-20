@@ -189,13 +189,29 @@
         return '<button class="rel" type="button" data-pubid="' + esc(id) + '">' + ic('book') + '<span>' + esc(p.title) + '<small>' + esc(jshort(p.journal)) + ' · ' + esc(p.year) + '</small></span>' + ic('arrow') + '</button>';
       }).join('') + '</div>';
     }
+    if (o.batches && o.batches.length) {
+      h += '<h4 class="bh">' + esc(o.batchesH || 'Batches') + '</h4><div class="rels">' + o.batches.map(function (b, i) {
+        return '<button class="rel" type="button" data-bati="' + i + '">' + ic('cal') + '<span>' + esc('Batch ' + b.no + ' · ' + b.when) + '<small>' + esc([b.mode, b.size].filter(Boolean).join(' · ')) + '</small></span>' + ic('arrow') + '</button>';
+      }).join('') + '</div>';
+    }
     if (imgs.length > 1) h += '<div class="imgs">' + imgs.slice(1).map(function (f) { return '<div>' + pic(f, o.title, 'camera') + '</div>'; }).join('') + '</div>';
+    if (o.parent) h += '<div class="row"><button class="btn sm" id="bkb" type="button">' + ic('back') + ' ' + esc(o.parentLabel || 'Back') + '</button></div>';
     if (o.links && o.links.length) h += '<div class="row">' + o.links.map(function (l, i) { return '<a class="btn ' + (i ? '' : 'pri') + ' sm"' + (/^https?:/.test(l.href) ? ' target="_blank" rel="noopener"' : '') + ' href="' + esc(l.href) + '">' + ic(l.icon || 'arrow') + ' ' + esc(l.label) + '</a>'; }).join('') + '</div>';
     openModal(h + '</div>');
-    $$('.rel', mo).forEach(function (b) { b.addEventListener('click', function () { if (b.dataset.confi) confModal(+b.dataset.confi); else pubModal(pubIndex(b.dataset.pubid)); }); });
+    $$('.rel', mo).forEach(function (b) { b.addEventListener('click', function () { if (b.dataset.bati !== undefined) batchInfo(o, +b.dataset.bati); else if (b.dataset.confi) confModal(+b.dataset.confi); else pubModal(pubIndex(b.dataset.pubid)); }); });
+    var bk = $('#bkb', mo); if (bk && o.parent) bk.addEventListener('click', function () { info(o.parent); });
     galBind(o.gallery, o.galleryAlbum);
   }
 
+  function batchInfo(parent, i) {
+    var b = parent.batches[i];
+    var online = /^Online/i.test(b.mode);
+    info({ art: b.art, tone: b.tone, kicker: 'Batch ' + b.no, kickerIcon: 'cal', title: b.title, sub: b.org || '',
+      meta: [['cal', b.when], ['users', b.size], [online ? 'globe' : 'pin', b.mode]].filter(function (m) { return m[1]; }),
+      text: b.text, blocks: [b.points ? { h: 'Highlights', list: b.points } : null],
+      gallery: (b.images || []).map(function (f) { return { file: f, title: b.title }; }), galleryH: (b.images && b.images.length) ? 'Photos' : '', galleryAlbum: 'Batch ' + b.no,
+      parent: parent, parentLabel: 'All ' + parent.batches.length + ' batches' });
+  }
   /* ---------- প্রকাশনা ও কনফারেন্স কার্ড ---------- */
   var TAGMAP = [[/fuzzy/i, 'Fuzzy AHP'], [/\bAHP\b|analytical hierarchy/i, 'AHP'], [/flood/i, 'Flood'], [/groundwater/i, 'Groundwater'], [/landslide/i, 'Landslide'], [/soil erosion|RUSLE|erosion/i, 'Erosion'], [/hydrogen|solar|charging/i, 'Energy'], [/land surface temperature|heat|LST/i, 'Heat'], [/drought|SPEI/i, 'Drought'], [/suitab|dragon/i, 'Suitability'], [/water (access|quality)|hydro-chemical|drinking/i, 'Water quality'], [/multi-hazard/i, 'Multi-hazard'], [/air quality/i, 'Air quality'], [/GIS/i, 'GIS']];
   var TAGART = { 'Flood': 'flood', 'Groundwater': 'ground', 'Landslide': 'mountain', 'Heat': 'climate', 'Drought': 'climate', 'Energy': 'ev', 'Suitability': 'leaf', 'Water quality': 'river', 'Erosion': 'ground', 'Multi-hazard': 'flood', 'Air quality': 'air' };

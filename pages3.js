@@ -14,7 +14,7 @@
     lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true');
     lb.innerHTML = '<button class="x" aria-label="Close">' + ic('close') + '</button><button class="pv" aria-label="Previous">' + ic('back') + '</button><div class="stage"></div><div class="lc"></div><button class="nx" aria-label="Next">' + ic('arrow') + '</button>';
     document.body.appendChild(lb);
-    function show() { var p = list[cur]; $('.stage', lb).innerHTML = pic(p.file, p.title, 'camera'); $('.lc', lb).innerHTML = '<b>' + esc(p.title) + '</b><div>' + cap(p) + '</div><a class="original-image" href="' + esc(p.file) + '" target="_blank" rel="noopener">Open full-resolution image</a>'; }
+    function show() { var p = list[cur]; $('.stage', lb).innerHTML = pic(p.file, p.title, 'camera'); $('.lc', lb).innerHTML = '<b>' + esc(p.title) + '</b><div>' + cap(p) + '</div>' + (p.note ? '<p class="ln">' + esc(p.note) + '</p>' : '') + '<a class="original-image" href="' + esc(p.file) + '" target="_blank" rel="noopener">Open full-resolution image</a>'; }
     function open(arr, i) { opener = document.activeElement; list = arr; cur = i; show(); lb.classList.add('on'); $('.x', lb).focus(); document.body.style.overflow = 'hidden'; }
     function close() { lb.classList.remove('on'); document.body.style.overflow = document.querySelector('.mo.on') ? 'hidden' : ''; if (opener && opener.isConnected) opener.focus(); }
     function step(d) { cur = (cur + d + list.length) % list.length; show(); }
@@ -27,29 +27,35 @@
 
   /* ---------- Photography + lightbox ---------- */
   function photography() {
-    var P = S.photography;
+    var P = S.photography, info = P.albumInfo || P.albums.map(function (n) { var f = P.photos.filter(function (p) { return p.album === n; })[0]; return { name: n, cover: f && f.file, desc: '' }; });
     var me = P.photos.filter(function (p) { return p.title === 'Colour-fest photographer'; })[0];
     var chips = '<div class="photo-themes"><span>' + ic('drop') + ' Rivers & landscapes</span><span>' + ic('camera') + ' Life through my lens</span></div>';
     $('#app').innerHTML = phead('camera', '', P.headline, P.intro, chips, U.lensSwitch('photography'), ['drone', 'sun'], ['camera', '']) +
-      '<section><div class="wrap">' + sh('Gallery', 'Selected <em>frames</em>', 'Browse by album, and tap any photograph to see it large.') +
-      '<div class="tabs" id="atabs"><button class="on" data-a="all">All</button>' + P.albums.map(function (a) { return '<button data-a="' + esc(a) + '">' + esc(a) + '</button>'; }).join('') + '</div>' +
-      '<div class="masonry" id="gal"></div></div></section>' +
+      '<section id="albums"><div class="wrap">' + sh('Gallery', 'Photo <em>albums</em>', 'Pick an album to open it, then tap any photograph to see it large.') +
+      '<div class="afolders" id="afolders">' + info.map(function (a, i) {
+        var n = P.photos.filter(function (p) { return p.album === a.name; }).length;
+        return '<a class="afold lift rv in" href="#album-' + i + '" data-ai="' + i + '"><span class="afc">' + pic(a.cover, a.name, 'camera') + '</span><span class="afb"><span class="afi">' + ic(a.icon || 'camera') + '</span><b>' + esc(a.name) + '</b><small>' + n + (n === 1 ? ' photo' : ' photos') + '</small><em>' + esc(a.desc || '') + '</em></span></a>';
+      }).join('') + '</div><div id="aview" hidden></div></div></section>' +
       '<section class="tint"><div class="wrap">' + sh('Behind the lens', 'Camera in <em>hand</em>', 'The gear I shoot with and the photographic societies I belong to.') +
       '<div class="behind"><div class="vf rv"><span class="plate p1"></span><span class="plate p2"></span>' + cont('', 6) + '<div class="vfimg land">' + pic(me ? me.file : 'photos/photo-21.jpg', 'Md. Biplob Hosen with a camera', 'camera') + '</div><i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i></div>' +
       '<div class="rv"><div class="gears">' + S.gear.slice(0, 2).map(function (g) { return '<div class="gearm"><div class="gthumb">' + U.artTile(g.icon === 'drone' ? 'drone' : 'camera', g.tone) + '</div><div><h4>' + esc(g.name) + '</h4><p>' + esc(g.note) + '</p></div></div>'; }).join('') + '</div>' +
       '<h4 class="bh" style="margin-top:26px">Photographic societies</h4><div class="roles big">' + P.roles.map(function (r, i) { return '<div class="role t' + (i % 3) + '"><span class="rb">' + ic('camera') + '</span><span><b>' + esc(r.role) + '</b><em>' + esc(r.org) + '</em></span>' + (r.years ? '<small>' + esc(r.years) + '</small>' : '') + '</div>'; }).join('') + '</div></div></div></div></section>';
-    var list = P.photos.slice(), cur = 0;
-    function cap(p) { return (p.place ? esc(p.place) + ' · ' : '') + esc(p.album || ''); }
-    function draw(a) {
-      list = P.photos.filter(function (p) { return a === 'all' || p.album === a; });
-      $('#gal').innerHTML = list.map(function (p, i) {
-        return '<button class="gi" style="aspect-ratio:' + esc(p.r || '3/2') + '" data-i="' + i + '" aria-label="' + esc(p.title) + '">' + pic(p.file, p.title, 'camera') + '<span class="cap"><b>' + esc(p.title) + '</b><small>' + cap(p) + '</small></span></button>';
-      }).join('');
-      $$('#gal .gi').forEach(function (b) { b.addEventListener('click', function () { LB.open(list, +b.dataset.i); }); });
+    var LB = makeLightbox(), list = [];
+    function showAlbum(i) {
+      var a = info[i]; if (!a) return showFolders();
+      list = P.photos.filter(function (p) { return p.album === a.name; });
+      $('#afolders').hidden = true;
+      var v = $('#aview'); v.hidden = false;
+      v.innerHTML = '<a class="btn sm aback" href="#albums">' + ic('back') + ' All albums</a><h3 class="atitle">' + esc(a.name) + '</h3><p class="adesc">' + esc(a.desc || '') + ' <span class="acount">' + list.length + (list.length === 1 ? ' photo' : ' photos') + '</span></p>' +
+        '<div class="agrid">' + list.map(function (p, k) {
+          return '<figure class="aph rv in"><button class="gi" type="button" style="aspect-ratio:' + esc(p.r || '3/2') + '" data-i="' + k + '" aria-label="' + esc(p.title) + '">' + pic(p.file, p.title, 'camera') + '</button><figcaption><b>' + esc(p.title) + '</b>' + (p.note ? '<span>' + esc(p.note) + '</span>' : '') + '</figcaption></figure>';
+        }).join('') + '</div>';
+      $$('#aview .gi').forEach(function (b) { b.addEventListener('click', function () { LB.open(list, +b.dataset.i); }); });
+      var sec = $('#albums'); if (sec && sec.scrollIntoView) sec.scrollIntoView();
     }
-    draw('all');
-    $$('#atabs button').forEach(function (b) { b.addEventListener('click', function () { $$('#atabs button').forEach(function (x) { x.classList.toggle('on', x === b); }); draw(b.dataset.a); }); });
-    var LB = makeLightbox();
+    function showFolders() { $('#aview').hidden = true; $('#aview').innerHTML = ''; $('#afolders').hidden = false; }
+    function route() { var m = /^#album-(\d+)$/.exec(location.hash); if (m) showAlbum(+m[1]); else { showFolders(); if (location.hash === '#albums') { var sec = $('#albums'); if (sec && sec.scrollIntoView) sec.scrollIntoView(); } } }
+    window.addEventListener('hashchange', route); route();
   }
 
   /* ---------- Travel blog ---------- */
@@ -82,9 +88,10 @@
         var inner = g.districts.map(function (n) { return byName[n] ? '<path class="bd on ' + g.tone + '" d="' + byName[n].p + '"/>' : ''; }).join('');
         var ds = g.districts.map(function (n) { return byName[n]; }).filter(Boolean), cx = 0, cy = 0;
         ds.forEach(function (d) { cx += d.c[0]; cy += d.c[1]; }); cx = cx / ds.length; cy = cy / ds.length;
-        cx += g.dx || 0; cy += g.dy || 0;
-        cx = Math.max(110, Math.min(G.w - 110, cx));
-        lbls += '<text class="bl" x="' + cx.toFixed(0) + '" y="' + cy.toFixed(0) + '" text-anchor="middle">' + esc(L(g.label)) + '</text>';
+        var anchor = 'middle';
+        if (g.lx !== undefined) { cx = g.lx; cy = g.ly; anchor = g.anchor || 'start'; }
+        else { cx += g.dx || 0; cy += g.dy || 0; cx = Math.max(110, Math.min(G.w - 110, cx)); }
+        lbls += '<text class="bl" x="' + cx.toFixed(0) + '" y="' + cy.toFixed(0) + '" text-anchor="' + anchor + '">' + esc(L(g.short || g.label)) + '</text>';
         var open = g.soon ? '<g class="bg ' + g.tone + '" aria-label="' + esc(L(g.label)) + '">' : '<a class="bg ' + g.tone + '" href="travel.html?p=' + esc(g.post) + '&lang=' + lang + '" aria-label="' + esc(L(g.label)) + '">';
         return open + '<title>' + esc(L(g.label)) + '</title>' + inner + (g.soon ? '</g>' : '</a>');
       }).join('') + lbls;
